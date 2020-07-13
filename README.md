@@ -6,9 +6,9 @@ A program a tradícionális image board-októl a következő módokban tér el: 
 
 Az IntrendChan másik nagy feature-je, mely megkülönbözteti a hagyományos image board-októl, az a kommentekre való szavazási lehetőség. A kommentek mellett található egy szám, mely a szavazatok számát mutatja, illetve egy fel és egy lefelé mutató nyíl, melyek segítségével a felhasználó szavazhat a kommentre. Minden kommentre csak egy szavazatot küldhet egy felhasználó (vagy fel, vagy le), de természetesen maga a szavazás opcionális. Lehetőség van a threadek alatti kommentek kronológikus, illetve szavazat alapján való rendezésére is.
 
-Követelménylista:
+## Követelménylista:
 | ID | Fontosság | Követelmény |
-|-|-|-|
+|-:|-:|-|
 | 1 | magas | A felhasználó tud új fiókot regisztrálni |
 | 2 | magas | A felhasználó be tud lépni a fiókjába |
 | 3 | magas | A főoldal kilistázza a board-okat |
@@ -30,3 +30,15 @@ Követelménylista:
 
 
 # Tervek
+
+A felhasználó jelszavát természetesen nem plain textben tároljuk el, hanem valami hashelést végzünk - azonban még célszerűbb, ha erre valami libraryt használunk majd.
+
+## Use-case diagram
+
+![Use-case](./specifikacio/use-case.svg)
+
+## Entytik class-diagramja
+
+![Class-diagram](./specifikacio/class-diagram.svg)
+
+## Szenvencia-diagramok
