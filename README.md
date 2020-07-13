@@ -1,2 +1,3 @@
-# IntrendChan
- An ImageBoard webapplication written in Java
+# Üzleti Igények
+
+# Tervek
