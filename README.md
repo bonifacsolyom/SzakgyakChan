@@ -35,10 +35,10 @@ A felhasználó jelszavát természetesen nem plain textben tároljuk el, hanem 
 
 ## Use-case diagram
 
-![Use-case](./specifikacio/use-case.svg)
+![Use-case](./specifikacio/uml/use-case.svg)
 
 ## Entytik class-diagramja
 
-![Class-diagram](./specifikacio/class-diagram.svg)
+![Class-diagram](./specifikacio/uml/class-diagram.svg)
 
 ## Szenvencia-diagramok
