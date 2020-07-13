@@ -6,6 +6,8 @@ A program a tradícionális image board-októl a következő módokban tér el: 
 
 Az IntrendChan másik nagy feature-je, mely megkülönbözteti a hagyományos image board-októl, az a kommentekre való szavazási lehetőség. A kommentek mellett található egy szám, mely a szavazatok számát mutatja, illetve egy fel és egy lefelé mutató nyíl, melyek segítségével a felhasználó szavazhat a kommentre. Minden kommentre csak egy szavazatot küldhet egy felhasználó (vagy fel, vagy le), de természetesen maga a szavazás opcionális. Lehetőség van a threadek alatti kommentek kronológikus, illetve szavazat alapján való rendezésére is.
 
+A felhasználó értesítést kap, ha egy kommentjére szavazat érkezik, illetve ha valaki válaszol rá. Ezt az értesítést látja a felhasználói felület egy részén, és addig highlight-olva van, amíg a felhasználó interakcióba nem lép vele. 
+
 ## Követelménylista:
 | ID | Fontosság | Követelmény |
 |-:|-:|-|
@@ -27,18 +29,26 @@ Az IntrendChan másik nagy feature-je, mely megkülönbözteti a hagyományos im
 | 16 | közepes | Egy kommentre egy user csak egy szavazatot küldhet |
 | 17 | közepes | A kommentek mellett egy szám mutatja, hogy a komment hány szavazattal rendelkezik |
 | 18 | alacsony | A kommenteket lehet kronológikusan, vagy szavazat alapján rendezni |
+| 19 | közepes | A felhasználó értesítést kap, ha szavazat vagy válasz érkezik egy kommentjére |
+| 20 | alacsony | Az értesítés addig aktív, amíg a felhasználó interkacióba nem lép vele |
 
 
 # Tervek
 
-A felhasználó jelszavát természetesen nem plain textben tároljuk el, hanem valami hashelést végzünk - azonban még célszerűbb, ha erre valami libraryt használunk majd.
+A boardok tartalmazzák a threadeket, azok pedig a reply-okat. A threadekhez és a replyokhoz eltároljuk, hogy melyik user posztolta őket, ez a törlésnél hasznos. A képeknek készítünk egy külön image osztályt, így könnyebb reprezentálni olyan kommenteket, melyekhez nem lett kép csatolva. A felhasználó jelszavát természetesen nem plain textben tároljuk el, hanem valami hashelést végzünk - azonban még célszerűbb lehet, ha erre valami libraryt használunk majd. A threadeket érdemes úgy implementálni, hogy ők maguk nem tárolnak külön képet és textet, hiszen akkor a kommentek funkcionalitását valósítanánk meg mégegyszer - tehát a threadekben mindig lesz egy kezdő komment, ez fogja tartalmazni a threadnek szövegét és képét. Természetesen itt enforszolni kell, hogy ezen komment mindig tartalmazzon képet. Minden usernek van egy notifications tömbje, ebben tároljuk az eddigi összes értesítéseit - ha a notifikáció aktív, akkor a read flagje false. Ebből leszármazik két különböző értesítéstípus, amely egy új szavazatról, illetve egy új válaszról értesít. Ezeknek a különböző prezentációjuk miatt kell, hogy két külön osztály legyenek.
 
 ## Use-case diagram
 
 ![Use-case](./specifikacio/uml/use-case.svg)
 
-## Entytik class-diagramja
+## Entityk class-diagramja
 
 ![Class-diagram](./specifikacio/uml/class-diagram.svg)
 
 ## Szenvencia-diagramok
+
+* Új reply posztolása:
+
+![Reply posztolása](./specifikacio/uml/sequence1.svg)
+
+* 
