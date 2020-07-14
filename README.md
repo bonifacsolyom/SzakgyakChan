@@ -51,4 +51,6 @@ A boardok tartalmazzák a threadeket, azok pedig a reply-okat. A threadekhez és
 
 ![Reply posztolása](./specifikacio/uml/sequence1.svg)
 
-* 
+* Boardok threadjeinek lekérése megjelenítéshez:
+
+![Boardok megjelenítése](./specifikacio/uml/sequence2.svg)
