@@ -1,10 +1,10 @@
 # Üzleti Igények
 
-Az IntrendChan egy olyan image board webalkalmazás, melyen a felhasználók különböző témákat beszélhetnek meg szabadon. A program felépítésben és funkcionálisan is hasonlít a klasszikus image board-okra, néhány kivétellel. A különzöző témájú diszkussziókat board-ok különítik el, melyek között a felhasználó a főoldalon tud választani. A boardok előre definiáltak, egy felhasználó nem tud újat létrehozni. A boardokon belül a felhasználó szabadon indíthat thread-eket tetszőleges, a board témájához kapcsolódó tartalommal, melyhez bármelyik felhasználó kommentelhet. Követelmény, hogy minden thread képpel és szöveggel kell, hogy kezdődjön, az azokhoz fűzött kommenteknél a kép hozzáfűzése opcionális, azonban mindenképpen egy lehetőség. A board-okon belül a threadek mindig olyan sorrendben vannak listázva, hogy melyikhez érkezett legutoljára komment, kivéve, ha a komment olyan opcióval lett elküldve, hogy az ne számítson bele ebbe - ezt a komment mező alatt egy checkbox teszi lehetővé.
+A SzakgyakChan egy olyan image board webalkalmazás, melyen a felhasználók különböző témákat beszélhetnek meg szabadon. A program felépítésben és funkcionálisan is hasonlít a klasszikus image board-okra, néhány kivétellel. A különzöző témájú diszkussziókat board-ok különítik el, melyek között a felhasználó a főoldalon tud választani. A boardok előre definiáltak, egy felhasználó nem tud újat létrehozni. A boardokon belül a felhasználó szabadon indíthat thread-eket tetszőleges, a board témájához kapcsolódó tartalommal, melyhez bármelyik felhasználó kommentelhet. Követelmény, hogy minden thread képpel és szöveggel kell, hogy kezdődjön, az azokhoz fűzött kommenteknél a kép hozzáfűzése opcionális, azonban mindenképpen egy lehetőség. A board-okon belül a threadek mindig olyan sorrendben vannak listázva, hogy melyikhez érkezett legutoljára komment, kivéve, ha a komment olyan opcióval lett elküldve, hogy az ne számítson bele ebbe - ezt a komment mező alatt egy checkbox teszi lehetővé.
 
-A program a tradícionális image board-októl a következő módokban tér el: az IntrendChan tartalmaz felhasználókezelést, azaz sok más image board-dal ellentétben a threadindítás és kommentelés nem anonim, hanem kötelezően belépés után van csak rá lehetőség. A felhasználó tudja törölni a saját kommentjeit, azonban egy thread csak akkor törölhető, ha ahhoz egy komment sem tartozik. Ha egy felhasználó egy olyan kommentet töröl, melyhez egy kép is csatolva van, akkor a képfájl a szerverről is kötelezően törlődik. A program tartalmaz role kezelést, tehát egy felhasználó rendelkezhet user vagy adminisztrátori jogokkal - az utóbbi esetben bármilyen hozzászólást vagy threadet jogában áll letörölni.
+A program a tradícionális image board-októl a következő módokban tér el: a SzakgyakChan tartalmaz felhasználókezelést, azaz sok más image board-dal ellentétben a threadindítás és kommentelés nem anonim, hanem kötelezően belépés után van csak rá lehetőség. A felhasználó tudja törölni a saját kommentjeit, azonban egy thread csak akkor törölhető, ha ahhoz egy komment sem tartozik. Ha egy felhasználó egy olyan kommentet töröl, melyhez egy kép is csatolva van, akkor a képfájl a szerverről is kötelezően törlődik. A program tartalmaz role kezelést, tehát egy felhasználó rendelkezhet user vagy adminisztrátori jogokkal - az utóbbi esetben bármilyen hozzászólást vagy threadet jogában áll letörölni.
 
-Az IntrendChan másik nagy feature-je, mely megkülönbözteti a hagyományos image board-októl, az a kommentekre való szavazási lehetőség. A kommentek mellett található egy szám, mely a szavazatok számát mutatja, illetve egy fel és egy lefelé mutató nyíl, melyek segítségével a felhasználó szavazhat a kommentre. Minden kommentre csak egy szavazatot küldhet egy felhasználó (vagy fel, vagy le), de természetesen maga a szavazás opcionális. Lehetőség van a threadek alatti kommentek kronológikus, illetve szavazat alapján való rendezésére is.
+A SzakgyakChan másik nagy feature-je, mely megkülönbözteti a hagyományos image board-októl, az a kommentekre való szavazási lehetőség. A kommentek mellett található egy szám, mely a szavazatok számát mutatja, illetve egy fel és egy lefelé mutató nyíl, melyek segítségével a felhasználó szavazhat a kommentre. Minden kommentre csak egy szavazatot küldhet egy felhasználó (vagy fel, vagy le), de természetesen maga a szavazás opcionális. Lehetőség van a threadek alatti kommentek kronológikus, illetve szavazat alapján való rendezésére is.
 
 A felhasználó értesítést kap, ha egy kommentjére szavazat érkezik, illetve ha valaki válaszol rá. Ezt az értesítést látja a felhasználói felület egy részén, és addig highlight-olva van, amíg a felhasználó interakcióba nem lép vele. 
 
@@ -45,12 +45,16 @@ A boardok tartalmazzák a threadeket, azok pedig a reply-okat. A threadekhez és
 
 ![Class-diagram](./specifikacio/uml/class-diagram.svg)
 
-## Szenvencia-diagramok
+## Szekvencia-diagramok
 
-* Új reply posztolása:
+* Új thread posztolása:
 
-![Reply posztolása](./specifikacio/uml/sequence1.svg)
+![Thread posztolása](./specifikacio/uml/sequence1.svg)
 
 * Boardok threadjeinek lekérése megjelenítéshez:
 
 ![Boardok megjelenítése](./specifikacio/uml/sequence2.svg)
+
+* Komment értesítés küldése a felhasználónak
+
+![Értesítés küldése](./specifikacio/uml/sequence3.svg)
