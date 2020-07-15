@@ -1,9 +1,9 @@
 package org.github.bobobot.entities;
 
 public class VoteNotification implements Notification {
-    public static enum voteTypes {
+    public static enum VoteType {
         UPVOTE, DOWNVOTE
     }
 
-    voteTypes voteType;
+    VoteType voteType;
 }
