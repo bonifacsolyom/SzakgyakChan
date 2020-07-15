@@ -29,7 +29,7 @@ public interface BoardDAO {
 
     /**
      * Selects a board by its ID.
-     * @param ID The ID of the board ot be selected.
+     * @param ID The ID of the board to be selected.
      * @return The selected board wrapped in an optional, in case the board wasn't found.
      */
     Optional<Board> select(int ID);
