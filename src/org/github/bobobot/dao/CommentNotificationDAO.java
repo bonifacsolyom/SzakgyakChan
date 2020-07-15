@@ -1,20 +1,41 @@
 package org.github.bobobot.dao;
 
-import org.github.bobobot.entities.Notification;
+import org.github.bobobot.entities.CommentNotification;
 
+import java.util.ArrayList;
 import java.util.Optional;
 
-public interface CommentNotificationDAO extends NotificationDAO {
+public interface CommentNotificationDAO {
 	/**
 	 * Creates a notification.
 	 * @return The created notification.
 	 */
-	Notification create(boolean read, String replyContent);
+	CommentNotification create(boolean read, String replyContent);
 
 	/**
 	 * Updates a notification.
 	 * @param ID The ID of the notification.
 	 * @return The updated notification.
 	 */
-	Optional<Notification> update(int ID, boolean read, String replyContent);
+	Optional<CommentNotification> update(int ID, boolean read, String replyContent);
+
+	/**
+	 * Selects a notiication by its ID.
+	 * @param ID The ID of the notification to be selected.
+	 * @return The selected notification, wrapped in an optional.
+	 */
+	Optional<CommentNotification> select(int ID);
+
+	/**
+	 * Lists all existing notifications.
+	 * @return A list of all existing notifications.
+	 */
+	ArrayList<CommentNotification> list();
+
+	/**
+	 * Deletes a notification.
+	 * @param ID The ID of the notification to be deleted.
+	 * @return The deleted norification, wrapped in an optional.
+	 */
+	Optional<CommentNotification> delete(int ID);
 }

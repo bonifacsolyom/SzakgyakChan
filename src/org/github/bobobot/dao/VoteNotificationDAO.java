@@ -4,9 +4,10 @@ import org.github.bobobot.entities.Notification;
 import org.github.bobobot.entities.VoteNotification;
 import org.github.bobobot.entities.VoteNotification.VoteType;
 
+import java.util.ArrayList;
 import java.util.Optional;
 
-public interface VoteNotificationDAO extends NotificationDAO {
+public interface VoteNotificationDAO {
 
 	/**
 	 * Creates a notification.
@@ -14,7 +15,7 @@ public interface VoteNotificationDAO extends NotificationDAO {
 	 * @param voteType The type of the vote (up or downvote)
 	 * @return The created notification.
 	 */
-	Notification create(boolean read, VoteType voteType);
+	VoteNotification create(boolean read, VoteType voteType);
 
 	/**
 	 * Updates a notification.
@@ -23,5 +24,25 @@ public interface VoteNotificationDAO extends NotificationDAO {
 	 * @param voteType The type of the vote (up or downvote)
 	 * @return The updated notification.
 	 */
-	Optional<Notification> update(int ID, boolean read, VoteType voteType);
+	Optional<VoteNotification> update(int ID, boolean read, VoteType voteType);
+
+	/**
+	 * Selects a notiication by its ID.
+	 * @param ID The ID of the notification to be selected.
+	 * @return The selected notification, wrapped in an optional.
+	 */
+	Optional<VoteNotification> select(int ID);
+
+	/**
+	 * Lists all existing notifications.
+	 * @return A list of all existing notifications.
+	 */
+	ArrayList<VoteNotification> list();
+
+	/**
+	 * Deletes a notification.
+	 * @param ID The ID of the notification to be deleted.
+	 * @return The deleted norification, wrapped in an optional.
+	 */
+	Optional<VoteNotification> delete(int ID);
 }
