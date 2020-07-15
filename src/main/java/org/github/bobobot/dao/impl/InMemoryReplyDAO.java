@@ -1,10 +1,8 @@
 package org.github.bobobot.dao.impl;
 
 import org.github.bobobot.dao.ReplyDAO;
-import org.github.bobobot.entities.Thread;
 import org.github.bobobot.entities.Reply;
 
-import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Optional;
 

@@ -8,6 +8,7 @@ import java.util.Optional;
 public interface CommentNotificationDAO {
 	/**
 	 * Creates a notification.
+	 *
 	 * @param notification The notification to be created.
 	 * @return The created notification.
 	 */
@@ -15,6 +16,7 @@ public interface CommentNotificationDAO {
 
 	/**
 	 * Updates a notification.
+	 *
 	 * @param notification The notification to be updated.
 	 * @return The updated notification.
 	 */
@@ -22,6 +24,7 @@ public interface CommentNotificationDAO {
 
 	/**
 	 * Selects a notiication by its ID.
+	 *
 	 * @param ID The ID of the notification to be selected.
 	 * @return The selected notification, wrapped in an optional.
 	 */
@@ -29,12 +32,14 @@ public interface CommentNotificationDAO {
 
 	/**
 	 * Lists all existing notifications.
+	 *
 	 * @return A list of all existing notifications.
 	 */
 	ArrayList<CommentNotification> list();
 
 	/**
 	 * Deletes a notification.
+	 *
 	 * @param ID The ID of the notification to be deleted.
 	 * @return The deleted norification, wrapped in an optional.
 	 */

@@ -1,8 +1,6 @@
 package org.github.bobobot.dao;
 
-import org.github.bobobot.entities.Notification;
 import org.github.bobobot.entities.VoteNotification;
-import org.github.bobobot.entities.VoteNotification.VoteType;
 
 import java.util.ArrayList;
 import java.util.Optional;
@@ -11,6 +9,7 @@ public interface VoteNotificationDAO {
 
 	/**
 	 * Creates a notification.
+	 *
 	 * @param notification The notification to be created.
 	 * @return The created notification.
 	 */
@@ -18,6 +17,7 @@ public interface VoteNotificationDAO {
 
 	/**
 	 * Updates a notification.
+	 *
 	 * @param notification The notification to be updated.
 	 * @return The updated notification.
 	 */
@@ -25,6 +25,7 @@ public interface VoteNotificationDAO {
 
 	/**
 	 * Selects a notiication by its ID.
+	 *
 	 * @param ID The ID of the notification to be selected.
 	 * @return The selected notification, wrapped in an optional.
 	 */
@@ -32,12 +33,14 @@ public interface VoteNotificationDAO {
 
 	/**
 	 * Lists all existing notifications.
+	 *
 	 * @return A list of all existing notifications.
 	 */
 	ArrayList<VoteNotification> list();
 
 	/**
 	 * Deletes a notification.
+	 *
 	 * @param ID The ID of the notification to be deleted.
 	 * @return The deleted norification, wrapped in an optional.
 	 */

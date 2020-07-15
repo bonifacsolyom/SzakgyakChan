@@ -1,16 +1,13 @@
 package org.github.bobobot.dao;
 
-import org.github.bobobot.entities.Notification;
-import org.github.bobobot.entities.Reply;
-import org.github.bobobot.entities.Thread;
 import org.github.bobobot.entities.User;
 
-import java.util.ArrayList;
 import java.util.Optional;
 
 public interface UserDAO {
 	/**
 	 * Creates a new user.
+	 *
 	 * @param user The user to be created.
 	 * @return The created user.
 	 */
@@ -18,6 +15,7 @@ public interface UserDAO {
 
 	/**
 	 * Updates a user.
+	 *
 	 * @param user The user to be updated.
 	 * @return The updated user.
 	 */
@@ -25,6 +23,7 @@ public interface UserDAO {
 
 	/**
 	 * Selects a user by their ID.
+	 *
 	 * @param ID The ID of the user to be selected.
 	 * @return The selected user, wrapped in an optional.
 	 */
@@ -32,6 +31,7 @@ public interface UserDAO {
 
 	/**
 	 * Deletes a user.
+	 *
 	 * @param ID The ID of the user to be deleted.
 	 * @return The deleted user, wrapped in an optional.
 	 */

@@ -1,7 +1,6 @@
 package org.github.bobobot.dao.impl;
 
 import org.github.bobobot.dao.ThreadDAO;
-import org.github.bobobot.entities.Board;
 import org.github.bobobot.entities.Thread;
 
 import java.util.ArrayList;

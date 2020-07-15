@@ -1,9 +1,6 @@
 package org.github.bobobot.dao.impl;
 
 import org.github.bobobot.dao.UserDAO;
-import org.github.bobobot.entities.Notification;
-import org.github.bobobot.entities.Reply;
-import org.github.bobobot.entities.Thread;
 import org.github.bobobot.entities.User;
 
 import java.util.ArrayList;

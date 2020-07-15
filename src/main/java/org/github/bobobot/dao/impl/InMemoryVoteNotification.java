@@ -1,9 +1,7 @@
 package org.github.bobobot.dao.impl;
 
 import org.github.bobobot.dao.VoteNotificationDAO;
-import org.github.bobobot.entities.Notification;
 import org.github.bobobot.entities.VoteNotification;
-import org.github.bobobot.entities.VoteNotification.VoteType;
 
 import java.util.ArrayList;
 import java.util.Optional;
