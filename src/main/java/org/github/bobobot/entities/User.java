@@ -33,9 +33,7 @@ public class User {
 				isAdmin == user.isAdmin &&
 				name.equals(user.name) &&
 				email.equals(user.email) &&
-				passwordHash.equals(user.passwordHash) &&
-				threads.equals(user.threads) &&
-				replies.equals(user.replies);
+				passwordHash.equals(user.passwordHash);
 	}
 
 	@Override

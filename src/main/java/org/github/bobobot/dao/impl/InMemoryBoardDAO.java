@@ -40,6 +40,14 @@ public class InMemoryBoardDAO implements IBoardDAO {
 	}
 
 	@Override
+	public Optional<Board> selectByShortName(String name) {
+		Optional<Board> board = memory.stream()
+				.filter(b -> b.getShortName().equals(name))
+				.findFirst();
+		return board;
+	}
+
+	@Override
 	public ArrayList<Board> list() {
 		return memory;
 	}

@@ -44,7 +44,7 @@ public class InMemoryUserDAO implements IUserDAO {
 	@Override
 	public Optional<User> selectByUsername(String name) {
 		Optional<User> user = memory.stream()
-				.filter(u -> u.getName() == name)
+				.filter(u -> u.getName().equals(name))
 				.findFirst();
 
 		return user;
@@ -53,7 +53,7 @@ public class InMemoryUserDAO implements IUserDAO {
 	@Override
 	public Optional<User> selectByEmail(String email) {
 		Optional<User> user = memory.stream()
-				.filter(u -> u.getEmail() == email)
+				.filter(u -> u.getEmail().equals(email))
 				.findFirst();
 
 		return user;
