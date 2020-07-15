@@ -12,24 +12,24 @@ public class InMemoryCommentNotification implements CommentNotificationDAO {
 	ArrayList<CommentNotification> memory = new ArrayList<>();
 
 	@Override
-	public CommentNotification create(boolean read, String replyContent) {
-		CommentNotification notification = new CommentNotification(replyContent, read);
+	public CommentNotification create(CommentNotification notification) {
+		notification.setID(memory.size());
 		memory.add(notification);
 		return notification;
 	}
 
 	@Override
-	public Optional<CommentNotification> update(int ID, boolean read, String replyContent) {
-		Optional<CommentNotification> notification = memory.stream()
-				.filter(n -> n.getID() == ID)
+	public Optional<CommentNotification> update(CommentNotification notification) {
+		Optional<CommentNotification> memoryNotification = memory.stream()
+				.filter(n -> n.getID() == notification.getID())
 				.findFirst();
 
-		if (notification.isPresent()) {
-			notification.get().setRead(read);
-			notification.get().setReplyContent(replyContent);
+		if (memoryNotification.isPresent()) {
+			memoryNotification.get().setRead(notification.isRead());
+			memoryNotification.get().setReplyContent(notification.getReplyContent());
 		}
 
-		return notification;
+		return memoryNotification;
 	}
 
 	@Override

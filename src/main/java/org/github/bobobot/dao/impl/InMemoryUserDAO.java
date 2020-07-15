@@ -13,26 +13,26 @@ public class InMemoryUserDAO implements UserDAO {
 	ArrayList<User> memory = new ArrayList<>();
 
 	@Override
-	public User create(boolean isAdmin, String name, String email, String passwordHash) {
-		User user = new User(memory.size(), isAdmin, name, email, passwordHash);
+	public User create(User user) {
+		user.setID(memory.size());
 		memory.add(user);
 		return user;
 	}
 
 	@Override
-	public Optional<User> update(int ID, boolean isAdmin, String name, String email, String passwordHash, ArrayList<Thread> threads, ArrayList<Reply> replies, ArrayList<Notification> notifications) {
-		Optional<User> user = memory.stream()
-				.filter(u -> u.getID() == ID)
+	public Optional<User> update(User user) {
+		Optional<User> memoryUser = memory.stream()
+				.filter(u -> u.getID() == user.getID())
 				.findFirst();
 
-		if (user.isPresent()) {
-			user.get().setAdmin(isAdmin);
-			user.get().setName(name);
-			user.get().setEmail(email);
-			user.get().setPasswordHash(passwordHash);
+		if (memoryUser.isPresent()) {
+			memoryUser.get().setAdmin(user.isAdmin());
+			memoryUser.get().setName(user.getName());
+			memoryUser.get().setEmail(user.getEmail());
+			memoryUser.get().setPasswordHash(user.getPasswordHash());
 		}
 
-		return user;
+		return memoryUser;
 	}
 
 	@Override

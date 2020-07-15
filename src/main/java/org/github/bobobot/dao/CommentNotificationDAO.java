@@ -8,16 +8,17 @@ import java.util.Optional;
 public interface CommentNotificationDAO {
 	/**
 	 * Creates a notification.
+	 * @param notification The notification to be created.
 	 * @return The created notification.
 	 */
-	CommentNotification create(boolean read, String replyContent);
+	CommentNotification create(CommentNotification notification);
 
 	/**
 	 * Updates a notification.
-	 * @param ID The ID of the notification.
+	 * @param notification The notification to be updated.
 	 * @return The updated notification.
 	 */
-	Optional<CommentNotification> update(int ID, boolean read, String replyContent);
+	Optional<CommentNotification> update(CommentNotification notification);
 
 	/**
 	 * Selects a notiication by its ID.

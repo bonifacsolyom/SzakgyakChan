@@ -10,24 +10,24 @@ public class InMemoryImageDAO implements ImageDAO {
 	ArrayList<Image> memory = new ArrayList<>();
 
 	@Override
-	public Image create(boolean exists, String path) {
-		Image image = new Image(memory.size(), exists, path);
+	public Image create(Image image) {
+		image.setID(memory.size());
 		memory.add(image);
 		return image;
 	}
 
 	@Override
-	public Optional<Image> update(int ID, boolean exists, String path) {
-		Optional<Image> image = memory.stream()
-				.filter(i -> i.getID() == ID)
+	public Optional<Image> update(Image image) {
+		Optional<Image> memoryImage = memory.stream()
+				.filter(i -> i.getID() == image.getID())
 				.findFirst();
 
-		if (image.isPresent()) {
-			image.get().setExists(exists);
-			image.get().setPath(path);
+		if (memoryImage.isPresent()) {
+			memoryImage.get().setExists(image.isExists());
+			memoryImage.get().setPath(image.getPath());
 		}
 
-		return image;
+		return memoryImage;
 	}
 
 	@Override

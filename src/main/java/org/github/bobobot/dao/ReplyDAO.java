@@ -14,24 +14,17 @@ public interface ReplyDAO {
 
     /**
      * Creates a reply.
-     * @param content The content of the reply.
-     * @param date The date of the reply.
-     * @param votes The summarized score of the reply.
-     * @param thread The thread the reply belongs to.
+     * @param reply The reply to be created.
      * @return The created reply.
      */
-    Reply create(String content, LocalDateTime date, int votes, Thread thread);
+    Reply create(Reply reply);
 
     /**
      * Updates a reply.
-     * @param ID The ID of the reply.
-     * @param content The content of the reply.
-     * @param date The date of the reply.
-     * @param votes The summarized score of the reply.
-     * @param thread The thread the reply belongs to.
+     * @param reply The reply to be updated.
      * @return
      */
-    Optional<Reply> update(int ID, String content, LocalDateTime date, int votes, Thread thread);
+    Optional<Reply> update(Reply reply);
 
     /**
      * Selects a reply by its ID.

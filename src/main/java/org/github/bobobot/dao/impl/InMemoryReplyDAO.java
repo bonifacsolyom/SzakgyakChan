@@ -12,26 +12,26 @@ public class InMemoryReplyDAO implements ReplyDAO {
 	ArrayList<Reply> memory = new ArrayList<>();
 
 	@Override
-	public Reply create(String content, LocalDateTime date, int votes, Thread thread) {
-		Reply reply = new Reply(memory.size(), content, date, votes, thread);
+	public Reply create(Reply reply) {
+		reply.setID(memory.size());
 		memory.add(reply);
 		return reply;
 	}
 
 	@Override
-	public Optional<Reply> update(int ID, String content, LocalDateTime date, int votes, Thread thread) {
-		Optional<Reply> reply = memory.stream()
-				.filter(r -> r.getID() == ID)
+	public Optional<Reply> update(Reply reply) {
+		Optional<Reply> memoryReply = memory.stream()
+				.filter(r -> r.getID() == reply.getID())
 				.findFirst();
 
-		if (reply.isPresent()) {
-			reply.get().setContent(content);
-			reply.get().setDate(date);
-			reply.get().setVotes(votes);
-			reply.get().setThread(thread);
+		if (memoryReply.isPresent()) {
+			memoryReply.get().setContent(reply.getContent());
+			memoryReply.get().setDate(reply.getDate());
+			memoryReply.get().setVotes(reply.getVotes());
+			memoryReply.get().setThread(reply.getThread());
 		}
 
-		return reply;
+		return memoryReply;
 	}
 
 	@Override

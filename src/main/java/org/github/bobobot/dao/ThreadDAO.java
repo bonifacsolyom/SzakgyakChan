@@ -12,20 +12,17 @@ import java.util.Optional;
 public interface ThreadDAO {
     /**
      * Creates a thread.
-     * @param title The title of the thread.
-     * @param board The board this thread belongs to.
+     * @param thread The thread to be created.
      * @return The created thread.
      */
-    Thread create(String title, Board board);
+    Thread create(Thread thread);
 
     /**
      * Updates a thread.
-     * @param ID The ID of the thread to be updated.
-     * @param title The title of th thread.
-     * @param board The board this thread belongs to.
-     * @return The updated thread.
+     * @param thread The thread to be updated.
+     * @return The updated thread, wrapped in an optional.
      */
-    Optional<Thread> update(int ID, String title, Board board);
+    Optional<Thread> update(Thread thread);
 
     /**
      * Selects a thread by its ID.

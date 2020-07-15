@@ -10,24 +10,25 @@ public class InMemoryBoardDAO implements BoardDAO {
 	ArrayList<Board> memory = new ArrayList<>();
 
 	@Override
-	public Board create(String shortName, String longName) {
-		Board board = new Board(memory.size(), shortName, longName);
+	public Board create(Board board) {
+		board.setID(memory.size());
 		memory.add(board);
 		return board;
 	}
 
 	@Override
-	public Optional<Board> update(int ID, String shortName, String longName) {
-		Optional<Board> board = memory.stream()
-				.filter(b -> b.getID() == ID)
+	public Optional<Board> update(Board board) {
+		Optional<Board> memoryBoard = memory.stream()
+				.filter(b -> b.getID() == board.getID())
 				.findFirst();
 
-		if (board.isPresent()) {
-			board.get().setShortName(shortName);
-			board.get().setLongName(longName);
+		if (memoryBoard.isPresent()) {
+			//TODO: nincs erre szebb megoldás?
+			memoryBoard.get().setShortName(board.getShortName());
+			memoryBoard.get().setLongName(board.getLongName());
 		}
 
-		return board;
+		return memoryBoard;
 	}
 
 	@Override

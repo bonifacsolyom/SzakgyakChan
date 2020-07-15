@@ -12,20 +12,17 @@ public interface BoardDAO {
 
     /**
      * Creates a board. Shouldn't be accessed by the user or the admin.
-     * @param shortName The short name of the board.
-     * @param longName The longer description of the board - should only be a couple words long.
+     * @param board The board to be created.
      * @return The created board.
      */
-    Board create(String shortName, String longName);
+    Board create(Board board);
 
     /**
      * Updates a board
-     * @param ID The ID of the board
-     * @param shortName The shrot name of the board.
-     * @param longName The longer description of the board.
+     * @param board The board to be updated
      * @return The updated board.
      */
-    Optional<Board> update(int ID, String shortName, String longName);
+    Optional<Board> update(Board board);
 
     /**
      * Selects a board by its ID.

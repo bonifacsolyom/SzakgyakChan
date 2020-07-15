@@ -5,7 +5,8 @@ import java.util.Objects;
 public class CommentNotification extends Notification {
     String replyContent;
 
-    public CommentNotification(String replyContent, boolean read) {
+    public CommentNotification(int ID, String replyContent, boolean read) {
+        this.ID = ID;
         this.replyContent = replyContent;
         this.read = read;
     }

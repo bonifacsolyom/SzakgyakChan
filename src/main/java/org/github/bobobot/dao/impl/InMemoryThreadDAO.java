@@ -11,24 +11,24 @@ public class InMemoryThreadDAO implements ThreadDAO {
 	ArrayList<Thread> memory = new ArrayList<>();
 
 	@Override
-	public Thread create(String title, Board board) {
-		Thread thread = new Thread(memory.size(), title, board);
+	public Thread create(Thread thread) {
+		thread.setID(memory.size());
 		memory.add(thread);
 		return thread;
 	}
 
 	@Override
-	public Optional<Thread> update(int ID, String title, Board board) {
-		Optional<Thread> thread = memory.stream()
-				.filter(t -> t.getID() == ID)
+	public Optional<Thread> update(Thread thread) {
+		Optional<Thread> memoryThread = memory.stream()
+				.filter(t -> t.getID() == thread.getID())
 				.findFirst();
 
-		if (thread.isPresent()) {
-			thread.get().setTitle(title);
-			thread.get().setBoard(board);
+		if (memoryThread.isPresent()) {
+			memoryThread.get().setTitle(thread.getTitle());
+			memoryThread.get().setBoard(thread.getBoard());
 		}
 
-		return thread;
+		return memoryThread;
 	}
 
 	@Override

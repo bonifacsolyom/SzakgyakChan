@@ -11,20 +11,17 @@ public interface VoteNotificationDAO {
 
 	/**
 	 * Creates a notification.
-	 * @param read Whether the notification was read by the user or not
-	 * @param voteType The type of the vote (up or downvote)
+	 * @param notification The notification to be created.
 	 * @return The created notification.
 	 */
-	VoteNotification create(boolean read, VoteType voteType);
+	VoteNotification create(VoteNotification notification);
 
 	/**
 	 * Updates a notification.
-	 * @param ID The ID of the notification.
-	 * @param read Whether the notification was read by the user or not
-	 * @param voteType The type of the vote (up or downvote)
+	 * @param notification The notification to be updated.
 	 * @return The updated notification.
 	 */
-	Optional<VoteNotification> update(int ID, boolean read, VoteType voteType);
+	Optional<VoteNotification> update(VoteNotification notification);
 
 	/**
 	 * Selects a notiication by its ID.

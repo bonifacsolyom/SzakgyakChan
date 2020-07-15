@@ -12,20 +12,17 @@ public interface ImageDAO {
 
     /**
      * Creates an image object.
-     * @param exists Whether the post this object belongs to has an image attached to it or not.
-     * @param path The path of the image, provided that it exists in the first place.
+     * @param image The image object to be created.
      * @return The created image object.
      */
-    Image create(boolean exists, String path);
+    Image create(Image image);
 
     /**
      * Updates an image object.
-     * @param ID The ID of the image object.
-     * @param exists Whether the post this object belongs to has an image attached to it or not.
-     * @param path The path of the image, provided that it exists in the first place.
+     * @param image The image object ot be updated.
      * @return The updated image object.
      */
-    Optional<Image> update(int ID, boolean exists, String path);
+    Optional<Image> update(Image image);
 
     /**
      * Selects an image object by its ID.
