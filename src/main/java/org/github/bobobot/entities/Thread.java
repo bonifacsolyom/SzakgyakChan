@@ -10,11 +10,18 @@ public class Thread {
 	ArrayList<Reply> replies = new ArrayList<>();
 	User user;
 
-	public Thread(int ID, String title, Board board, ArrayList<Reply> replies, User user) {
+	public Thread(int ID, String title, Board board, User user, ArrayList<Reply> replies) {
 		this.ID = ID;
 		this.title = title;
 		this.board = board;
+		this.user = user;
 		this.replies = replies;
+	}
+
+	public Thread(int ID, String title, Board board, User user) {
+		this.ID = ID;
+		this.title = title;
+		this.board = board;
 		this.user = user;
 	}
 

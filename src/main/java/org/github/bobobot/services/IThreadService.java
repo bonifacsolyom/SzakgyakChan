@@ -13,12 +13,22 @@ public interface IThreadService {
 	 * Creates or updates a thread.
 	 *
 	 * @param title The title of the thread.
-	 * @param board
-	 * @param replies
-	 * @param user
+	 * @param board The board this thread was posted on.
+	 * @param user The user who posted the thread.
+	 * @param replies A list of replies to the thread.
 	 * @return The created/updated thread.
 	 */
-	Thread create(String title, Board board, ArrayList<Reply> replies, User user);
+	Thread create(String title, Board board, User user, ArrayList<Reply> replies);
+
+	/**
+	 * Creates or updates a thread.
+	 *
+	 * @param title The title of the thread.
+	 * @param board The board this thread was posted on.
+	 * @param user The user who posted the thread.
+	 * @return The created/updated thread.
+	 */
+	Thread create(String title, Board board, User user);
 
 
 	/**

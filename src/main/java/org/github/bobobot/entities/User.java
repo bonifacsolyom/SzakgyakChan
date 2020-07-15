@@ -24,6 +24,14 @@ public class User {
 		this.notifications = notifications;
 	}
 
+	public User(int ID, boolean isAdmin, String name, String email, String passwordHash) {
+		this.ID = ID;
+		this.isAdmin = isAdmin;
+		this.name = name;
+		this.email = email;
+		this.passwordHash = passwordHash;
+	}
+
 	@Override
 	public boolean equals(Object o) {
 		if (this == o) return true;
@@ -104,4 +112,6 @@ public class User {
 	public void setPasswordHash(String passwordHash) {
 		this.passwordHash = passwordHash;
 	}
+
+	public void addThread(Thread thread) { threads.add(thread); }
 }

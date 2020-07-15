@@ -16,14 +16,21 @@ public class ThreadService implements IThreadService {
 	IThreadDAO dao = new InMemoryThreadDAO();
 
 	@Override
-	public Thread create(String title, Board board, ArrayList<Reply> replies, User user) {
-		Thread thread = new Thread(-1, title, board, replies, user);
+	public Thread create(String title, Board board, User user, ArrayList<Reply> replies) {
+		Thread thread = new Thread(-1, title, board, user, replies);
+		return dao.create(thread);
+	}
+
+	@Override
+	public Thread create(String title, Board board, User user) {
+		Thread thread = new Thread(-1, title, board, user);
+		user.addThread(thread);
 		return dao.create(thread);
 	}
 
 	@Override
 	public Thread update(int ID, String title, Board board, ArrayList<Reply> replies, User user) {
-		Optional<Thread> thread = dao.update(new Thread(ID, title, board, replies, user));
+		Optional<Thread> thread = dao.update(new Thread(ID, title, board, user, replies));
 		if (!thread.isPresent()) { throw new IllegalArgumentException("Thread was not found!"); }
 		return thread.get();
 	}

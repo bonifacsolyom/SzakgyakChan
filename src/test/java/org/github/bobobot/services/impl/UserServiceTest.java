@@ -15,13 +15,10 @@ class UserServiceTest {
 	@Test
 	void findCreatedUserByName() {
 		UserService service = new UserService();
-		ArrayList<Thread> threads = new ArrayList<>();
-		ArrayList<Reply> replies = new ArrayList<>();
-		ArrayList<Notification> notifications = new ArrayList<>();
 
-		User originalUser = new User(0, true, "tesztNev", "tesztEmail", "tesztJelszo", threads, replies, notifications);
+		User originalUser = new User(0, true, "tesztNev", "tesztEmail", "tesztJelszo");
 
-		service.create(true, "tesztNev", "tesztEmail", "tesztJelszo", threads, replies, notifications);
+		service.create(true, "tesztNev", "tesztEmail", "tesztJelszo");
 		User user = service.findByUsername("tesztNev");
 
 		assertEquals(user, originalUser);
