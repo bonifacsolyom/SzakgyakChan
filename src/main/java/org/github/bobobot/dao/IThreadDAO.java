@@ -8,7 +8,7 @@ import java.util.Optional;
 /**
  * This interface defines a DAO of a thread.
  */
-public interface ThreadDAO {
+public interface IThreadDAO {
 	/**
 	 * Creates a thread.
 	 *

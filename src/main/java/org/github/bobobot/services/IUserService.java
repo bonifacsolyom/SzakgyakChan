@@ -8,11 +8,25 @@ import org.github.bobobot.entities.User;
 import java.util.ArrayList;
 import java.util.Optional;
 
-public interface UserService {
+public interface IUserService {
 	//TODO: Jelszóhash helyett ez még csak jelszót kapjon
 
 	/**
-	 * Creates or updates a user
+	 * Creates a user
+	 *
+	 * @param isAdmin       Specifies whether a user is an administrator or not.
+	 * @param name          The name of the user.
+	 * @param email         The email of the user.
+	 * @param passwordHash  The password hash of the user.
+	 * @param threads       The threads this user has posted.
+	 * @param replies       The replies this user has posted.
+	 * @param notifications The notifications this user has.
+	 * @return The created user.
+	 */
+	User create(boolean isAdmin, String name, String email, String passwordHash, ArrayList<Thread> threads, ArrayList<Reply> replies, ArrayList<Notification> notifications);
+
+	/**
+	 * Updates a user
 	 *
 	 * @param ID            The ID of the user to be updated.
 	 * @param isAdmin       Specifies whether a user is an administrator or not.
@@ -22,9 +36,9 @@ public interface UserService {
 	 * @param threads       The threads this user has posted.
 	 * @param replies       The replies this user has posted.
 	 * @param notifications The notifications this user has.
-	 * @return The created/updated user.
+	 * @return The updated user.
 	 */
-	User createOrUpdate(int ID, boolean isAdmin, String name, String email, String passwordHash, ArrayList<Thread> threads, ArrayList<Reply> replies, ArrayList<Notification> notifications);
+	User update(int ID, boolean isAdmin, String name, String email, String passwordHash, ArrayList<Thread> threads, ArrayList<Reply> replies, ArrayList<Notification> notifications);
 
 	/**
 	 * Lists all users.
@@ -39,7 +53,7 @@ public interface UserService {
 	 * @param ID The ID of the user to be found.
 	 * @return The user, wrapped in an optional.
 	 */
-	Optional<User> findById(int ID);
+	User findById(int ID);
 
 	/**
 	 * Finds a user by their username.
@@ -47,7 +61,7 @@ public interface UserService {
 	 * @param name The username of the user to be found.
 	 * @return The user, wrapped in an optional.
 	 */
-	Optional<User> findByUsername(String name);
+	User findByUsername(String name);
 
 	/**
 	 * Finds a user by their email.
@@ -55,7 +69,7 @@ public interface UserService {
 	 * @param email The email of the user to be found.
 	 * @return The user, wrapped in an optional.
 	 */
-	Optional<User> findByEmail(String email);
+	User findByEmail(String email);
 
 	/**
 	 * Deletes a user.

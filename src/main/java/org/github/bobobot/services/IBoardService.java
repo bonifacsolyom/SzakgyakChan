@@ -5,17 +5,25 @@ import org.github.bobobot.entities.Board;
 import java.util.ArrayList;
 import java.util.Optional;
 
-public interface BoardService {
+public interface IBoardService {
 
 	/**
-	 * Creates or updates a board, depending
-	 *
-	 * @param ID        the ID of the board to be created
+	 * Creates a board
 	 * @param shortName The short name of the board.
 	 * @param longName  The longer description of the board - should only be a couple words long.
-	 * @return The created/updated board.
+	 * @return The created board.
 	 */
-	Board createOrUpdate(int ID, String shortName, String longName);
+	Board create(String shortName, String longName);
+
+
+	/**
+	 * Updates a board
+	 * @param ID        the ID of the board to be updated
+	 * @param shortName The short name of the board.
+	 * @param longName  The longer description of the board - should only be a couple words long.
+	 * @return The updated board.
+	 */
+	Board update(int ID, String shortName, String longName);
 
 	/**
 	 * Lists all existing boards.
@@ -30,7 +38,7 @@ public interface BoardService {
 	 * @param ID The ID of the board to be found.
 	 * @return The found board wrapped in an optional.
 	 */
-	Optional<Board> findById(int ID);
+	Board findById(int ID);
 
 	/**
 	 * Finds a board by its short name.
@@ -38,7 +46,7 @@ public interface BoardService {
 	 * @param shortName The short name of the board to be found.
 	 * @return The found board wrapped in an optional.
 	 */
-	Optional<Board> findByShortName(String shortName);
+	Board findByShortName(String shortName);
 
 	/**
 	 * Deletes a board.

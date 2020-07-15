@@ -5,7 +5,7 @@ import org.github.bobobot.entities.VoteNotification;
 import java.util.ArrayList;
 import java.util.Optional;
 
-public interface VoteNotificationDAO {
+public interface IVoteNotificationDAO {
 
 	/**
 	 * Creates a notification.

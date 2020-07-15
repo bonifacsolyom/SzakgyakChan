@@ -1,12 +1,12 @@
 package org.github.bobobot.dao.impl;
 
-import org.github.bobobot.dao.CommentNotificationDAO;
+import org.github.bobobot.dao.ICommentNotificationDAO;
 import org.github.bobobot.entities.CommentNotification;
 
 import java.util.ArrayList;
 import java.util.Optional;
 
-public class InMemoryCommentNotification implements CommentNotificationDAO {
+public class InMemoryCommentNotification implements ICommentNotificationDAO {
 	ArrayList<CommentNotification> memory = new ArrayList<>();
 
 	@Override

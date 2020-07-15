@@ -5,7 +5,7 @@ import org.github.bobobot.entities.CommentNotification;
 import java.util.ArrayList;
 import java.util.Optional;
 
-public interface CommentNotificationDAO {
+public interface ICommentNotificationDAO {
 	/**
 	 * Creates a notification.
 	 *

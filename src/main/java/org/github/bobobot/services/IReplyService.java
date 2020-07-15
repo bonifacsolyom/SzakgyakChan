@@ -1,11 +1,13 @@
 package org.github.bobobot.services;
 
+import org.github.bobobot.entities.Image;
 import org.github.bobobot.entities.Reply;
+import org.github.bobobot.entities.Thread;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 
-public interface ReplyService {
+public interface IReplyService {
 
 	/**
 	 * Creates a reply.
@@ -16,7 +18,7 @@ public interface ReplyService {
 	 * @param thread  The thread the reply belongs to.
 	 * @return The created reply.
 	 */
-	Reply create(String content, LocalDateTime date, int votes, Thread thread);
+	Reply create(String content, LocalDateTime date, int votes, Image image, Thread thread);
 
 	/**
 	 * Updates a reply.
@@ -28,7 +30,7 @@ public interface ReplyService {
 	 * @param thread  The thread the reply belongs to.
 	 * @return The updated reply.
 	 */
-	Reply update(int ID, String content, LocalDateTime date, int votes, Thread thread);
+	Reply update(int ID, String content, LocalDateTime date, int votes, Image image, Thread thread);
 
 	/**
 	 * Lists all replies.

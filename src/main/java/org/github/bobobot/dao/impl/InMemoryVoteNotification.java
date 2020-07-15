@@ -1,12 +1,12 @@
 package org.github.bobobot.dao.impl;
 
-import org.github.bobobot.dao.VoteNotificationDAO;
+import org.github.bobobot.dao.IVoteNotificationDAO;
 import org.github.bobobot.entities.VoteNotification;
 
 import java.util.ArrayList;
 import java.util.Optional;
 
-public class InMemoryVoteNotification implements VoteNotificationDAO {
+public class InMemoryVoteNotification implements IVoteNotificationDAO {
 	ArrayList<VoteNotification> memory = new ArrayList<>();
 
 	@Override

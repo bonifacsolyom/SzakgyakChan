@@ -1,10 +1,25 @@
 package org.github.bobobot.services;
 
+import org.github.bobobot.entities.Board;
+import org.github.bobobot.entities.Reply;
 import org.github.bobobot.entities.Thread;
+import org.github.bobobot.entities.User;
 
 import java.util.ArrayList;
 
-public interface ThreadService {
+public interface IThreadService {
+
+	/**
+	 * Creates or updates a thread.
+	 *
+	 * @param title The title of the thread.
+	 * @param board
+	 * @param replies
+	 * @param user
+	 * @return The created/updated thread.
+	 */
+	Thread create(String title, Board board, ArrayList<Reply> replies, User user);
+
 
 	/**
 	 * Creates or updates a thread.
@@ -12,7 +27,7 @@ public interface ThreadService {
 	 * @param title The title of the thread.
 	 * @return The created/updated thread.
 	 */
-	Thread createOrUpdate(int ID, String title);
+	Thread update(int ID, String title, Board board, ArrayList<Reply> replies, User user);
 
 	/**
 	 * Lists all threads.

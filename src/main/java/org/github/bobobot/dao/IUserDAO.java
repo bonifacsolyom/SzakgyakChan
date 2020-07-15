@@ -2,9 +2,10 @@ package org.github.bobobot.dao;
 
 import org.github.bobobot.entities.User;
 
+import java.util.ArrayList;
 import java.util.Optional;
 
-public interface UserDAO {
+public interface IUserDAO {
 	/**
 	 * Creates a new user.
 	 *
@@ -27,7 +28,29 @@ public interface UserDAO {
 	 * @param ID The ID of the user to be selected.
 	 * @return The selected user, wrapped in an optional.
 	 */
-	Optional<User> select(int ID);
+	Optional<User> selectById(int ID);
+
+	/**
+	 * Selects a user by their ID.
+	 *
+	 * @param name The Username of the user to be selected.
+	 * @return The selected user, wrapped in an optional.
+	 */
+	Optional<User> selectByUsername(String name);
+
+	/**
+	 * Selects a user by their ID.
+	 *
+	 * @param email The email of the user to be selected.
+	 * @return The selected user, wrapped in an optional.
+	 */
+	Optional<User> selectByEmail(String email);
+
+	/**
+	 * Returns a list of all users
+	 * @return A list of all users
+	 */
+	ArrayList<User> list();
 
 	/**
 	 * Deletes a user.

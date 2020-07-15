@@ -1,12 +1,15 @@
 package org.github.bobobot.dao.impl;
 
-import org.github.bobobot.dao.ReplyDAO;
+import org.github.bobobot.dao.IReplyDAO;
 import org.github.bobobot.entities.Reply;
+import org.github.bobobot.entities.Thread;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
-public class InMemoryReplyDAO implements ReplyDAO {
+public class InMemoryReplyDAO implements IReplyDAO {
 	ArrayList<Reply> memory = new ArrayList<>();
 
 	@Override
@@ -38,6 +41,14 @@ public class InMemoryReplyDAO implements ReplyDAO {
 				.filter(r -> r.getID() == ID)
 				.findFirst();
 		return reply;
+	}
+
+	@Override
+	public ArrayList<Reply> selectByThread(Thread thread) {
+		List<Reply> replies = memory.stream()
+				.filter(r -> r.getThread().equals(thread))
+				.collect(Collectors.toList());
+		return new ArrayList<Reply>(replies);
 	}
 
 	@Override

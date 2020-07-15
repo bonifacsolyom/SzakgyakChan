@@ -1,12 +1,12 @@
 package org.github.bobobot.dao.impl;
 
-import org.github.bobobot.dao.ThreadDAO;
+import org.github.bobobot.dao.IThreadDAO;
 import org.github.bobobot.entities.Thread;
 
 import java.util.ArrayList;
 import java.util.Optional;
 
-public class InMemoryThreadDAO implements ThreadDAO {
+public class InMemoryThreadDAO implements IThreadDAO {
 	ArrayList<Thread> memory = new ArrayList<>();
 
 	@Override

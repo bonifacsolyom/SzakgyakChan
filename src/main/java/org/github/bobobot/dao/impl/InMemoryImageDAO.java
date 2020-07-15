@@ -1,12 +1,12 @@
 package org.github.bobobot.dao.impl;
 
-import org.github.bobobot.dao.ImageDAO;
+import org.github.bobobot.dao.IImageDAO;
 import org.github.bobobot.entities.Image;
 
 import java.util.ArrayList;
 import java.util.Optional;
 
-public class InMemoryImageDAO implements ImageDAO {
+public class InMemoryImageDAO implements IImageDAO {
 	ArrayList<Image> memory = new ArrayList<>();
 
 	@Override

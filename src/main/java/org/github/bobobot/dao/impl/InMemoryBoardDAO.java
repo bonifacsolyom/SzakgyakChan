@@ -1,12 +1,12 @@
 package org.github.bobobot.dao.impl;
 
-import org.github.bobobot.dao.BoardDAO;
+import org.github.bobobot.dao.IBoardDAO;
 import org.github.bobobot.entities.Board;
 
 import java.util.ArrayList;
 import java.util.Optional;
 
-public class InMemoryBoardDAO implements BoardDAO {
+public class InMemoryBoardDAO implements IBoardDAO {
 	ArrayList<Board> memory = new ArrayList<>();
 
 	@Override
@@ -32,7 +32,7 @@ public class InMemoryBoardDAO implements BoardDAO {
 	}
 
 	@Override
-	public Optional<Board> select(int ID) {
+	public Optional<Board> selectByID(int ID) {
 		Optional<Board> board = memory.stream()
 				.filter(b -> b.getID() == ID)
 				.findFirst();

@@ -10,10 +10,12 @@ public class Thread {
 	ArrayList<Reply> replies = new ArrayList<>();
 	User user;
 
-	public Thread(int ID, String title, Board board) {
+	public Thread(int ID, String title, Board board, ArrayList<Reply> replies, User user) {
 		this.ID = ID;
 		this.title = title;
 		this.board = board;
+		this.replies = replies;
+		this.user = user;
 	}
 
 	@Override

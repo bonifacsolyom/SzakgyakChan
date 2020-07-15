@@ -13,13 +13,15 @@ public class User {
 	ArrayList<Reply> replies = new ArrayList<>();
 	ArrayList<Notification> notifications = new ArrayList<>();
 
-
-	public User(int ID, boolean isAdmin, String name, String email, String passwordHash) {
+	public User(int ID, boolean isAdmin, String name, String email, String passwordHash, ArrayList<Thread> threads, ArrayList<Reply> replies, ArrayList<Notification> notifications) {
 		this.ID = ID;
 		this.isAdmin = isAdmin;
 		this.name = name;
 		this.email = email;
 		this.passwordHash = passwordHash;
+		this.threads = threads;
+		this.replies = replies;
+		this.notifications = notifications;
 	}
 
 	@Override
