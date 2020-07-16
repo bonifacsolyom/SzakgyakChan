@@ -18,7 +18,8 @@ public interface IThreadService {
 	Thread create(Thread thread);
 
 	/**
-	 * Creates a thread.
+	 * Creates a thread. Consider using this method instead:
+	 * @see IThreadService#create(String, Board, User, Reply)
 	 *
 	 * @param title The title of the thread.
 	 * @param board The board this thread was posted on.
@@ -30,6 +31,18 @@ public interface IThreadService {
 
 	/**
 	 * Creates a thread.
+	 *
+	 * @param title The title of the thread.
+	 * @param board The board this thread was posted on.
+	 * @param user The user who posted the thread.
+	 * @param firstPost The first post to a thread.
+	 * @return The created thread.
+	 */
+	Thread create(String title, Board board, User user, Reply firstPost);
+
+	/**
+	 * Creates a thread. Consider using this method instead:
+	 * @see IThreadService#create(String, Board, User, Reply)
 	 *
 	 * @param title The title of the thread.
 	 * @param board The board this thread was posted on.

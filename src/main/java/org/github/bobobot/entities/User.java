@@ -65,6 +65,10 @@ public class User {
 		this.notifications = notifications;
 	}
 
+	public void addNotification(Notification notification) {
+		this.notifications.add(notification);
+	}
+
 	public boolean isAdmin() {
 		return isAdmin;
 	}
@@ -81,12 +85,20 @@ public class User {
 		this.threads = threads;
 	}
 
+	public void addThread(Thread thread) {
+		this.threads.add(thread);
+	}
+
 	public ArrayList<Reply> getReplies() {
 		return replies;
 	}
 
 	public void setReplies(ArrayList<Reply> replies) {
 		this.replies = replies;
+	}
+
+	public void addReply(Reply reply) {
+		this.replies.add(reply);
 	}
 
 	public String getName() {
@@ -112,6 +124,4 @@ public class User {
 	public void setPasswordHash(String passwordHash) {
 		this.passwordHash = passwordHash;
 	}
-
-	public void addThread(Thread thread) { threads.add(thread); }
 }

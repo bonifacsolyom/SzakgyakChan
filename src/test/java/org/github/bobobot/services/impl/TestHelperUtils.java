@@ -1,8 +1,9 @@
 package org.github.bobobot.services.impl;
 
-import org.github.bobobot.entities.Board;
+import org.github.bobobot.entities.*;
 import org.github.bobobot.entities.Thread;
-import org.github.bobobot.entities.User;
+
+import java.time.LocalDateTime;
 
 public class TestHelperUtils {
 
@@ -62,5 +63,31 @@ public class TestHelperUtils {
 	 */
 	static Thread createDummyThread() {
 		return createDummyThread(createDummyBoard(), createDummyUser());
+	}
+
+	static Reply createDummyReply(Thread thread, User user) {
+		return new Reply(-1,
+				"tesztContent",
+				LocalDateTime.of(2020, 4, 20, 8, 0),
+				10,
+				createDummyImage(), thread, user);
+	}
+
+	static Reply createDummyReply(User user) {
+		return createDummyReply(createDummyThread(), user);
+	}
+
+
+	static Reply createDummyReply(Thread thread) {
+		return createDummyReply(thread, createDummyUser());
+	}
+
+
+	static Reply createDummyReply() {
+		return createDummyReply(createDummyThread(), createDummyUser());
+	}
+
+	static Image createDummyImage() {
+		return new Image(-1, false, "");
 	}
 }

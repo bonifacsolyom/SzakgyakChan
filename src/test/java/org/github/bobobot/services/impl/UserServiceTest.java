@@ -9,6 +9,7 @@ import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
 
+import static org.assertj.core.api.Assertions.*;
 import static org.github.bobobot.services.impl.TestHelperUtils.createDummyUser;
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -23,8 +24,7 @@ class UserServiceTest {
 		service.create(originalUser);
 		User user = service.findByUsername("tesztNev");
 
-		assertEquals(user, originalUser);
-
+		assertThat(user).isEqualTo(originalUser);
 	}
 
 	@Test
@@ -36,7 +36,7 @@ class UserServiceTest {
 		service.update(userID, true, "tesztNev", "tesztEmail2@teszt.com", "tesztJelszo");
 		user = service.findById(userID);
 
-		assertEquals(user.getEmail(), "tesztEmail2@teszt.com");
+		assertThat(user.getEmail()).isEqualTo("tesztEmail2@teszt.com");
 	}
 
 	@Test
@@ -51,8 +51,8 @@ class UserServiceTest {
 
 		ArrayList<User> userList = service.list();
 
-		assertEquals(userList.get(0), user1);
-		assertEquals(userList.get(1), user2);
+		assertThat(userList.get(0)).isEqualTo(user1);
+		assertThat(userList.get(1)).isEqualTo(user2);
 	}
 
 	@Test
@@ -60,7 +60,7 @@ class UserServiceTest {
 		UserService service = new UserService(new InMemoryUserDAO());
 		User user = createDummyUser();
 
-		assertDoesNotThrow(() -> service.create(user));
+		assertThatCode(() -> service.create(user)).doesNotThrowAnyException();
 	}
 
 	@Test
@@ -68,7 +68,7 @@ class UserServiceTest {
 		UserService service = new UserService(new InMemoryUserDAO());
 		User user = new User(0, true, "tesztNev", "tesztEmail", "tesztJelszo");
 
-		assertThrows(IllegalArgumentException.class, () -> service.create(user));
+		assertThatIllegalArgumentException().isThrownBy(() -> service.create(user));
 	}
 
 

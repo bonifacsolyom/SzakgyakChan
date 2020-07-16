@@ -8,6 +8,7 @@ import org.github.bobobot.entities.Thread;
 import org.github.bobobot.entities.User;
 import org.github.bobobot.services.IThreadService;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Optional;
 
@@ -27,6 +28,13 @@ public class ThreadService implements IThreadService {
 
 	@Override
 	public Thread create(String title, Board board, User user, ArrayList<Reply> replies) {
+		return create(new Thread(-1, title, board, user, replies));
+	}
+
+	@Override
+	public Thread create(String title, Board board, User user, Reply firstPost) {
+		ArrayList<Reply> replies = new ArrayList<>();
+		replies.add(firstPost);
 		return create(new Thread(-1, title, board, user, replies));
 	}
 

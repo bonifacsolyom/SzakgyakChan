@@ -1,8 +1,8 @@
 package org.github.bobobot.services;
 
-import org.github.bobobot.entities.Image;
-import org.github.bobobot.entities.Reply;
+import org.github.bobobot.entities.*;
 import org.github.bobobot.entities.Thread;
+import org.github.bobobot.entities.VoteNotification.VoteType;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -12,13 +12,30 @@ public interface IReplyService {
 	/**
 	 * Creates a reply.
 	 *
+	 * @param reply The reply to be created.
+	 * @return The created reply.
+	 */
+	Reply post(Reply reply);
+
+	/**
+	 * Creates a reply.
+	 *
 	 * @param content The content of the reply.
 	 * @param date    The date of the reply.
 	 * @param votes   The summarized score of the reply.
 	 * @param thread  The thread the reply belongs to.
+	 * @param user
 	 * @return The created reply.
 	 */
-	Reply create(String content, LocalDateTime date, int votes, Image image, Thread thread);
+	Reply post(String content, LocalDateTime date, int votes, Image image, Thread thread, User user);
+
+	/**
+	 * Updates a reply.
+	 *
+	 * @param reply The reply to be updated
+	 * @return The updated reply.
+	 */
+	Reply update(Reply reply);
 
 	/**
 	 * Updates a reply.
@@ -28,9 +45,10 @@ public interface IReplyService {
 	 * @param date    The date of the reply.
 	 * @param votes   The summarized score of the reply.
 	 * @param thread  The thread the reply belongs to.
+	 * @param user
 	 * @return The updated reply.
 	 */
-	Reply update(int ID, String content, LocalDateTime date, int votes, Image image, Thread thread);
+	Reply update(int ID, String content, LocalDateTime date, int votes, Image image, Thread thread, User user);
 
 	/**
 	 * Lists all replies.
@@ -54,6 +72,15 @@ public interface IReplyService {
 	 * @return All replies that belong to the thread
 	 */
 	ArrayList<Reply> listByThread(Thread thread);
+
+	/**
+	 * Votes on a reply.
+	 *
+	 * @param ID The ID of the reply.
+	 * @param voteType The type of the vote
+	 * @return
+	 */
+	Reply vote(int ID, VoteType voteType);
 
 	/**
 	 * Deletes a reply.

@@ -10,6 +10,8 @@ import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
 
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatIllegalArgumentException;
 import static org.github.bobobot.services.impl.TestHelperUtils.*;
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -23,7 +25,7 @@ class ThreadServiceTest {
 		service.create(originalThread);
 		Thread thread = service.findById(0);
 
-		assertEquals(originalThread, thread);
+		assertThat(originalThread).isEqualTo(thread);
 	}
 
 	@Test
@@ -37,7 +39,7 @@ class ThreadServiceTest {
 		User user = userService.findByUsername("tesztNev");
 		threadService.create(originalThread);
 
-		assertEquals(1, user.getThreads().size());
+		assertThat(user.getThreads().size()).isEqualTo(1);
 	}
 
 	@Test
@@ -51,7 +53,7 @@ class ThreadServiceTest {
 		threadService.create(originalThread);
 		Thread thread = threadService.findById(0);
 
-		assertEquals(originalUser, thread.getUser());
+		assertThat(originalUser).isEqualTo(thread.getUser());
 	}
 
 	@Test
@@ -65,21 +67,23 @@ class ThreadServiceTest {
 		service.update(0, "tesztTitle1", board, user);
 		Thread thread = service.findById(0);
 
-		assertEquals("tesztTitle1", thread.getTitle());
+		assertThat("tesztTitle1").isEqualTo(thread.getTitle());
 	}
 
 	@Test
 	void deleteThread() {
 		ThreadService service = new ThreadService(new InMemoryThreadDAO());
 		service.create(createDummyThread());
-		assertEquals(1, service.list().size());
+		assertThat(service.list().size()).isEqualTo(1);
 		service.delete(0);
-		assertEquals(0, service.list().size());
+		assertThat(service.list().size()).isEqualTo(0);
 	}
 
 	@Test
 	void deleteThreadButIsntPresent() {
 		ThreadService service = new ThreadService(new InMemoryThreadDAO());
-		assertThrows(IllegalArgumentException.class, () -> service.delete(0));
+		assertThatIllegalArgumentException().isThrownBy(() -> service.delete(0));
 	}
+
+
 }

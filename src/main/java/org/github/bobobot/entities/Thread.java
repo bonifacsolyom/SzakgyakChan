@@ -66,6 +66,10 @@ public class Thread {
 		this.replies = replies;
 	}
 
+	public void addReply(Reply reply) {
+		this.replies.add(reply);
+	}
+
 	public Board getBoard() {
 		return board;
 	}
