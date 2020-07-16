@@ -12,7 +12,7 @@ import java.util.Optional;
 
 public class UserService implements IUserService {
 
-	IUserDAO dao = new InMemoryUserDAO();
+	private IUserDAO dao = new InMemoryUserDAO();
 
 	@Override
 	public User create(boolean isAdmin, String name, String email, String passwordHash, ArrayList<Thread> threads, ArrayList<Reply> replies, ArrayList<Notification> notifications) {
@@ -23,6 +23,13 @@ public class UserService implements IUserService {
 	public User create(boolean isAdmin, String name, String email, String passwordHash) {
 		User user = new User(-1, isAdmin, name, email, passwordHash);
 		return dao.create(user);
+	}
+
+	@Override
+	public User update(int ID, boolean isAdmin, String name, String email, String passwordHash) {
+		Optional<User> user = dao.update(new User(ID, isAdmin, name, email, passwordHash));
+		if (!user.isPresent()) { throw new IllegalArgumentException("User not found!"); }
+		return user.get();
 	}
 
 	@Override

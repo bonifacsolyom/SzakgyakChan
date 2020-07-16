@@ -13,7 +13,7 @@ import java.util.Optional;
 
 public class ThreadService implements IThreadService {
 
-	IThreadDAO dao = new InMemoryThreadDAO();
+	private IThreadDAO dao = new InMemoryThreadDAO();
 
 	@Override
 	public Thread create(String title, Board board, User user, ArrayList<Reply> replies) {
@@ -29,7 +29,14 @@ public class ThreadService implements IThreadService {
 	}
 
 	@Override
-	public Thread update(int ID, String title, Board board, ArrayList<Reply> replies, User user) {
+	public Thread update(int ID, String title, Board board, User user) {
+		Optional<Thread> thread = dao.update(new Thread(ID, title, board, user));
+		if (!thread.isPresent()) { throw new IllegalArgumentException("Thread was not found!"); }
+		return thread.get();
+	}
+
+	@Override
+	public Thread update(int ID, String title, Board board, User user, ArrayList<Reply> replies) {
 		Optional<Thread> thread = dao.update(new Thread(ID, title, board, user, replies));
 		if (!thread.isPresent()) { throw new IllegalArgumentException("Thread was not found!"); }
 		return thread.get();

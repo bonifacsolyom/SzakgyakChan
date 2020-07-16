@@ -10,7 +10,7 @@ import java.util.Optional;
 
 public class BoardService implements IBoardService {
 
-	IBoardDAO dao = new InMemoryBoardDAO();
+	private IBoardDAO dao = new InMemoryBoardDAO();
 
 	@Override
 	public Board create(String shortName, String longName) {
