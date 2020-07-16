@@ -11,6 +11,7 @@ import org.github.bobobot.entities.Thread;
 import org.github.bobobot.services.IUserService;
 import org.xml.sax.SAXException;
 
+import javax.xml.stream.events.Comment;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Optional;
@@ -35,8 +36,8 @@ public class UserService implements IUserService {
 	}
 
 	@Override
-	public User create(boolean isAdmin, String name, String email, String passwordHash, ArrayList<Thread> threads, ArrayList<Reply> replies, ArrayList<Notification> notifications) {
-		return create(new User(-1, isAdmin, name, email, passwordHash, threads, replies, notifications));
+	public User create(boolean isAdmin, String name, String email, String passwordHash, ArrayList<Thread> threads, ArrayList<Reply> replies, ArrayList<CommentNotification> commentNotifications, ArrayList<VoteNotification> voteNotifications) {
+		return create(new User(-1, isAdmin, name, email, passwordHash, threads, replies, commentNotifications, voteNotifications));
 	}
 
 	public User create(boolean isAdmin, String name, String email, String passwordHash) {
@@ -58,8 +59,8 @@ public class UserService implements IUserService {
 	}
 
 	@Override
-	public User update(int ID, boolean isAdmin, String name, String email, String passwordHash, ArrayList<Thread> threads, ArrayList<Reply> replies, ArrayList<Notification> notifications) {
-		return update(new User(ID, isAdmin, name, email, passwordHash, threads, replies, notifications));
+	public User update(int ID, boolean isAdmin, String name, String email, String passwordHash, ArrayList<Thread> threads, ArrayList<Reply> replies, ArrayList<CommentNotification> commentNotifications, ArrayList<VoteNotification> voteNotifications) {
+		return update(new User(ID, isAdmin, name, email, passwordHash, threads, replies, commentNotifications, voteNotifications));
 	}
 
 	@Override

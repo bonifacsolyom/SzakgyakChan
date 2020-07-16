@@ -1,9 +1,7 @@
 package org.github.bobobot.services;
 
-import org.github.bobobot.entities.Notification;
-import org.github.bobobot.entities.Reply;
+import org.github.bobobot.entities.*;
 import org.github.bobobot.entities.Thread;
-import org.github.bobobot.entities.User;
 
 import java.util.ArrayList;
 import java.util.Optional;
@@ -28,10 +26,11 @@ public interface IUserService {
 	 * @param passwordHash  The password hash of the user.
 	 * @param threads       The threads this user has posted.
 	 * @param replies       The replies this user has posted.
-	 * @param notifications The notifications this user has.
+	 * @param commentNotifications The comment notifications this user has.
+	 * @param voteNotifications The vote notifications this user has.
 	 * @return The created user.
 	 */
-	User create(boolean isAdmin, String name, String email, String passwordHash, ArrayList<Thread> threads, ArrayList<Reply> replies, ArrayList<Notification> notifications);
+	User create(boolean isAdmin, String name, String email, String passwordHash, ArrayList<Thread> threads, ArrayList<Reply> replies, ArrayList<CommentNotification> commentNotifications, ArrayList<VoteNotification> voteNotifications);
 
 	/**
 	 * Updates a user
@@ -62,10 +61,11 @@ public interface IUserService {
 	 * @param passwordHash  The password hash of the user.
 	 * @param threads       The threads this user has posted.
 	 * @param replies       The replies this user has posted.
-	 * @param notifications The notifications this user has.
+	 * @param commentNotifications The comment notifications this user has.
+	 * @param voteNotifications The vote notifications this user has.
 	 * @return The updated user.
 	 */
-	User update(int ID, boolean isAdmin, String name, String email, String passwordHash, ArrayList<Thread> threads, ArrayList<Reply> replies, ArrayList<Notification> notifications);
+	User update(int ID, boolean isAdmin, String name, String email, String passwordHash, ArrayList<Thread> threads, ArrayList<Reply> replies, ArrayList<CommentNotification> commentNotifications, ArrayList<VoteNotification> voteNotifications);
 
 	/**
 	 * Lists all users.
