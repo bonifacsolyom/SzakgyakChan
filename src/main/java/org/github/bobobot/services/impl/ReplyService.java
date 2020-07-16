@@ -1,31 +1,44 @@
 package org.github.bobobot.services.impl;
 
+import org.github.bobobot.dao.ICommentNotificationDAO;
 import org.github.bobobot.dao.IReplyDAO;
+import org.github.bobobot.dao.IVoteNotificationDAO;
 import org.github.bobobot.entities.*;
 import org.github.bobobot.entities.Thread;
 import org.github.bobobot.entities.VoteNotification.VoteType;
 import org.github.bobobot.services.IReplyService;
 
+import javax.xml.stream.events.Comment;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Optional;
 
 public class ReplyService implements IReplyService {
 
-	private IReplyDAO dao;
+	private final IReplyDAO replyDAO;
+	private final ICommentNotificationDAO commentDAO;
+	private final IVoteNotificationDAO voteDAO;
 
-	public ReplyService(IReplyDAO dao) {
-		this.dao = dao;
+	public ReplyService(IReplyDAO replyDAO, ICommentNotificationDAO commentDAO, IVoteNotificationDAO voteDAO) {
+		this.replyDAO = replyDAO;
+		this.commentDAO = commentDAO;
+		this.voteDAO = voteDAO;
 	}
 
 	@Override
 	public Reply post(Reply tempReply) {
 		//Értesítjük minden reply userét, hogy egy új reply érkezett a threadbe
-		for (Reply r : tempReply.getThread().getReplies()) {
-			//TODO
-		}
+		notifyReplies(tempReply);
 		tempReply.getThread().addReply(tempReply);
-		return dao.create(tempReply);
+		return replyDAO.create(tempReply);
+	}
+
+	private void notifyReplies(Reply reply) {
+		for (Reply r : reply.getThread().getReplies()) {
+			CommentNotification notification = commentDAO.create(new CommentNotification(-1, reply.getContent(), false));
+			r.getUser().addCommentNotification(notification);
+		}
+
 	}
 
 	@Override
@@ -35,7 +48,7 @@ public class ReplyService implements IReplyService {
 
 	@Override
 	public Reply update(Reply tempReply) {
-		Optional<Reply> reply = dao.update(tempReply);
+		Optional<Reply> reply = replyDAO.update(tempReply);
 		if (!reply.isPresent()) { throw new IllegalArgumentException("Reply was not found!"); }
 		return reply.get();
 	}
@@ -47,19 +60,19 @@ public class ReplyService implements IReplyService {
 
 	@Override
 	public ArrayList<Reply> list() {
-		return dao.list();
+		return replyDAO.list();
 	}
 
 	@Override
 	public Reply findById(int ID) {
-		Optional<Reply> reply = dao.select(ID);
+		Optional<Reply> reply = replyDAO.select(ID);
 		if (!reply.isPresent()) { throw new IllegalArgumentException("Reply was not found!"); }
 		return reply.get();
 	}
 
 	@Override
 	public ArrayList<Reply> listByThread(Thread thread) {
-		return dao.selectByThread(thread);
+		return replyDAO.selectByThread(thread);
 	}
 
 	@Override
@@ -84,7 +97,7 @@ public class ReplyService implements IReplyService {
 
 	@Override
 	public void delete(int ID) {
-		Optional<Reply> reply = dao.delete(ID);
+		Optional<Reply> reply = replyDAO.delete(ID);
 		if (!reply.isPresent()) { throw new IllegalArgumentException("Reply was not found!"); }
 	}
 }

@@ -1,11 +1,19 @@
 package org.github.bobobot.services.impl;
 
+import org.github.bobobot.dao.impl.InMemoryCommentNotification;
+import org.github.bobobot.dao.impl.InMemoryReplyDAO;
+import org.github.bobobot.dao.impl.InMemoryVoteNotification;
 import org.github.bobobot.entities.*;
 import org.github.bobobot.entities.Thread;
+import org.github.bobobot.services.IReplyService;
 
 import java.time.LocalDateTime;
 
 public class TestHelperUtils {
+
+	static ReplyService createReplyService() {
+		return new ReplyService(new InMemoryReplyDAO(), new InMemoryCommentNotification(), new InMemoryVoteNotification());
+	}
 
 	/**
 	 * Creates a dummy user for testing with the following details:<p>

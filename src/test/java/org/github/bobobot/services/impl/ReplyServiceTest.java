@@ -13,7 +13,7 @@ class ReplyServiceTest {
 
 	@Test
 	void postReply() {
-		IReplyService service = new ReplyService(new InMemoryReplyDAO());
+		IReplyService service = createReplyService();
 		Reply originalReply = createDummyReply();
 
 		service.post(originalReply);
@@ -24,7 +24,7 @@ class ReplyServiceTest {
 
 	@Test
 	void checkIfReplyStoredTheThreadAfterPost() {
-		IReplyService service = new ReplyService(new InMemoryReplyDAO());
+		IReplyService service = createReplyService();
 		Thread thread = createDummyThread();
 		Reply originalReply = createDummyReply(thread);
 
@@ -35,7 +35,7 @@ class ReplyServiceTest {
 
 	@Test
 	void checkIfThreadStoredTheReplyAfterPost() {
-		IReplyService service = new ReplyService(new InMemoryReplyDAO());
+		IReplyService service = createReplyService();
 		Thread thread = createDummyThread();
 		Reply reply = createDummyReply(thread);
 
@@ -46,7 +46,7 @@ class ReplyServiceTest {
 
 	@Test
 	void checkIfOtherRepliesAreNotifiedOfComment() {
-		IReplyService service = new ReplyService(new InMemoryReplyDAO());
+		IReplyService service = createReplyService();
 
 		Thread thread = createDummyThread();
 		Reply reply1 = createDummyReply(thread);
@@ -61,7 +61,7 @@ class ReplyServiceTest {
 
 	@Test
 	void voteOnReply() {
-
+		
 	}
 
 	void deleteReply() {

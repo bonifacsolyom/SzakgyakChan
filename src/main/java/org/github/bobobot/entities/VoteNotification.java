@@ -31,7 +31,7 @@ public class VoteNotification extends Notification {
 		return Objects.hash(voteType);
 	}
 
-	public static enum VoteType {
+	public enum VoteType {
 		UPVOTE, DOWNVOTE
 	}
 }
