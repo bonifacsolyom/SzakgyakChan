@@ -14,6 +14,14 @@ public interface IUserService {
 	/**
 	 * Creates a user
 	 *
+	 * @param tempUser The user to be created.
+	 * @return The created user.
+	 */
+	User create(User tempUser);
+
+	/**
+	 * Creates a user
+	 *
 	 * @param isAdmin       Specifies whether a user is an administrator or not.
 	 * @param name          The name of the user.
 	 * @param email         The email of the user.
@@ -24,6 +32,14 @@ public interface IUserService {
 	 * @return The created user.
 	 */
 	User create(boolean isAdmin, String name, String email, String passwordHash, ArrayList<Thread> threads, ArrayList<Reply> replies, ArrayList<Notification> notifications);
+
+	/**
+	 * Updates a user
+	 *
+	 * @param tempUser The user to be updated.
+	 * @return The updated user.
+	 */
+	User update(User tempUser);
 
 	/**
 	 * Updates a user

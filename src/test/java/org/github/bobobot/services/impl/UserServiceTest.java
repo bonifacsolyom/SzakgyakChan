@@ -53,10 +53,20 @@ class UserServiceTest {
 		assertEquals(userList.get(1), user2);
 	}
 
+	@Test
+	void testValidEmail() {
+		UserService service = new UserService();
+		User user = new User(0, true, "tesztNev1", "tesztEmail1@teszt.com", "tesztJelszo1");
+
+		assertDoesNotThrow(() -> service.create(user));
+	}
+
+	@Test
 	void testInvalidEmail() {
 		UserService service = new UserService();
+		User user = new User(0, true, "tesztNev1", "tesztEmail1", "tesztJelszo1");
 
-		User user1 = new User(0, true, "tesztNev1", "tesztEmail1", "tesztJelszo1");
+		assertThrows(IllegalArgumentException.class, () -> service.create(user));
 	}
 
 
