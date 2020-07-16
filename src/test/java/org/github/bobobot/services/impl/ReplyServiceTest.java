@@ -3,6 +3,7 @@ package org.github.bobobot.services.impl;
 import org.github.bobobot.dao.impl.InMemoryReplyDAO;
 import org.github.bobobot.entities.Reply;
 import org.github.bobobot.entities.Thread;
+import org.github.bobobot.entities.VoteNotification;
 import org.github.bobobot.services.IReplyService;
 import org.junit.jupiter.api.Test;
 
@@ -61,10 +62,24 @@ class ReplyServiceTest {
 
 	@Test
 	void voteOnReply() {
-		
+		IReplyService service = createReplyService();
+		Reply reply = createDummyReply();
+
+		reply = service.post(reply);
+		service.vote(reply.getID(), VoteNotification.VoteType.UPVOTE);
+		reply = service.findById(reply.getID());
+
+		assertThat(reply.getVotes()).isEqualTo(1);
 	}
 
 	void deleteReply() {
+		IReplyService service = createReplyService();
+		Reply reply = createDummyReply();
+
+		service.post(reply);
+		assertThat(service.list().size()).isEqualTo(1);
+		service.delete(0);
+		assertThat(service.list().size()).isEqualTo(0);
 
 	}
 

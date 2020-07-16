@@ -77,7 +77,7 @@ public class TestHelperUtils {
 		return new Reply(-1,
 				"tesztContent",
 				LocalDateTime.of(2020, 4, 20, 8, 0),
-				10,
+				0,
 				createDummyImage(), thread, user);
 	}
 
