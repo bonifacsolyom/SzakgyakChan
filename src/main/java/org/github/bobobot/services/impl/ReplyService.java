@@ -14,7 +14,11 @@ import java.util.Optional;
 
 public class ReplyService implements IReplyService {
 
-	private IReplyDAO dao = new InMemoryReplyDAO();
+	private IReplyDAO dao;
+
+	public ReplyService(IReplyDAO dao) {
+		this.dao = dao;
+	}
 
 	@Override
 	public Reply create(String content, LocalDateTime date, int votes, Image image, Thread thread) {

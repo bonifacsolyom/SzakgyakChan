@@ -1,5 +1,6 @@
 package org.github.bobobot.services;
 
+import org.github.bobobot.dao.IBoardDAO;
 import org.github.bobobot.entities.Board;
 
 import java.util.ArrayList;

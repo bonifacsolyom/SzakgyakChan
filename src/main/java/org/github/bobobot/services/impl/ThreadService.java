@@ -13,33 +13,43 @@ import java.util.Optional;
 
 public class ThreadService implements IThreadService {
 
-	private IThreadDAO dao = new InMemoryThreadDAO();
+	private IThreadDAO dao;
+
+	public ThreadService(IThreadDAO dao) {
+		this.dao = dao;
+	}
+
+	@Override
+	public Thread create(Thread tempThread) {
+		tempThread.getUser().addThread(tempThread);
+		return dao.create(tempThread);
+	}
 
 	@Override
 	public Thread create(String title, Board board, User user, ArrayList<Reply> replies) {
-		Thread thread = new Thread(-1, title, board, user, replies);
-		return dao.create(thread);
+		return create(new Thread(-1, title, board, user, replies));
 	}
 
 	@Override
 	public Thread create(String title, Board board, User user) {
-		Thread thread = new Thread(-1, title, board, user);
-		user.addThread(thread);
-		return dao.create(thread);
+		return create(new Thread(-1, title, board, user));
+	}
+
+	@Override
+	public Thread update(Thread tempThread) {
+		Optional<Thread> thread = dao.update(tempThread);
+		if (!thread.isPresent()) { throw new IllegalArgumentException("Thread was not found!"); }
+		return thread.get();
 	}
 
 	@Override
 	public Thread update(int ID, String title, Board board, User user) {
-		Optional<Thread> thread = dao.update(new Thread(ID, title, board, user));
-		if (!thread.isPresent()) { throw new IllegalArgumentException("Thread was not found!"); }
-		return thread.get();
+		return update(new Thread(ID, title, board, user));
 	}
 
 	@Override
 	public Thread update(int ID, String title, Board board, User user, ArrayList<Reply> replies) {
-		Optional<Thread> thread = dao.update(new Thread(ID, title, board, user, replies));
-		if (!thread.isPresent()) { throw new IllegalArgumentException("Thread was not found!"); }
-		return thread.get();
+		return update(new Thread(ID, title, board, user, replies));
 	}
 
 	@Override

@@ -17,8 +17,11 @@ import java.util.Optional;
 
 public class UserService implements IUserService {
 
-	private IUserDAO dao = new InMemoryUserDAO();
+	private IUserDAO dao;
 
+	public UserService(IUserDAO dao) {
+		this.dao = dao;
+	}
 
 	private void validateEmail(String email) {
 		EmailValidator validator = EmailValidator.getInstance();

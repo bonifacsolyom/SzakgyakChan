@@ -1,5 +1,7 @@
 package org.github.bobobot.services.impl;
 
+import org.github.bobobot.dao.impl.InMemoryThreadDAO;
+import org.github.bobobot.dao.impl.InMemoryUserDAO;
 import org.github.bobobot.entities.Board;
 import org.github.bobobot.entities.Reply;
 import org.github.bobobot.entities.Thread;
@@ -8,6 +10,7 @@ import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
 
+import static org.github.bobobot.services.impl.TestHelperUtils.*;
 import static org.junit.jupiter.api.Assertions.*;
 
 class ThreadServiceTest {
@@ -15,12 +18,9 @@ class ThreadServiceTest {
 
 	@Test
 	void postThread() {
-		ThreadService service = new ThreadService();
-		Board board = new Board(0, "t", "teszt board");
-
-		User user = new User(0, true, "tesztNev", "tesztEmail", "tesztJelszo");
-		Thread originalThread = new Thread(0, "tesztTitle", board, user);
-		service.create("tesztTitle", board, user);
+		ThreadService service = new ThreadService(new InMemoryThreadDAO());
+		Thread originalThread = createDummyThread();
+		service.create(originalThread);
 		Thread thread = service.findById(0);
 
 		assertEquals(originalThread, thread);
@@ -28,29 +28,27 @@ class ThreadServiceTest {
 
 	@Test
 	void checkIfUserStoredTheThreadAfterPost() {
-		ThreadService threadService = new ThreadService();
-		UserService userService = new UserService();
-		Board board = new Board(0, "t", "teszt board");
+		ThreadService threadService = new ThreadService(new InMemoryThreadDAO());
+		UserService userService = new UserService(new InMemoryUserDAO());
 
-		User originalUser = new User(0, true, "tesztNev", "tesztEmail", "tesztJelszo");
-		Thread originalThread = new Thread(0, "tesztTitle", board, originalUser);
-		userService.create(true, "tesztNev", "tesztEmail", "tesztJelszo");
+		User originalUser = createDummyUser();
+		Thread originalThread = createDummyThread(originalUser);
+		userService.create(originalUser);
 		User user = userService.findByUsername("tesztNev");
-		threadService.create("tesztTitle", board, user);
+		threadService.create(originalThread);
 
 		assertEquals(1, user.getThreads().size());
 	}
 
 	@Test
 	void checkIfThreadStoredTheUserAfterPost() {
-		ThreadService threadService = new ThreadService();
-		UserService userService = new UserService();
-		Board board = new Board(0, "t", "teszt board");
+		ThreadService threadService = new ThreadService(new InMemoryThreadDAO());
+		UserService userService = new UserService(new InMemoryUserDAO());
 
-		User originalUser = new User(0, true, "tesztNev", "tesztEmail", "tesztJelszo");
-		Thread originalThread = new Thread(0, "tesztTitle", board, originalUser);
-		userService.create(true, "tesztNev", "tesztEmail", "tesztJelszo");
-		threadService.create("tesztTitle", board, originalUser);
+		User originalUser = createDummyUser();
+		Thread originalThread = createDummyThread(originalUser);
+		userService.create(originalUser);
+		threadService.create(originalThread);
 		Thread thread = threadService.findById(0);
 
 		assertEquals(originalUser, thread.getUser());
@@ -58,11 +56,12 @@ class ThreadServiceTest {
 
 	@Test
 	void updateThread() {
-		ThreadService service = new ThreadService();
-		Board board = new Board(0, "t", "teszt board");
+		ThreadService service = new ThreadService(new InMemoryThreadDAO());
+		Board board = createDummyBoard();
+		User user = createDummyUser();
+		Thread originalThread = createDummyThread(board, user);
 
-		User user = new User(0, true, "tesztNev", "tesztEmail", "tesztJelszo");
-		service.create("tesztTitle", board, user);
+		service.create(originalThread);
 		service.update(0, "tesztTitle1", board, user);
 		Thread thread = service.findById(0);
 
@@ -71,11 +70,8 @@ class ThreadServiceTest {
 
 	@Test
 	void deleteThread() {
-		ThreadService service = new ThreadService();
-		Board board = new Board(0, "t", "teszt board");
-
-		User user = new User(0, true, "tesztNev", "tesztEmail", "tesztJelszo");
-		service.create("tesztTitle", board, user);
+		ThreadService service = new ThreadService(new InMemoryThreadDAO());
+		service.create(createDummyThread());
 		assertEquals(1, service.list().size());
 		service.delete(0);
 		assertEquals(0, service.list().size());
@@ -83,7 +79,7 @@ class ThreadServiceTest {
 
 	@Test
 	void deleteThreadButIsntPresent() {
-		ThreadService service = new ThreadService();
-		assertThrows(IllegalArgumentException.class,  () -> service.delete(0));
+		ThreadService service = new ThreadService(new InMemoryThreadDAO());
+		assertThrows(IllegalArgumentException.class, () -> service.delete(0));
 	}
 }

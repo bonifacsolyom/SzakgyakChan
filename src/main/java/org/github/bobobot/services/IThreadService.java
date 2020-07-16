@@ -10,47 +10,63 @@ import java.util.ArrayList;
 public interface IThreadService {
 
 	/**
-	 * Creates or updates a thread.
+	 * Creates a thread.
+	 *
+	 * @param thread The thread to be created.
+	 * @return The created thread.
+	 */
+	Thread create(Thread thread);
+
+	/**
+	 * Creates a thread.
 	 *
 	 * @param title The title of the thread.
 	 * @param board The board this thread was posted on.
 	 * @param user The user who posted the thread.
 	 * @param replies A list of replies to the thread.
-	 * @return The created/updated thread.
+	 * @return The created thread.
 	 */
 	Thread create(String title, Board board, User user, ArrayList<Reply> replies);
 
 	/**
-	 * Creates or updates a thread.
+	 * Creates a thread.
 	 *
 	 * @param title The title of the thread.
 	 * @param board The board this thread was posted on.
 	 * @param user The user who posted the thread.
-	 * @return The created/updated thread.
+	 * @return The created thread.
 	 */
 	Thread create(String title, Board board, User user);
 
+	/**
+	 * Updates a thread.
+	 *
+	 * @param thread The thread to be updated.
+	 * @return The updated thread.
+	 */
+	Thread update(Thread thread);
+
 
 	/**
-	 * Creates or updates a thread.
+	 * Updates a thread.
 	 *
 	 * @param ID The ID of the thread.
 	 * @param title The title of the thread.
 	 * @param board The board of the thread.
 	 * @param user The user that posted the thread.
-	 * @return The created/updated thread.
+	 * @return The updated thread.
 	 */
 	Thread update(int ID, String title, Board board, User user);
 
 	/**
-	 * Creates or updates a thread.
+	 * Updates a thread.
 	 *
 	 * @param ID The ID of the thread.
 	 * @param title The title of the thread.
 	 * @param board The board of the thread.
 	 * @param user The user that posted the thread.
 	 * @param replies The replies of the thread.
-	 * @return The created/updated thread.
+	 * @return The updated thread.
 	 */
 	Thread update(int ID, String title, Board board, User user, ArrayList<Reply> replies);
 

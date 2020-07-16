@@ -1,5 +1,6 @@
 package org.github.bobobot.services.impl;
 
+import org.github.bobobot.dao.impl.InMemoryUserDAO;
 import org.github.bobobot.entities.Notification;
 import org.github.bobobot.entities.Thread;
 import org.github.bobobot.entities.Reply;
@@ -8,17 +9,18 @@ import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
 
+import static org.github.bobobot.services.impl.TestHelperUtils.createDummyUser;
 import static org.junit.jupiter.api.Assertions.*;
 
 class UserServiceTest {
 
 	@Test
 	void findCreatedUserByName() {
-		UserService service = new UserService();
+		UserService service = new UserService(new InMemoryUserDAO());
 
-		User originalUser = new User(0, true, "tesztNev", "tesztEmail", "tesztJelszo");
+		User originalUser = createDummyUser();
 
-		service.create(true, "tesztNev", "tesztEmail", "tesztJelszo");
+		service.create(originalUser);
 		User user = service.findByUsername("tesztNev");
 
 		assertEquals(user, originalUser);
@@ -27,25 +29,25 @@ class UserServiceTest {
 
 	@Test
 	void updateUserEmail() {
-		UserService service = new UserService();
+		UserService service = new UserService(new InMemoryUserDAO());
 
-		User user = service.create(true, "tesztNev", "tesztEmail", "tesztJelszo");
+		User user = service.create(createDummyUser());
 		int userID = user.getID();
-		service.update(userID, true, "tesztNev", "tesztEmail2", "tesztJelszo");
+		service.update(userID, true, "tesztNev", "tesztEmail2@teszt.com", "tesztJelszo");
 		user = service.findById(userID);
 
-		assertEquals(user.getEmail(), "tesztEmail2");
+		assertEquals(user.getEmail(), "tesztEmail2@teszt.com");
 	}
 
 	@Test
 	void testList() {
-		UserService service = new UserService();
+		UserService service = new UserService(new InMemoryUserDAO());
 
-		User user1 = new User(0, true, "tesztNev1", "tesztEmail1", "tesztJelszo1");
-		User user2 = new User(1, true, "tesztNev2", "tesztEmail2", "tesztJelszo2");
+		User user1 = new User(0, true, "tesztNev1", "tesztEmail1@teszt.com", "tesztJelszo1");
+		User user2 = new User(1, true, "tesztNev2", "tesztEmail2@teszt.com", "tesztJelszo2");
 
-		service.create(true, "tesztNev1", "tesztEmail1", "tesztJelszo1");
-		service.create(true, "tesztNev2", "tesztEmail2", "tesztJelszo2");
+		service.create(true, "tesztNev1", "tesztEmail1@teszt.com", "tesztJelszo1");
+		service.create(true, "tesztNev2", "tesztEmail2@teszt.com", "tesztJelszo2");
 
 		ArrayList<User> userList = service.list();
 
@@ -55,16 +57,16 @@ class UserServiceTest {
 
 	@Test
 	void testValidEmail() {
-		UserService service = new UserService();
-		User user = new User(0, true, "tesztNev1", "tesztEmail1@teszt.com", "tesztJelszo1");
+		UserService service = new UserService(new InMemoryUserDAO());
+		User user = createDummyUser();
 
 		assertDoesNotThrow(() -> service.create(user));
 	}
 
 	@Test
 	void testInvalidEmail() {
-		UserService service = new UserService();
-		User user = new User(0, true, "tesztNev1", "tesztEmail1", "tesztJelszo1");
+		UserService service = new UserService(new InMemoryUserDAO());
+		User user = new User(0, true, "tesztNev", "tesztEmail", "tesztJelszo");
 
 		assertThrows(IllegalArgumentException.class, () -> service.create(user));
 	}
