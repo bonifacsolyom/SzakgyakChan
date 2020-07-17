@@ -8,9 +8,8 @@ import org.github.bobobot.entities.Thread;
 import org.github.bobobot.entities.VoteNotification.VoteType;
 import org.github.bobobot.services.IReplyService;
 
-import javax.xml.stream.events.Comment;
 import java.time.LocalDateTime;
-import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 public class ReplyService implements IReplyService {
@@ -59,7 +58,7 @@ public class ReplyService implements IReplyService {
 	}
 
 	@Override
-	public ArrayList<Reply> list() {
+	public List<Reply> list() {
 		return replyDAO.list();
 	}
 
@@ -71,7 +70,7 @@ public class ReplyService implements IReplyService {
 	}
 
 	@Override
-	public ArrayList<Reply> listByThread(Thread thread) {
+	public List<Reply> listByThread(Thread thread) {
 		return replyDAO.selectByThread(thread);
 	}
 

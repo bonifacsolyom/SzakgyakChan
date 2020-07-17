@@ -1,11 +1,10 @@
 package org.github.bobobot.services.impl;
 
 import org.github.bobobot.dao.IBoardDAO;
-import org.github.bobobot.dao.impl.InMemoryBoardDAO;
 import org.github.bobobot.entities.Board;
 import org.github.bobobot.services.IBoardService;
 
-import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 public class BoardService implements IBoardService {
@@ -30,7 +29,7 @@ public class BoardService implements IBoardService {
 	}
 
 	@Override
-	public ArrayList<Board> list() {
+	public List<Board> list() {
 		return dao.list();
 	}
 

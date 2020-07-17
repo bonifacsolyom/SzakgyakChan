@@ -1,15 +1,14 @@
 package org.github.bobobot.services.impl;
 
 import org.github.bobobot.dao.IThreadDAO;
-import org.github.bobobot.dao.impl.InMemoryThreadDAO;
 import org.github.bobobot.entities.Board;
 import org.github.bobobot.entities.Reply;
 import org.github.bobobot.entities.Thread;
 import org.github.bobobot.entities.User;
 import org.github.bobobot.services.IThreadService;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 public class ThreadService implements IThreadService {
@@ -27,13 +26,13 @@ public class ThreadService implements IThreadService {
 	}
 
 	@Override
-	public Thread create(String title, Board board, User user, ArrayList<Reply> replies) {
+	public Thread create(String title, Board board, User user, List<Reply> replies) {
 		return create(new Thread(-1, title, board, user, replies));
 	}
 
 	@Override
 	public Thread create(String title, Board board, User user, Reply firstPost) {
-		ArrayList<Reply> replies = new ArrayList<>();
+		List<Reply> replies = new ArrayList<>();
 		replies.add(firstPost);
 		return create(new Thread(-1, title, board, user, replies));
 	}
@@ -56,12 +55,12 @@ public class ThreadService implements IThreadService {
 	}
 
 	@Override
-	public Thread update(int ID, String title, Board board, User user, ArrayList<Reply> replies) {
+	public Thread update(int ID, String title, Board board, User user, List<Reply> replies) {
 		return update(new Thread(ID, title, board, user, replies));
 	}
 
 	@Override
-	public ArrayList<Thread> list() {
+	public List<Thread> list() {
 		return dao.list();
 	}
 

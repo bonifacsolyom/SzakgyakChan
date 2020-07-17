@@ -5,7 +5,7 @@ import org.github.bobobot.entities.Reply;
 import org.github.bobobot.entities.Thread;
 import org.github.bobobot.entities.User;
 
-import java.util.ArrayList;
+import java.util.List;
 
 public interface IThreadService {
 
@@ -27,7 +27,7 @@ public interface IThreadService {
 	 * @param replies A list of replies to the thread.
 	 * @return The created thread.
 	 */
-	Thread create(String title, Board board, User user, ArrayList<Reply> replies);
+	Thread create(String title, Board board, User user, List<Reply> replies);
 
 	/**
 	 * Creates a thread.
@@ -81,14 +81,14 @@ public interface IThreadService {
 	 * @param replies The replies of the thread.
 	 * @return The updated thread.
 	 */
-	Thread update(int ID, String title, Board board, User user, ArrayList<Reply> replies);
+	Thread update(int ID, String title, Board board, User user, List<Reply> replies);
 
 	/**
 	 * Lists all threads.
 	 *
 	 * @return A list of all threads.
 	 */
-	ArrayList<Thread> list();
+	List<Thread> list();
 
 	/**
 	 * Finds a thread by its ID.

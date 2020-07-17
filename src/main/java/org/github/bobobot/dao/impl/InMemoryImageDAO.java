@@ -4,10 +4,11 @@ import org.github.bobobot.dao.IImageDAO;
 import org.github.bobobot.entities.Image;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 public class InMemoryImageDAO implements IImageDAO {
-	ArrayList<Image> memory = new ArrayList<>();
+	List<Image> memory = new ArrayList<>();
 
 	@Override
 	public Image create(Image image) {

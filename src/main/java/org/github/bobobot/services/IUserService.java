@@ -3,8 +3,7 @@ package org.github.bobobot.services;
 import org.github.bobobot.entities.*;
 import org.github.bobobot.entities.Thread;
 
-import java.util.ArrayList;
-import java.util.Optional;
+import java.util.List;
 
 public interface IUserService {
 	//TODO: Jelszóhash helyett ez még csak jelszót kapjon
@@ -30,7 +29,7 @@ public interface IUserService {
 	 * @param voteNotifications The vote notifications this user has.
 	 * @return The created user.
 	 */
-	User create(boolean isAdmin, String name, String email, String passwordHash, ArrayList<Thread> threads, ArrayList<Reply> replies, ArrayList<CommentNotification> commentNotifications, ArrayList<VoteNotification> voteNotifications);
+	User create(boolean isAdmin, String name, String email, String passwordHash, List<Thread> threads, List<Reply> replies, List<CommentNotification> commentNotifications, List<VoteNotification> voteNotifications);
 
 	/**
 	 * Updates a user
@@ -65,14 +64,14 @@ public interface IUserService {
 	 * @param voteNotifications The vote notifications this user has.
 	 * @return The updated user.
 	 */
-	User update(int ID, boolean isAdmin, String name, String email, String passwordHash, ArrayList<Thread> threads, ArrayList<Reply> replies, ArrayList<CommentNotification> commentNotifications, ArrayList<VoteNotification> voteNotifications);
+	User update(int ID, boolean isAdmin, String name, String email, String passwordHash, List<Thread> threads, List<Reply> replies, List<CommentNotification> commentNotifications, List<VoteNotification> voteNotifications);
 
 	/**
 	 * Lists all users.
 	 *
 	 * @return The list of all users.
 	 */
-	ArrayList<User> list();
+	List<User> list();
 
 	/**
 	 * Finds a user by their ID.

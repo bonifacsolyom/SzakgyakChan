@@ -4,10 +4,11 @@ import org.github.bobobot.dao.IUserDAO;
 import org.github.bobobot.entities.User;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 public class InMemoryUserDAO implements IUserDAO {
-	ArrayList<User> memory = new ArrayList<>();
+	List<User> memory = new ArrayList<>();
 
 	@Override
 	public User create(User user) {
@@ -60,7 +61,7 @@ public class InMemoryUserDAO implements IUserDAO {
 	}
 
 	@Override
-	public ArrayList<User> list() {
+	public List<User> list() {
 		return memory;
 	}
 

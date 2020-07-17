@@ -2,7 +2,7 @@ package org.github.bobobot.dao;
 
 import org.github.bobobot.entities.Board;
 
-import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 /**
@@ -47,7 +47,7 @@ public interface IBoardDAO {
 	 *
 	 * @return list of all existing boards.
 	 */
-	ArrayList<Board> list();
+	List<Board> list();
 
 	/**
 	 * Deletes a board.

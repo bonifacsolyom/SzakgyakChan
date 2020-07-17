@@ -4,10 +4,11 @@ import org.github.bobobot.dao.IBoardDAO;
 import org.github.bobobot.entities.Board;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 public class InMemoryBoardDAO implements IBoardDAO {
-	ArrayList<Board> memory = new ArrayList<>();
+	List<Board> memory = new ArrayList<>();
 
 	@Override
 	public Board create(Board board) {
@@ -48,7 +49,7 @@ public class InMemoryBoardDAO implements IBoardDAO {
 	}
 
 	@Override
-	public ArrayList<Board> list() {
+	public List<Board> list() {
 		return memory;
 	}
 

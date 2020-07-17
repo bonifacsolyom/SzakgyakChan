@@ -2,7 +2,7 @@ package org.github.bobobot.dao;
 
 import org.github.bobobot.entities.User;
 
-import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 public interface IUserDAO {
@@ -50,7 +50,7 @@ public interface IUserDAO {
 	 * Returns a list of all users
 	 * @return A list of all users
 	 */
-	ArrayList<User> list();
+	List<User> list();
 
 	/**
 	 * Deletes a user.

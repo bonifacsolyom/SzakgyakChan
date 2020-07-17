@@ -2,7 +2,7 @@ package org.github.bobobot.dao;
 
 import org.github.bobobot.entities.CommentNotification;
 
-import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 public interface ICommentNotificationDAO {
@@ -35,7 +35,7 @@ public interface ICommentNotificationDAO {
 	 *
 	 * @return A list of all existing notifications.
 	 */
-	ArrayList<CommentNotification> list();
+	List<CommentNotification> list();
 
 	/**
 	 * Deletes a notification.

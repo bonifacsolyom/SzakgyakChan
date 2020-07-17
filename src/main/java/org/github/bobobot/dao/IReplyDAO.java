@@ -3,7 +3,7 @@ package org.github.bobobot.dao;
 import org.github.bobobot.entities.Reply;
 import org.github.bobobot.entities.Thread;
 
-import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 /**
@@ -41,14 +41,14 @@ public interface IReplyDAO {
 	 * @param thread The thread of the reply to be selected
 	 * @return The selected reply, wrapped in an optional.
 	 */
-	ArrayList<Reply> selectByThread(Thread thread);
+	List<Reply> selectByThread(Thread thread);
 
 	/**
 	 * Lists all replies.
 	 *
 	 * @return A list of all replies.
 	 */
-	ArrayList<Reply> list();
+	List<Reply> list();
 
 	/**
 	 * Deletes a reply.

@@ -1,10 +1,8 @@
 package org.github.bobobot.services;
 
-import org.github.bobobot.dao.IBoardDAO;
 import org.github.bobobot.entities.Board;
 
-import java.util.ArrayList;
-import java.util.Optional;
+import java.util.List;
 
 public interface IBoardService {
 
@@ -31,7 +29,7 @@ public interface IBoardService {
 	 *
 	 * @return list of all existing boards.
 	 */
-	ArrayList<Board> list();
+	List<Board> list();
 
 	/**
 	 * Finds a board by its ID.

@@ -10,7 +10,7 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 
 public class InMemoryReplyDAO implements IReplyDAO {
-	ArrayList<Reply> memory = new ArrayList<>();
+	List<Reply> memory = new ArrayList<>();
 
 	@Override
 	public Reply create(Reply reply) {
@@ -44,7 +44,7 @@ public class InMemoryReplyDAO implements IReplyDAO {
 	}
 
 	@Override
-	public ArrayList<Reply> selectByThread(Thread thread) {
+	public List<Reply> selectByThread(Thread thread) {
 		List<Reply> replies = memory.stream()
 				.filter(r -> r.getThread().equals(thread))
 				.collect(Collectors.toList());
@@ -52,7 +52,7 @@ public class InMemoryReplyDAO implements IReplyDAO {
 	}
 
 	@Override
-	public ArrayList<Reply> list() {
+	public List<Reply> list() {
 		return memory;
 	}
 

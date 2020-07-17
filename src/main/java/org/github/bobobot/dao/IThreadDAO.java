@@ -2,7 +2,7 @@ package org.github.bobobot.dao;
 
 import org.github.bobobot.entities.Thread;
 
-import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 /**
@@ -38,7 +38,7 @@ public interface IThreadDAO {
 	 *
 	 * @return A list of all existing threads.
 	 */
-	ArrayList<Thread> list();
+	List<Thread> list();
 
 	/**
 	 * Deletes a thread.

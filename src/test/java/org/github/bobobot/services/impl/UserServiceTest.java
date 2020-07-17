@@ -8,6 +8,7 @@ import org.github.bobobot.entities.User;
 import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import static org.assertj.core.api.Assertions.*;
 import static org.github.bobobot.services.impl.TestHelperUtils.createDummyUser;
@@ -49,7 +50,7 @@ class UserServiceTest {
 		service.create(true, "tesztNev1", "tesztEmail1@teszt.com", "tesztJelszo1");
 		service.create(true, "tesztNev2", "tesztEmail2@teszt.com", "tesztJelszo2");
 
-		ArrayList<User> userList = service.list();
+		List<User> userList = service.list();
 
 		assertThat(userList.get(0)).isEqualTo(user1);
 		assertThat(userList.get(1)).isEqualTo(user2);

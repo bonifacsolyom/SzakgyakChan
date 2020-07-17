@@ -1,19 +1,12 @@
 package org.github.bobobot.services.impl;
 
-import org.apache.commons.validator.Validator;
-import org.apache.commons.validator.ValidatorResources;
 import org.apache.commons.validator.routines.EmailValidator;
 import org.github.bobobot.dao.IUserDAO;
-import org.github.bobobot.dao.impl.InMemoryBoardDAO;
-import org.github.bobobot.dao.impl.InMemoryUserDAO;
 import org.github.bobobot.entities.*;
 import org.github.bobobot.entities.Thread;
 import org.github.bobobot.services.IUserService;
-import org.xml.sax.SAXException;
 
-import javax.xml.stream.events.Comment;
-import java.io.IOException;
-import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 public class UserService implements IUserService {
@@ -36,7 +29,7 @@ public class UserService implements IUserService {
 	}
 
 	@Override
-	public User create(boolean isAdmin, String name, String email, String passwordHash, ArrayList<Thread> threads, ArrayList<Reply> replies, ArrayList<CommentNotification> commentNotifications, ArrayList<VoteNotification> voteNotifications) {
+	public User create(boolean isAdmin, String name, String email, String passwordHash, List<Thread> threads, List<Reply> replies, List<CommentNotification> commentNotifications, List<VoteNotification> voteNotifications) {
 		return create(new User(-1, isAdmin, name, email, passwordHash, threads, replies, commentNotifications, voteNotifications));
 	}
 
@@ -59,12 +52,12 @@ public class UserService implements IUserService {
 	}
 
 	@Override
-	public User update(int ID, boolean isAdmin, String name, String email, String passwordHash, ArrayList<Thread> threads, ArrayList<Reply> replies, ArrayList<CommentNotification> commentNotifications, ArrayList<VoteNotification> voteNotifications) {
+	public User update(int ID, boolean isAdmin, String name, String email, String passwordHash, List<Thread> threads, List<Reply> replies, List<CommentNotification> commentNotifications, List<VoteNotification> voteNotifications) {
 		return update(new User(ID, isAdmin, name, email, passwordHash, threads, replies, commentNotifications, voteNotifications));
 	}
 
 	@Override
-	public ArrayList<User> list() {
+	public List<User> list() {
 		return dao.list();
 	}
 

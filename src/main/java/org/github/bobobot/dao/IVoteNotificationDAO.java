@@ -2,7 +2,7 @@ package org.github.bobobot.dao;
 
 import org.github.bobobot.entities.VoteNotification;
 
-import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 public interface IVoteNotificationDAO {
@@ -36,7 +36,7 @@ public interface IVoteNotificationDAO {
 	 *
 	 * @return A list of all existing notifications.
 	 */
-	ArrayList<VoteNotification> list();
+	List<VoteNotification> list();
 
 	/**
 	 * Deletes a notification.

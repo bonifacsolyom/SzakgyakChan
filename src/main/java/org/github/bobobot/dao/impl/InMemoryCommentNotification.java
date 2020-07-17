@@ -4,10 +4,11 @@ import org.github.bobobot.dao.ICommentNotificationDAO;
 import org.github.bobobot.entities.CommentNotification;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 public class InMemoryCommentNotification implements ICommentNotificationDAO {
-	ArrayList<CommentNotification> memory = new ArrayList<>();
+	List<CommentNotification> memory = new ArrayList<>();
 
 	@Override
 	public CommentNotification create(CommentNotification notification) {
@@ -39,7 +40,7 @@ public class InMemoryCommentNotification implements ICommentNotificationDAO {
 	}
 
 	@Override
-	public ArrayList<CommentNotification> list() {
+	public List<CommentNotification> list() {
 		return memory;
 	}
 

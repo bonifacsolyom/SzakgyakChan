@@ -12,12 +12,12 @@ public class User {
 	String name;
 	String email;
 	String passwordHash;
-	ArrayList<Thread> threads = new ArrayList<>();
-	ArrayList<Reply> replies = new ArrayList<>();
-	ArrayList<CommentNotification> commentNotifications = new ArrayList<>();
-	ArrayList<VoteNotification> voteNotifications = new ArrayList<>();
+	List<Thread> threads = new ArrayList<>();
+	List<Reply> replies = new ArrayList<>();
+	List<CommentNotification> commentNotifications = new ArrayList<>();
+	List<VoteNotification> voteNotifications = new ArrayList<>();
 
-	public User(int ID, boolean isAdmin, String name, String email, String passwordHash, ArrayList<Thread> threads, ArrayList<Reply> replies, ArrayList<CommentNotification> commentNotifications, ArrayList<VoteNotification> voteNotifications) {
+	public User(int ID, boolean isAdmin, String name, String email, String passwordHash, List<Thread> threads, List<Reply> replies, List<CommentNotification> commentNotifications, List<VoteNotification> voteNotifications) {
 		this.ID = ID;
 		this.isAdmin = isAdmin;
 		this.name = name;
@@ -62,11 +62,11 @@ public class User {
 		this.ID = ID;
 	}
 
-	public ArrayList<CommentNotification> getCommentNotifications() {
+	public List<CommentNotification> getCommentNotifications() {
 		return commentNotifications;
 	}
 
-	public void setCommentNotifications(ArrayList<CommentNotification> commentNotifications) {
+	public void setCommentNotifications(List<CommentNotification> commentNotifications) {
 		this.commentNotifications = commentNotifications;
 	}
 
@@ -74,11 +74,11 @@ public class User {
 		this.commentNotifications.add(notification);
 	}
 
-	public ArrayList<VoteNotification> getVoteNotifications() {
+	public List<VoteNotification> getVoteNotifications() {
 		return voteNotifications;
 	}
 
-	public void setVoteNotifications(ArrayList<VoteNotification> voteNotifications) {
+	public void setVoteNotifications(List<VoteNotification> voteNotifications) {
 		this.voteNotifications = voteNotifications;
 	}
 
@@ -86,10 +86,10 @@ public class User {
 		this.voteNotifications.add(notification);
 	}
 
-	public ArrayList<Notification> getNotifications() {
+	public List<Notification> getNotifications() {
 		return Stream.of(commentNotifications, voteNotifications)
 				.flatMap(x -> x.stream())
-				.collect(Collectors.toCollection(ArrayList::new));
+				.collect(Collectors.toList());
 	}
 
 	public boolean isAdmin() {
@@ -100,11 +100,11 @@ public class User {
 		isAdmin = admin;
 	}
 
-	public ArrayList<Thread> getThreads() {
+	public List<Thread> getThreads() {
 		return threads;
 	}
 
-	public void setThreads(ArrayList<Thread> threads) {
+	public void setThreads(List<Thread> threads) {
 		this.threads = threads;
 	}
 
@@ -112,11 +112,11 @@ public class User {
 		this.threads.add(thread);
 	}
 
-	public ArrayList<Reply> getReplies() {
+	public List<Reply> getReplies() {
 		return replies;
 	}
 
-	public void setReplies(ArrayList<Reply> replies) {
+	public void setReplies(List<Reply> replies) {
 		this.replies = replies;
 	}
 

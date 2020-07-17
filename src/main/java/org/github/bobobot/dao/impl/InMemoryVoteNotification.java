@@ -4,10 +4,11 @@ import org.github.bobobot.dao.IVoteNotificationDAO;
 import org.github.bobobot.entities.VoteNotification;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 public class InMemoryVoteNotification implements IVoteNotificationDAO {
-	ArrayList<VoteNotification> memory = new ArrayList<>();
+	List<VoteNotification> memory = new ArrayList<>();
 
 	@Override
 	public VoteNotification create(VoteNotification notification) {
@@ -39,7 +40,7 @@ public class InMemoryVoteNotification implements IVoteNotificationDAO {
 	}
 
 	@Override
-	public ArrayList<VoteNotification> list() {
+	public List<VoteNotification> list() {
 		return memory;
 	}
 

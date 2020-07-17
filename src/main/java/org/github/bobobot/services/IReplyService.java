@@ -5,7 +5,7 @@ import org.github.bobobot.entities.Thread;
 import org.github.bobobot.entities.VoteNotification.VoteType;
 
 import java.time.LocalDateTime;
-import java.util.ArrayList;
+import java.util.List;
 
 public interface IReplyService {
 
@@ -55,7 +55,7 @@ public interface IReplyService {
 	 *
 	 * @return A list of all replies.
 	 */
-	ArrayList<Reply> list();
+	List<Reply> list();
 
 	/**
 	 * Finds a reply by its ID.
@@ -71,7 +71,7 @@ public interface IReplyService {
 	 * @param thread The thread the replies belong to
 	 * @return All replies that belong to the thread
 	 */
-	ArrayList<Reply> listByThread(Thread thread);
+	List<Reply> listByThread(Thread thread);
 
 	/**
 	 * Votes on a reply.
