@@ -23,18 +23,19 @@ public class UserService implements IUserService {
 	}
 
 	@Override
-	public User create(User tempUser) {
+	public User register(User tempUser) {
 		validateEmail(tempUser.getEmail());
 		return dao.create(tempUser);
 	}
 
 	@Override
-	public User create(boolean isAdmin, String name, String email, String passwordHash, List<Thread> threads, List<Reply> replies, List<CommentNotification> commentNotifications, List<VoteNotification> voteNotifications) {
-		return create(new User(-1, isAdmin, name, email, passwordHash, threads, replies, commentNotifications, voteNotifications));
+	public User register(boolean isAdmin, String name, String email, String passwordHash, List<Thread> threads, List<Reply> replies, List<CommentNotification> commentNotifications, List<VoteNotification> voteNotifications) {
+		return register(new User(-1, isAdmin, name, email, passwordHash, threads, replies, commentNotifications, voteNotifications));
 	}
 
-	public User create(boolean isAdmin, String name, String email, String passwordHash) {
-		return create(new User(-1, isAdmin, name, email, passwordHash));
+	@Override
+	public User register(boolean isAdmin, String name, String email, String passwordHash) {
+		return register(new User(-1, isAdmin, name, email, passwordHash));
 
 	}
 

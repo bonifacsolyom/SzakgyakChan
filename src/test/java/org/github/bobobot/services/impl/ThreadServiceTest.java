@@ -3,17 +3,13 @@ package org.github.bobobot.services.impl;
 import org.github.bobobot.dao.impl.InMemoryThreadDAO;
 import org.github.bobobot.dao.impl.InMemoryUserDAO;
 import org.github.bobobot.entities.Board;
-import org.github.bobobot.entities.Reply;
 import org.github.bobobot.entities.Thread;
 import org.github.bobobot.entities.User;
 import org.junit.jupiter.api.Test;
 
-import java.util.ArrayList;
-
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatIllegalArgumentException;
 import static org.github.bobobot.services.impl.TestHelperUtils.*;
-import static org.junit.jupiter.api.Assertions.*;
 
 class ThreadServiceTest {
 
@@ -35,7 +31,7 @@ class ThreadServiceTest {
 
 		User originalUser = createDummyUser();
 		Thread originalThread = createDummyThread(originalUser);
-		userService.create(originalUser);
+		userService.register(originalUser);
 		User user = userService.findByUsername("tesztNev");
 		threadService.create(originalThread);
 
@@ -49,7 +45,7 @@ class ThreadServiceTest {
 
 		User originalUser = createDummyUser();
 		Thread originalThread = createDummyThread(originalUser);
-		userService.create(originalUser);
+		userService.register(originalUser);
 		threadService.create(originalThread);
 		Thread thread = threadService.findById(0);
 

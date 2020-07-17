@@ -9,15 +9,16 @@ public interface IUserService {
 	//TODO: Jelszóhash helyett ez még csak jelszót kapjon
 
 	/**
-	 * Creates a user
+	 * Creates a user.
 	 *
 	 * @param tempUser The user to be created.
 	 * @return The created user.
 	 */
-	User create(User tempUser);
+	User register(User tempUser);
 
 	/**
-	 * Creates a user
+	 * Creates a user. Consider using this method instead:
+	 * @see IUserService#register(boolean, String, String, String)
 	 *
 	 * @param isAdmin       Specifies whether a user is an administrator or not.
 	 * @param name          The name of the user.
@@ -29,10 +30,21 @@ public interface IUserService {
 	 * @param voteNotifications The vote notifications this user has.
 	 * @return The created user.
 	 */
-	User create(boolean isAdmin, String name, String email, String passwordHash, List<Thread> threads, List<Reply> replies, List<CommentNotification> commentNotifications, List<VoteNotification> voteNotifications);
+	User register(boolean isAdmin, String name, String email, String passwordHash, List<Thread> threads, List<Reply> replies, List<CommentNotification> commentNotifications, List<VoteNotification> voteNotifications);
 
 	/**
-	 * Updates a user
+	 * Creates a user.
+	 *
+	 * @param isAdmin       Specifies whether a user is an administrator or not.
+	 * @param name          The name of the user.
+	 * @param email         The email of the user.
+	 * @param passwordHash  The password hash of the user.
+	 * @return The created user.
+	 */
+	User register(boolean isAdmin, String name, String email, String passwordHash);
+
+	/**
+	 * Updates a user.
 	 *
 	 * @param tempUser The user to be updated.
 	 * @return The updated user.
@@ -40,7 +52,7 @@ public interface IUserService {
 	User update(User tempUser);
 
 	/**
-	 * Updates a user
+	 * Updates a user.
 	 *
 	 * @param ID            The ID of the user to be updated.
 	 * @param isAdmin       Specifies whether a user is an administrator or not.
@@ -51,7 +63,7 @@ public interface IUserService {
 	User update(int ID, boolean isAdmin, String name, String email, String passwordHash);
 
 	/**
-	 * Updates a user
+	 * Updates a user.
 	 *
 	 * @param ID            The ID of the user to be updated.
 	 * @param isAdmin       Specifies whether a user is an administrator or not.

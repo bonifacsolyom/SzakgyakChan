@@ -1,13 +1,14 @@
 package org.github.bobobot.dao.impl;
 
-import org.github.bobobot.dao.ICommentNotificationDAO;
+import org.github.bobobot.dao.INotificationDAO;
 import org.github.bobobot.entities.CommentNotification;
+import org.github.bobobot.entities.User;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-public class InMemoryCommentNotification implements ICommentNotificationDAO {
+public class InMemoryCommentNotificationDAO implements INotificationDAO<CommentNotification> {
 	List<CommentNotification> memory = new ArrayList<>();
 
 	@Override
@@ -32,11 +33,16 @@ public class InMemoryCommentNotification implements ICommentNotificationDAO {
 	}
 
 	@Override
-	public Optional<CommentNotification> select(int ID) {
+	public Optional<CommentNotification> selectByID(int ID) {
 		Optional<CommentNotification> notification = memory.stream()
 				.filter(n -> n.getID() == ID)
 				.findFirst();
 		return notification;
+	}
+
+	@Override
+	public List<CommentNotification> selectByUser(User user) {
+		return null;
 	}
 
 	@Override

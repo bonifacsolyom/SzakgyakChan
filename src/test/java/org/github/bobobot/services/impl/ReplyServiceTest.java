@@ -7,6 +7,7 @@ import org.github.bobobot.entities.VoteNotification;
 import org.github.bobobot.services.IReplyService;
 import org.junit.jupiter.api.Test;
 
+import static org.assertj.core.api.Assertions.assertThatIllegalArgumentException;
 import static org.github.bobobot.services.impl.TestHelperUtils.*;
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -55,8 +56,9 @@ class ReplyServiceTest {
 		Reply reply2 = createDummyReply(thread);
 
 		service.post(reply1);
-		service.post(reply2);
+		assertThat(reply1.getUser().getNotifications()).hasSize(0);
 
+		service.post(reply2);
 		assertThat(reply1.getUser().getNotifications()).hasSize(1);
 	}
 
@@ -72,6 +74,7 @@ class ReplyServiceTest {
 		assertThat(reply.getVotes()).isEqualTo(1);
 	}
 
+	@Test
 	void deleteReply() {
 		IReplyService service = createReplyService();
 		Reply reply = createDummyReply();
@@ -80,7 +83,13 @@ class ReplyServiceTest {
 		assertThat(service.list().size()).isEqualTo(1);
 		service.delete(0);
 		assertThat(service.list().size()).isEqualTo(0);
+	}
 
+	@Test
+	void deleteReplyButDoesntExist() {
+		IReplyService service = createReplyService();
+
+		assertThatIllegalArgumentException().isThrownBy(() -> service.delete(0));
 	}
 
 }

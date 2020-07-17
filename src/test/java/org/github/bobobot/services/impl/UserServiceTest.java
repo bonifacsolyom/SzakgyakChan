@@ -1,18 +1,13 @@
 package org.github.bobobot.services.impl;
 
 import org.github.bobobot.dao.impl.InMemoryUserDAO;
-import org.github.bobobot.entities.Notification;
-import org.github.bobobot.entities.Thread;
-import org.github.bobobot.entities.Reply;
 import org.github.bobobot.entities.User;
 import org.junit.jupiter.api.Test;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.*;
 import static org.github.bobobot.services.impl.TestHelperUtils.createDummyUser;
-import static org.junit.jupiter.api.Assertions.*;
 
 class UserServiceTest {
 
@@ -22,7 +17,7 @@ class UserServiceTest {
 
 		User originalUser = createDummyUser();
 
-		service.create(originalUser);
+		service.register(originalUser);
 		User user = service.findByUsername("tesztNev");
 
 		assertThat(user).isEqualTo(originalUser);
@@ -32,7 +27,7 @@ class UserServiceTest {
 	void updateUserEmail() {
 		UserService service = new UserService(new InMemoryUserDAO());
 
-		User user = service.create(createDummyUser());
+		User user = service.register(createDummyUser());
 		int userID = user.getID();
 		service.update(userID, true, "tesztNev", "tesztEmail2@teszt.com", "tesztJelszo");
 		user = service.findById(userID);
@@ -47,8 +42,8 @@ class UserServiceTest {
 		User user1 = new User(0, true, "tesztNev1", "tesztEmail1@teszt.com", "tesztJelszo1");
 		User user2 = new User(1, true, "tesztNev2", "tesztEmail2@teszt.com", "tesztJelszo2");
 
-		service.create(true, "tesztNev1", "tesztEmail1@teszt.com", "tesztJelszo1");
-		service.create(true, "tesztNev2", "tesztEmail2@teszt.com", "tesztJelszo2");
+		service.register(true, "tesztNev1", "tesztEmail1@teszt.com", "tesztJelszo1");
+		service.register(true, "tesztNev2", "tesztEmail2@teszt.com", "tesztJelszo2");
 
 		List<User> userList = service.list();
 
@@ -61,7 +56,7 @@ class UserServiceTest {
 		UserService service = new UserService(new InMemoryUserDAO());
 		User user = createDummyUser();
 
-		assertThatCode(() -> service.create(user)).doesNotThrowAnyException();
+		assertThatCode(() -> service.register(user)).doesNotThrowAnyException();
 	}
 
 	@Test
@@ -69,9 +64,8 @@ class UserServiceTest {
 		UserService service = new UserService(new InMemoryUserDAO());
 		User user = new User(0, true, "tesztNev", "tesztEmail", "tesztJelszo");
 
-		assertThatIllegalArgumentException().isThrownBy(() -> service.create(user));
+		assertThatIllegalArgumentException().isThrownBy(() -> service.register(user));
 	}
-
 
 
 }

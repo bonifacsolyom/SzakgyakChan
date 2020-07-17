@@ -1,13 +1,14 @@
 package org.github.bobobot.dao.impl;
 
-import org.github.bobobot.dao.IVoteNotificationDAO;
+import org.github.bobobot.dao.INotificationDAO;
+import org.github.bobobot.entities.User;
 import org.github.bobobot.entities.VoteNotification;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-public class InMemoryVoteNotification implements IVoteNotificationDAO {
+public class InMemoryVoteNotificationDAO implements INotificationDAO<VoteNotification> {
 	List<VoteNotification> memory = new ArrayList<>();
 
 	@Override
@@ -32,12 +33,18 @@ public class InMemoryVoteNotification implements IVoteNotificationDAO {
 	}
 
 	@Override
-	public Optional<VoteNotification> select(int ID) {
+	public Optional<VoteNotification> selectByID(int ID) {
 		Optional<VoteNotification> notification = memory.stream()
 				.filter(n -> n.getID() == ID)
 				.findFirst();
 		return notification;
 	}
+
+	@Override
+	public List<VoteNotification> selectByUser(User user) {
+		return null;
+	}
+
 
 	@Override
 	public List<VoteNotification> list() {

@@ -1,8 +1,7 @@
 package org.github.bobobot.services.impl;
 
-import org.github.bobobot.dao.ICommentNotificationDAO;
+import org.github.bobobot.dao.INotificationDAO;
 import org.github.bobobot.dao.IReplyDAO;
-import org.github.bobobot.dao.IVoteNotificationDAO;
 import org.github.bobobot.entities.*;
 import org.github.bobobot.entities.Thread;
 import org.github.bobobot.entities.VoteNotification.VoteType;
@@ -15,10 +14,10 @@ import java.util.Optional;
 public class ReplyService implements IReplyService {
 
 	private final IReplyDAO replyDAO;
-	private final ICommentNotificationDAO commentDAO;
-	private final IVoteNotificationDAO voteDAO;
+	private final INotificationDAO<CommentNotification> commentDAO;
+	private final INotificationDAO<VoteNotification> voteDAO;
 
-	public ReplyService(IReplyDAO replyDAO, ICommentNotificationDAO commentDAO, IVoteNotificationDAO voteDAO) {
+	public ReplyService(IReplyDAO replyDAO, INotificationDAO<CommentNotification> commentDAO, INotificationDAO<VoteNotification> voteDAO) {
 		this.replyDAO = replyDAO;
 		this.commentDAO = commentDAO;
 		this.voteDAO = voteDAO;
@@ -34,7 +33,7 @@ public class ReplyService implements IReplyService {
 
 	private void notifyReplies(Reply reply) {
 		for (Reply r : reply.getThread().getReplies()) {
-			CommentNotification notification = commentDAO.create(new CommentNotification(-1, reply.getContent(), false));
+			CommentNotification notification = commentDAO.create(new CommentNotification(-1, false, r.getUser(), reply.getContent()));
 			r.getUser().addCommentNotification(notification);
 		}
 

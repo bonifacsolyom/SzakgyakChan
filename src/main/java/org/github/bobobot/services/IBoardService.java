@@ -8,11 +8,25 @@ public interface IBoardService {
 
 	/**
 	 * Creates a board
+	 * @param board The board to be created.
+	 * @return The created board.
+	 */
+	Board create(Board board);
+
+	/**
+	 * Creates a board
 	 * @param shortName The short name of the board.
 	 * @param longName  The longer description of the board - should only be a couple words long.
 	 * @return The created board.
 	 */
 	Board create(String shortName, String longName);
+
+	/**
+	 * Updates a board
+	 * @param board The board to be updated.
+	 * @return The updated board.
+	 */
+	Board update(Board board);
 
 
 	/**

@@ -16,16 +16,25 @@ public class BoardService implements IBoardService {
 	}
 
 	@Override
-	public Board create(String shortName, String longName) {
-		Board board = new Board(-1, shortName, longName);
+	public Board create(Board board) {
 		return dao.create(board);
 	}
 
 	@Override
-	public Board update(int ID, String shortName, String longName) {
-		Optional<Board> board = dao.update(new Board(ID, shortName, longName));
+	public Board create(String shortName, String longName) {
+		return create(new Board(-1, shortName, longName));
+	}
+
+	@Override
+	public Board update(Board tempBoard) {
+		Optional<Board> board = dao.update(tempBoard);
 		if (!board.isPresent()) { throw new IllegalArgumentException("Board was not found!"); }
 		return board.get();
+	}
+
+	@Override
+	public Board update(int ID, String shortName, String longName) {
+		return update(new Board(ID, shortName, longName));
 	}
 
 	@Override

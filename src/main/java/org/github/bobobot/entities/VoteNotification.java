@@ -5,9 +5,9 @@ import java.util.Objects;
 public class VoteNotification extends Notification {
 	VoteType voteType;
 
-	public VoteNotification(VoteType voteType, boolean read) {
+	public VoteNotification(int ID, boolean read, User user, VoteType voteType) {
+		super(ID, read, user);
 		this.voteType = voteType;
-		this.read = read;
 	}
 
 	public VoteType getVoteType() {
@@ -22,13 +22,14 @@ public class VoteNotification extends Notification {
 	public boolean equals(Object o) {
 		if (this == o) return true;
 		if (o == null || getClass() != o.getClass()) return false;
+		if (!super.equals(o)) return false;
 		VoteNotification that = (VoteNotification) o;
 		return voteType == that.voteType;
 	}
 
 	@Override
 	public int hashCode() {
-		return Objects.hash(voteType);
+		return Objects.hash(super.hashCode(), voteType);
 	}
 
 	public enum VoteType {

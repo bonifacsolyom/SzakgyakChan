@@ -1,19 +1,18 @@
 package org.github.bobobot.dao;
 
-import org.github.bobobot.entities.VoteNotification;
+import org.github.bobobot.entities.User;
 
 import java.util.List;
 import java.util.Optional;
 
-public interface IVoteNotificationDAO {
-
+public interface INotificationDAO<GenericNotification> {
 	/**
 	 * Creates a notification.
 	 *
 	 * @param notification The notification to be created.
 	 * @return The created notification.
 	 */
-	VoteNotification create(VoteNotification notification);
+	GenericNotification create(GenericNotification notification);
 
 	/**
 	 * Updates a notification.
@@ -21,22 +20,30 @@ public interface IVoteNotificationDAO {
 	 * @param notification The notification to be updated.
 	 * @return The updated notification.
 	 */
-	Optional<VoteNotification> update(VoteNotification notification);
+	Optional<GenericNotification> update(GenericNotification notification);
 
 	/**
-	 * Selects a notiication by its ID.
+	 * Selects a notification by its ID.
 	 *
 	 * @param ID The ID of the notification to be selected.
 	 * @return The selected notification, wrapped in an optional.
 	 */
-	Optional<VoteNotification> select(int ID);
+	Optional<GenericNotification> selectByID(int ID);
+
+	/**
+	 * Selects all of a user's notifications.
+	 *
+	 * @param user The user of whom we want to get the notifications of.
+	 * @return A list of all the user's notifications.
+	 */
+	List<GenericNotification> selectByUser(User user);
 
 	/**
 	 * Lists all existing notifications.
 	 *
 	 * @return A list of all existing notifications.
 	 */
-	List<VoteNotification> list();
+	List<GenericNotification> list();
 
 	/**
 	 * Deletes a notification.
@@ -44,5 +51,5 @@ public interface IVoteNotificationDAO {
 	 * @param ID The ID of the notification to be deleted.
 	 * @return The deleted norification, wrapped in an optional.
 	 */
-	Optional<VoteNotification> delete(int ID);
+	Optional<GenericNotification> delete(int ID);
 }

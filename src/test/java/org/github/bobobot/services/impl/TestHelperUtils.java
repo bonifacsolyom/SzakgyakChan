@@ -1,18 +1,17 @@
 package org.github.bobobot.services.impl;
 
-import org.github.bobobot.dao.impl.InMemoryCommentNotification;
+import org.github.bobobot.dao.impl.InMemoryCommentNotificationDAO;
 import org.github.bobobot.dao.impl.InMemoryReplyDAO;
-import org.github.bobobot.dao.impl.InMemoryVoteNotification;
+import org.github.bobobot.dao.impl.InMemoryVoteNotificationDAO;
 import org.github.bobobot.entities.*;
 import org.github.bobobot.entities.Thread;
-import org.github.bobobot.services.IReplyService;
 
 import java.time.LocalDateTime;
 
 public class TestHelperUtils {
 
 	static ReplyService createReplyService() {
-		return new ReplyService(new InMemoryReplyDAO(), new InMemoryCommentNotification(), new InMemoryVoteNotification());
+		return new ReplyService(new InMemoryReplyDAO(), new InMemoryCommentNotificationDAO(), new InMemoryVoteNotificationDAO());
 	}
 
 	/**
@@ -73,6 +72,17 @@ public class TestHelperUtils {
 		return createDummyThread(createDummyBoard(), createDummyUser());
 	}
 
+	/**
+	 * Creates a dummy reply with the following details:<p>
+	 * ID: -1<p>
+	 * content: tesztContent<p>
+	 * date: 2020.04.20 8:00<p>
+	 * votes: 0<p>
+	 * image: Dummy image<p>
+	 * @param thread The thread of the reply
+	 * @param user The user of the reply
+	 * @return The newly created reply.
+	 */
 	static Reply createDummyReply(Thread thread, User user) {
 		return new Reply(-1,
 				"tesztContent",
@@ -81,20 +91,36 @@ public class TestHelperUtils {
 				createDummyImage(), thread, user);
 	}
 
+	/**
+	 * @see TestHelperUtils#createDummyReply(Thread, User)
+	 */
 	static Reply createDummyReply(User user) {
 		return createDummyReply(createDummyThread(), user);
 	}
 
 
+	/**
+	 * @see TestHelperUtils#createDummyReply(Thread, User)
+	 */
 	static Reply createDummyReply(Thread thread) {
 		return createDummyReply(thread, createDummyUser());
 	}
 
 
+	/**
+	 * @see TestHelperUtils#createDummyReply(Thread, User)
+	 */
 	static Reply createDummyReply() {
 		return createDummyReply(createDummyThread(), createDummyUser());
 	}
 
+	/**
+	 * Creates a dummy image with the following details:
+	 * ID: -1<p>
+	 * exists: false<p>
+	 * path: ""<p>
+	 * @return The newly created image.
+	 */
 	static Image createDummyImage() {
 		return new Image(-1, false, "");
 	}
