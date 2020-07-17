@@ -4,7 +4,6 @@ import org.github.bobobot.entities.*;
 import org.github.bobobot.entities.Thread;
 import org.github.bobobot.entities.VoteNotification.VoteType;
 
-import java.time.LocalDateTime;
 import java.util.List;
 
 public interface IReplyService {
@@ -21,13 +20,12 @@ public interface IReplyService {
 	 * Creates a reply.
 	 *
 	 * @param content The content of the reply.
-	 * @param date    The date of the reply.
 	 * @param votes   The summarized score of the reply.
 	 * @param thread  The thread the reply belongs to.
 	 * @param user
 	 * @return The created reply.
 	 */
-	Reply post(String content, LocalDateTime date, int votes, Image image, Thread thread, User user);
+	Reply post(String content, int votes, Image image, Thread thread, User user);
 
 	/**
 	 * Updates a reply.
@@ -42,13 +40,12 @@ public interface IReplyService {
 	 *
 	 * @param ID      The ID of the reply.
 	 * @param content The content of the reply.
-	 * @param date    The date of the reply.
 	 * @param votes   The summarized score of the reply.
 	 * @param thread  The thread the reply belongs to.
 	 * @param user
 	 * @return The updated reply.
 	 */
-	Reply update(int ID, String content, LocalDateTime date, int votes, Image image, Thread thread, User user);
+	Reply update(int ID, String content, int votes, Image image, Thread thread, User user);
 
 	/**
 	 * Lists all replies.

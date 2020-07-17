@@ -41,8 +41,8 @@ public class ReplyService implements IReplyService {
 	}
 
 	@Override
-	public Reply post(String content, LocalDateTime date, int votes, Image image, Thread thread, User user) {
-		return post(new Reply(-1, content, date, votes, image, thread, user));
+	public Reply post(String content, int votes, Image image, Thread thread, User user) {
+		return post(new Reply(-1, content, LocalDateTime.now(), votes, image, thread, user));
 	}
 
 	@Override
@@ -53,8 +53,8 @@ public class ReplyService implements IReplyService {
 	}
 
 	@Override
-	public Reply update(int ID, String content, LocalDateTime date, int votes, Image image, Thread thread, User user) {
-		return update(new Reply(ID, content, date, votes, image, thread, user));
+	public Reply update(int ID, String content, int votes, Image image, Thread thread, User user) {
+		return update(new Reply(ID, content, LocalDateTime.now(), votes, image, thread, user));
 	}
 
 	@Override
