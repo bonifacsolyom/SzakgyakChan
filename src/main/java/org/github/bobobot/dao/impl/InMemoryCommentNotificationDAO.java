@@ -11,7 +11,6 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 
 public class InMemoryCommentNotificationDAO extends InMemoryNotificationDAO<CommentNotification> {
-	List<CommentNotification> memory = new ArrayList<>();
 
 	@Override
 	public CommentNotification create(CommentNotification notification) {

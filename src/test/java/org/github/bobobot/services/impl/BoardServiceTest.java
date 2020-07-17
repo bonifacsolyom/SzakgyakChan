@@ -11,6 +11,7 @@ import org.mockito.Mockito;
 import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.assertThatIllegalArgumentException;
+import static org.github.bobobot.services.impl.TestHelperUtils.createBoardService;
 import static org.github.bobobot.services.impl.TestHelperUtils.createDummyBoard;
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -18,7 +19,7 @@ public class BoardServiceTest {
 
 	@Test
 	void createBoard() {
-		IBoardService service = new BoardService(new InMemoryBoardDAO());
+		IBoardService service = createBoardService();
 		Board originalBoard = createDummyBoard();
 
 		service.create(originalBoard);
@@ -29,12 +30,11 @@ public class BoardServiceTest {
 
 	@Test
 	void updateBoard() {
-		IBoardService service = new BoardService(new InMemoryBoardDAO());
+		IBoardService service = createBoardService();
 		Board originalBoard = createDummyBoard();
 
 		service.create(originalBoard);
 		service.update(0, "t1", "teszt board 1");
-
 		Board board = service.findById(0);
 
 		assertThat(board.getShortName()).isEqualTo("t1");
@@ -43,14 +43,14 @@ public class BoardServiceTest {
 
 	@Test
 	void updateBoardButDoesntExist() {
-		IBoardService service = new BoardService(new InMemoryBoardDAO());
+		IBoardService service = createBoardService();
 
 		assertThatIllegalArgumentException().isThrownBy(() -> service.update(createDummyBoard()));
 	}
 
 	@Test
 	void listAllBoards() {
-		IBoardService service = new BoardService(new InMemoryBoardDAO());
+		IBoardService service = createBoardService();
 		service.create(createDummyBoard());
 		service.create(createDummyBoard());
 

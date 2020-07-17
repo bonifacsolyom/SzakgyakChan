@@ -11,7 +11,6 @@ import java.util.stream.Collector;
 import java.util.stream.Collectors;
 
 public class InMemoryVoteNotificationDAO extends InMemoryNotificationDAO<VoteNotification> {
-	List<VoteNotification> memory = new ArrayList<>();
 
 	@Override
 	public VoteNotification create(VoteNotification notification) {

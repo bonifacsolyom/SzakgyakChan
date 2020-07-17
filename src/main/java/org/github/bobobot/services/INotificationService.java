@@ -29,6 +29,10 @@ public interface INotificationService {
 
 	VoteNotification findVoteNotificationByID(int ID);
 
+	List<CommentNotification> listCommentNotifications();
+
+	List<VoteNotification> listVoteNotifications();
+
 	List<Notification> getUsersNotifications(User user);
 
 	List<Notification> getUsersActiveNotifications(User user);

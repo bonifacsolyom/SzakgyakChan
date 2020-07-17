@@ -1,8 +1,6 @@
 package org.github.bobobot.services.impl;
 
-import org.github.bobobot.dao.impl.InMemoryCommentNotificationDAO;
-import org.github.bobobot.dao.impl.InMemoryReplyDAO;
-import org.github.bobobot.dao.impl.InMemoryVoteNotificationDAO;
+import org.github.bobobot.dao.impl.*;
 import org.github.bobobot.entities.*;
 import org.github.bobobot.entities.Thread;
 
@@ -12,6 +10,22 @@ public class TestHelperUtils {
 
 	static ReplyService createReplyService() {
 		return new ReplyService(new InMemoryReplyDAO(), new InMemoryCommentNotificationDAO(), new InMemoryVoteNotificationDAO());
+	}
+
+	static NotificationService createNotificationService() {
+		return new NotificationService(new InMemoryCommentNotificationDAO(), new InMemoryVoteNotificationDAO());
+	}
+
+	static UserService createUserService() {
+		return new UserService(new InMemoryUserDAO());
+	}
+
+	static BoardService createBoardService() {
+		return new BoardService(new InMemoryBoardDAO());
+	}
+
+	static ThreadService createThreadService() {
+		return new ThreadService(new InMemoryThreadDAO());
 	}
 
 	/**
@@ -33,6 +47,7 @@ public class TestHelperUtils {
 	 * ID: -1<p>
 	 * short name: t<p>
 	 * long name: teszt board<p>
+	 *
 	 * @return The newly created board
 	 */
 	static Board createDummyBoard() {
@@ -43,6 +58,7 @@ public class TestHelperUtils {
 	 * Creates a dummy thread for testing with the following details:<p>
 	 * ID: -1<p>
 	 * title: tesztTitle<p>
+	 *
 	 * @param board The thread's board
 	 * @param user The thread's user
 	 * @return The newly created thread
@@ -79,6 +95,7 @@ public class TestHelperUtils {
 	 * date: 2020.04.20 8:00<p>
 	 * votes: 0<p>
 	 * image: Dummy image<p>
+	 *
 	 * @param thread The thread of the reply
 	 * @param user The user of the reply
 	 * @return The newly created reply.
@@ -115,13 +132,54 @@ public class TestHelperUtils {
 	}
 
 	/**
-	 * Creates a dummy image with the following details:
+	 * Creates a dummy image with the following details:<p>
 	 * ID: -1<p>
 	 * exists: false<p>
 	 * path: ""<p>
+	 *
 	 * @return The newly created image.
 	 */
 	static Image createDummyImage() {
 		return new Image(-1, false, "");
+	}
+
+	/**
+	 * Creates a dummy comment notification with the following details:<p>
+	 * ID: -1<p>
+	 * read: false<p>
+	 * reply content: tesztContent<p>
+	 *
+	 * @param user The user that the notification belongs to
+	 * @return The newly created dummy comment notification.
+	 */
+	static CommentNotification createDummyCommentNotification(User user) {
+		return new CommentNotification(-1, false, user, "tesztContent");
+	}
+
+	/**
+	 * @see TestHelperUtils#createDummyCommentNotification(User)
+	 */
+	static CommentNotification createDummyCommentNotification() {
+		return createDummyCommentNotification(createDummyUser());
+	}
+
+	/**
+	 * Creates a dummy vote notification with the following details:<p>
+	 * ID: -1<p>
+	 * read: false<p>
+	 * vote type: UPVOTE<p>
+	 *
+	 * @param user The user that the notification belongs to
+	 * @return The newly created dummy vote notification
+	 */
+	static VoteNotification createDummyVoteNotification(User user) {
+		return new VoteNotification(-1, false, user, VoteNotification.VoteType.UPVOTE);
+	}
+
+	/**
+	 * @see TestHelperUtils#createDummyVoteNotification(User)
+	 */
+	static VoteNotification createDummyVoteNotification() {
+		return createDummyVoteNotification(createDummyUser());
 	}
 }

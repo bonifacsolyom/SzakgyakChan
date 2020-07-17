@@ -1,6 +1,7 @@
 package org.github.bobobot.services.impl;
 
 import org.github.bobobot.dao.INotificationDAO;
+import org.github.bobobot.dao.IUserDAO;
 import org.github.bobobot.dao.impl.InMemoryCommentNotificationDAO;
 import org.github.bobobot.dao.impl.InMemoryVoteNotificationDAO;
 import org.github.bobobot.entities.*;
@@ -11,11 +12,19 @@ import java.util.Optional;
 
 public class NotificationService implements INotificationService {
 
-	INotificationDAO<CommentNotification> commentDAO = new InMemoryCommentNotificationDAO();
-	INotificationDAO<VoteNotification> voteDAO = new InMemoryVoteNotificationDAO();
+	INotificationDAO<CommentNotification> commentDAO;
+	INotificationDAO<VoteNotification> voteDAO;
+	IUserDAO userDAO;
+
+	public NotificationService(INotificationDAO<CommentNotification> iCommentNotificationDAO, INotificationDAO<VoteNotification> iVoteNotificationDAO) {
+		this.commentDAO = iCommentNotificationDAO;
+		this.voteDAO = iVoteNotificationDAO;
+	}
 
 	@Override
 	public CommentNotification create(CommentNotification notification) {
+		//TODO: értesítések a userDAO-n keresztüli feltöltése itt
+		notification.getUser();
 		return commentDAO.create(notification);
 	}
 
@@ -70,6 +79,16 @@ public class NotificationService implements INotificationService {
 			Optional<VoteNotification> notification = voteDAO.selectByID(ID);
 			if (!notification.isPresent()) { throw new IllegalArgumentException("Comment Notification was not found!"); }
 			return notification.get();
+	}
+
+	@Override
+	public List<CommentNotification> listCommentNotifications() {
+		return commentDAO.list();
+	}
+
+	@Override
+	public List<VoteNotification> listVoteNotifications() {
+		return voteDAO.list();
 	}
 
 	@Override

@@ -16,7 +16,7 @@ class ThreadServiceTest {
 
 	@Test
 	void postThread() {
-		ThreadService service = new ThreadService(new InMemoryThreadDAO());
+		ThreadService service = createThreadService();
 		Thread originalThread = createDummyThread();
 		service.create(originalThread);
 		Thread thread = service.findById(0);
@@ -26,7 +26,7 @@ class ThreadServiceTest {
 
 	@Test
 	void checkIfUserStoredTheThreadAfterPost() {
-		ThreadService threadService = new ThreadService(new InMemoryThreadDAO());
+		ThreadService threadService = createThreadService();
 		UserService userService = new UserService(new InMemoryUserDAO());
 
 		User originalUser = createDummyUser();
@@ -40,7 +40,7 @@ class ThreadServiceTest {
 
 	@Test
 	void checkIfThreadStoredTheUserAfterPost() {
-		ThreadService threadService = new ThreadService(new InMemoryThreadDAO());
+		ThreadService threadService = createThreadService();
 		UserService userService = new UserService(new InMemoryUserDAO());
 
 		User originalUser = createDummyUser();
@@ -54,7 +54,7 @@ class ThreadServiceTest {
 
 	@Test
 	void updateThread() {
-		ThreadService service = new ThreadService(new InMemoryThreadDAO());
+		ThreadService service = createThreadService();
 		Board board = createDummyBoard();
 		User user = createDummyUser();
 		Thread originalThread = createDummyThread(board, user);
@@ -68,7 +68,7 @@ class ThreadServiceTest {
 
 	@Test
 	void deleteThread() {
-		ThreadService service = new ThreadService(new InMemoryThreadDAO());
+		ThreadService service = createThreadService();
 		service.create(createDummyThread());
 		assertThat(service.list().size()).isEqualTo(1);
 		service.delete(0);
@@ -77,7 +77,7 @@ class ThreadServiceTest {
 
 	@Test
 	void deleteThreadButIsntPresent() {
-		ThreadService service = new ThreadService(new InMemoryThreadDAO());
+		ThreadService service = createThreadService();
 		assertThatIllegalArgumentException().isThrownBy(() -> service.delete(0));
 	}
 

@@ -8,12 +8,13 @@ import java.util.List;
 
 import static org.assertj.core.api.Assertions.*;
 import static org.github.bobobot.services.impl.TestHelperUtils.createDummyUser;
+import static org.github.bobobot.services.impl.TestHelperUtils.createUserService;
 
 class UserServiceTest {
 
 	@Test
 	void findCreatedUserByName() {
-		UserService service = new UserService(new InMemoryUserDAO());
+		UserService service = createUserService();
 
 		User originalUser = createDummyUser();
 
@@ -25,7 +26,7 @@ class UserServiceTest {
 
 	@Test
 	void updateUserEmail() {
-		UserService service = new UserService(new InMemoryUserDAO());
+		UserService service = createUserService();
 
 		User user = service.register(createDummyUser());
 		int userID = user.getID();
@@ -37,7 +38,7 @@ class UserServiceTest {
 
 	@Test
 	void testList() {
-		UserService service = new UserService(new InMemoryUserDAO());
+		UserService service = createUserService();
 
 		User user1 = new User(0, true, "tesztNev1", "tesztEmail1@teszt.com", "tesztJelszo1");
 		User user2 = new User(1, true, "tesztNev2", "tesztEmail2@teszt.com", "tesztJelszo2");
@@ -53,7 +54,7 @@ class UserServiceTest {
 
 	@Test
 	void testValidEmail() {
-		UserService service = new UserService(new InMemoryUserDAO());
+		UserService service = createUserService();
 		User user = createDummyUser();
 
 		assertThatCode(() -> service.register(user)).doesNotThrowAnyException();
@@ -61,7 +62,7 @@ class UserServiceTest {
 
 	@Test
 	void testInvalidEmail() {
-		UserService service = new UserService(new InMemoryUserDAO());
+		UserService service = createUserService();
 		User user = new User(0, true, "tesztNev", "tesztEmail", "tesztJelszo");
 
 		assertThatIllegalArgumentException().isThrownBy(() -> service.register(user));
