@@ -3,12 +3,14 @@ package org.github.bobobot.dao.impl;
 import org.github.bobobot.dao.INotificationDAO;
 import org.github.bobobot.entities.CommentNotification;
 import org.github.bobobot.entities.User;
+import org.github.bobobot.entities.VoteNotification;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
-public class InMemoryCommentNotificationDAO implements INotificationDAO<CommentNotification> {
+public class InMemoryCommentNotificationDAO extends InMemoryNotificationDAO<CommentNotification> {
 	List<CommentNotification> memory = new ArrayList<>();
 
 	@Override
@@ -30,35 +32,5 @@ public class InMemoryCommentNotificationDAO implements INotificationDAO<CommentN
 		}
 
 		return memoryNotification;
-	}
-
-	@Override
-	public Optional<CommentNotification> selectByID(int ID) {
-		Optional<CommentNotification> notification = memory.stream()
-				.filter(n -> n.getID() == ID)
-				.findFirst();
-		return notification;
-	}
-
-	@Override
-	public List<CommentNotification> selectByUser(User user) {
-		return null;
-	}
-
-	@Override
-	public List<CommentNotification> list() {
-		return memory;
-	}
-
-	@Override
-	public Optional<CommentNotification> delete(int ID) {
-		Optional<CommentNotification> notification = memory.stream()
-				.filter(n -> n.getID() == ID)
-				.findFirst();
-		if (notification.isPresent()) {
-			memory.remove(notification.get());
-		}
-
-		return notification;
 	}
 }

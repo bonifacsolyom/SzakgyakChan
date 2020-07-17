@@ -1,11 +1,12 @@
 package org.github.bobobot.dao;
 
+import org.github.bobobot.entities.Notification;
 import org.github.bobobot.entities.User;
 
 import java.util.List;
 import java.util.Optional;
 
-public interface INotificationDAO<GenericNotification> {
+public interface INotificationDAO<GenericNotification extends Notification> {
 	/**
 	 * Creates a notification.
 	 *

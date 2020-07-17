@@ -7,8 +7,10 @@ import org.github.bobobot.entities.VoteNotification;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collector;
+import java.util.stream.Collectors;
 
-public class InMemoryVoteNotificationDAO implements INotificationDAO<VoteNotification> {
+public class InMemoryVoteNotificationDAO extends InMemoryNotificationDAO<VoteNotification> {
 	List<VoteNotification> memory = new ArrayList<>();
 
 	@Override
@@ -30,36 +32,5 @@ public class InMemoryVoteNotificationDAO implements INotificationDAO<VoteNotific
 		}
 
 		return memoryNotification;
-	}
-
-	@Override
-	public Optional<VoteNotification> selectByID(int ID) {
-		Optional<VoteNotification> notification = memory.stream()
-				.filter(n -> n.getID() == ID)
-				.findFirst();
-		return notification;
-	}
-
-	@Override
-	public List<VoteNotification> selectByUser(User user) {
-		return null;
-	}
-
-
-	@Override
-	public List<VoteNotification> list() {
-		return memory;
-	}
-
-	@Override
-	public Optional<VoteNotification> delete(int ID) {
-		Optional<VoteNotification> notification = memory.stream()
-				.filter(n -> n.getID() == ID)
-				.findFirst();
-		if (notification.isPresent()) {
-			memory.remove(notification.get());
-		}
-
-		return notification;
 	}
 }
