@@ -13,10 +13,17 @@ import java.util.Optional;
 
 public class ThreadService implements IThreadService {
 
-	private IThreadDAO dao;
+	private final IThreadDAO dao;
 
 	public ThreadService(IThreadDAO dao) {
 		this.dao = dao;
+	}
+
+	private Thread getThreadIfPresent(Optional<Thread> thread) {
+		if (!thread.isPresent()) {
+			throw new IllegalArgumentException("Thread was not found!");
+		}
+		return thread.get();
 	}
 
 	@Override
@@ -45,8 +52,7 @@ public class ThreadService implements IThreadService {
 	@Override
 	public Thread update(Thread tempThread) {
 		Optional<Thread> thread = dao.update(tempThread);
-		if (!thread.isPresent()) { throw new IllegalArgumentException("Thread was not found!"); }
-		return thread.get();
+		return getThreadIfPresent(thread);
 	}
 
 	@Override
@@ -67,13 +73,12 @@ public class ThreadService implements IThreadService {
 	@Override
 	public Thread findById(int ID) {
 		Optional<Thread> thread = dao.select(ID);
-		if (!thread.isPresent()) { throw new IllegalArgumentException("Thread was not found!"); }
-		return thread.get();
+		return getThreadIfPresent(thread);
 	}
 
 	@Override
 	public void delete(int ID) {
 		Optional<Thread> thread = dao.delete(ID);
-		if (!thread.isPresent()) { throw new IllegalArgumentException("Thread was not found!"); }
+		getThreadIfPresent(thread); //throw error if not found
 	}
 }

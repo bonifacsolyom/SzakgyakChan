@@ -1,6 +1,5 @@
 package org.github.bobobot.services.impl;
 
-import org.github.bobobot.dao.impl.InMemoryUserDAO;
 import org.github.bobobot.entities.User;
 import org.junit.jupiter.api.Test;
 

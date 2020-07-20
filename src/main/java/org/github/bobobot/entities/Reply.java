@@ -85,6 +85,10 @@ public class Reply {
 		return votes;
 	}
 
+	public void setVotes(int votes) {
+		this.votes = votes;
+	}
+
 	public int upvote() {
 		return ++votes;
 	}
@@ -99,9 +103,5 @@ public class Reply {
 
 	public void setUser(User user) {
 		this.user = user;
-	}
-
-	public void setVotes(int votes) {
-		this.votes = votes;
 	}
 }

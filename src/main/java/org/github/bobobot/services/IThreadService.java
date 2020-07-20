@@ -19,22 +19,22 @@ public interface IThreadService {
 
 	/**
 	 * Creates a thread. Consider using this method instead:
-	 * @see IThreadService#create(String, Board, User, Reply)
 	 *
-	 * @param title The title of the thread.
-	 * @param board The board this thread was posted on.
-	 * @param user The user who posted the thread.
+	 * @param title   The title of the thread.
+	 * @param board   The board this thread was posted on.
+	 * @param user    The user who posted the thread.
 	 * @param replies A list of replies to the thread.
 	 * @return The created thread.
+	 * @see IThreadService#create(String, Board, User, Reply)
 	 */
 	Thread create(String title, Board board, User user, List<Reply> replies);
 
 	/**
 	 * Creates a thread.
 	 *
-	 * @param title The title of the thread.
-	 * @param board The board this thread was posted on.
-	 * @param user The user who posted the thread.
+	 * @param title     The title of the thread.
+	 * @param board     The board this thread was posted on.
+	 * @param user      The user who posted the thread.
 	 * @param firstPost The first post to a thread.
 	 * @return The created thread.
 	 */
@@ -42,12 +42,12 @@ public interface IThreadService {
 
 	/**
 	 * Creates a thread. Consider using this method instead:
-	 * @see IThreadService#create(String, Board, User, Reply)
 	 *
 	 * @param title The title of the thread.
 	 * @param board The board this thread was posted on.
-	 * @param user The user who posted the thread.
+	 * @param user  The user who posted the thread.
 	 * @return The created thread.
+	 * @see IThreadService#create(String, Board, User, Reply)
 	 */
 	Thread create(String title, Board board, User user);
 
@@ -63,10 +63,10 @@ public interface IThreadService {
 	/**
 	 * Updates a thread.
 	 *
-	 * @param ID The ID of the thread.
+	 * @param ID    The ID of the thread.
 	 * @param title The title of the thread.
 	 * @param board The board of the thread.
-	 * @param user The user that posted the thread.
+	 * @param user  The user that posted the thread.
 	 * @return The updated thread.
 	 */
 	Thread update(int ID, String title, Board board, User user);
@@ -74,10 +74,10 @@ public interface IThreadService {
 	/**
 	 * Updates a thread.
 	 *
-	 * @param ID The ID of the thread.
-	 * @param title The title of the thread.
-	 * @param board The board of the thread.
-	 * @param user The user that posted the thread.
+	 * @param ID      The ID of the thread.
+	 * @param title   The title of the thread.
+	 * @param board   The board of the thread.
+	 * @param user    The user that posted the thread.
 	 * @param replies The replies of the thread.
 	 * @return The updated thread.
 	 */

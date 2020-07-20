@@ -48,6 +48,7 @@ public interface IUserDAO {
 
 	/**
 	 * Returns a list of all users
+	 *
 	 * @return A list of all users
 	 */
 	List<User> list();

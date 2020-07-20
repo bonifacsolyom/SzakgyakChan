@@ -9,10 +9,17 @@ import java.util.Optional;
 
 public class BoardService implements IBoardService {
 
-	private IBoardDAO dao;
+	private final IBoardDAO dao;
 
 	public BoardService(IBoardDAO dao) {
 		this.dao = dao;
+	}
+
+	private Board getBoardIfPresent(Optional<Board> board) {
+		if (!board.isPresent()) {
+			throw new IllegalArgumentException("Board was not found!");
+		}
+		return board.get();
 	}
 
 	@Override
@@ -28,8 +35,7 @@ public class BoardService implements IBoardService {
 	@Override
 	public Board update(Board tempBoard) {
 		Optional<Board> board = dao.update(tempBoard);
-		if (!board.isPresent()) { throw new IllegalArgumentException("Board was not found!"); }
-		return board.get();
+		return getBoardIfPresent(board);
 	}
 
 	@Override
@@ -45,20 +51,18 @@ public class BoardService implements IBoardService {
 	@Override
 	public Board findById(int ID) {
 		Optional<Board> board = dao.selectByID(ID);
-		if (!board.isPresent()) { throw new IllegalArgumentException("Board was not found!"); }
-		return board.get();
+		return getBoardIfPresent(board);
 	}
 
 	@Override
 	public Board findByShortName(String shortName) {
 		Optional<Board> board = dao.selectByShortName(shortName);
-		if (!board.isPresent()) { throw new IllegalArgumentException("Board was not found!"); }
-		return board.get();
+		return getBoardIfPresent(board);
 	}
 
 	@Override
 	public void delete(int ID) {
 		Optional<Board> board = dao.delete(ID);
-		if (!board.isPresent()) { throw new IllegalArgumentException("Board was not found!"); }
+		getBoardIfPresent(board); //throw error if not found
 	}
 }

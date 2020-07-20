@@ -1,7 +1,9 @@
 package org.github.bobobot.services;
 
-import org.github.bobobot.entities.*;
+import org.github.bobobot.entities.Image;
+import org.github.bobobot.entities.Reply;
 import org.github.bobobot.entities.Thread;
+import org.github.bobobot.entities.User;
 import org.github.bobobot.entities.VoteNotification.VoteType;
 
 import java.util.List;
@@ -73,7 +75,7 @@ public interface IReplyService {
 	/**
 	 * Votes on a reply.
 	 *
-	 * @param ID The ID of the reply.
+	 * @param ID       The ID of the reply.
 	 * @param voteType The type of the vote
 	 * @return
 	 */

@@ -1,15 +1,14 @@
 package org.github.bobobot.services.impl;
 
-import org.github.bobobot.dao.impl.InMemoryReplyDAO;
 import org.github.bobobot.entities.Reply;
 import org.github.bobobot.entities.Thread;
 import org.github.bobobot.entities.VoteNotification;
 import org.github.bobobot.services.IReplyService;
 import org.junit.jupiter.api.Test;
 
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatIllegalArgumentException;
 import static org.github.bobobot.services.impl.TestHelperUtils.*;
-import static org.assertj.core.api.Assertions.assertThat;
 
 class ReplyServiceTest {
 

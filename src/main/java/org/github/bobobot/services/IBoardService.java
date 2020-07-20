@@ -8,6 +8,7 @@ public interface IBoardService {
 
 	/**
 	 * Creates a board
+	 *
 	 * @param board The board to be created.
 	 * @return The created board.
 	 */
@@ -15,6 +16,7 @@ public interface IBoardService {
 
 	/**
 	 * Creates a board
+	 *
 	 * @param shortName The short name of the board.
 	 * @param longName  The longer description of the board - should only be a couple words long.
 	 * @return The created board.
@@ -23,6 +25,7 @@ public interface IBoardService {
 
 	/**
 	 * Updates a board
+	 *
 	 * @param board The board to be updated.
 	 * @return The updated board.
 	 */
@@ -31,6 +34,7 @@ public interface IBoardService {
 
 	/**
 	 * Updates a board
+	 *
 	 * @param ID        the ID of the board to be updated
 	 * @param shortName The short name of the board.
 	 * @param longName  The longer description of the board - should only be a couple words long.

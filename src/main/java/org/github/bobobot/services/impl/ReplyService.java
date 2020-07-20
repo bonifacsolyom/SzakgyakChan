@@ -2,8 +2,8 @@ package org.github.bobobot.services.impl;
 
 import org.github.bobobot.dao.INotificationDAO;
 import org.github.bobobot.dao.IReplyDAO;
-import org.github.bobobot.entities.*;
 import org.github.bobobot.entities.Thread;
+import org.github.bobobot.entities.*;
 import org.github.bobobot.entities.VoteNotification.VoteType;
 import org.github.bobobot.services.IReplyService;
 
@@ -21,6 +21,13 @@ public class ReplyService implements IReplyService {
 		this.replyDAO = replyDAO;
 		this.commentDAO = commentDAO;
 		this.voteDAO = voteDAO;
+	}
+
+	private Reply getReplyIfPresent(Optional<Reply> reply) {
+		if (!reply.isPresent()) {
+			throw new IllegalArgumentException("Reply was not found!");
+		}
+		return reply.get();
 	}
 
 	@Override
@@ -47,8 +54,7 @@ public class ReplyService implements IReplyService {
 	@Override
 	public Reply update(Reply tempReply) {
 		Optional<Reply> reply = replyDAO.update(tempReply);
-		if (!reply.isPresent()) { throw new IllegalArgumentException("Reply was not found!"); }
-		return reply.get();
+		return getReplyIfPresent(reply);
 	}
 
 	@Override
@@ -64,8 +70,7 @@ public class ReplyService implements IReplyService {
 	@Override
 	public Reply findById(int ID) {
 		Optional<Reply> reply = replyDAO.select(ID);
-		if (!reply.isPresent()) { throw new IllegalArgumentException("Reply was not found!"); }
-		return reply.get();
+		return getReplyIfPresent(reply);
 	}
 
 	@Override
@@ -96,6 +101,6 @@ public class ReplyService implements IReplyService {
 	@Override
 	public void delete(int ID) {
 		Optional<Reply> reply = replyDAO.delete(ID);
-		if (!reply.isPresent()) { throw new IllegalArgumentException("Reply was not found!"); }
+		getReplyIfPresent(reply); //throw error if not found
 	}
 }

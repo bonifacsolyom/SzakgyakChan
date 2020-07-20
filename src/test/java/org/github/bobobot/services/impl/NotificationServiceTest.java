@@ -1,8 +1,7 @@
 package org.github.bobobot.services.impl;
 
-import org.github.bobobot.dao.impl.InMemoryCommentNotificationDAO;
-import org.github.bobobot.dao.impl.InMemoryThreadDAO;
-import org.github.bobobot.dao.impl.InMemoryVoteNotificationDAO;
+import org.github.bobobot.dao.IUserDAO;
+import org.github.bobobot.dao.impl.InMemoryUserDAO;
 import org.github.bobobot.entities.CommentNotification;
 import org.github.bobobot.entities.User;
 import org.github.bobobot.services.INotificationService;
@@ -16,25 +15,32 @@ public class NotificationServiceTest {
 
 	@Test
 	void createCommentNotification() {
-		INotificationService service = createNotificationService();
-		CommentNotification originalNotification = createDummyCommentNotification();
+		IUserDAO userDAO = new InMemoryUserDAO();
+		INotificationService notificationService = createNotificationService(userDAO);
+		IUserService userService = createUserService(userDAO);
+		User user = createDummyUser();
+		CommentNotification originalNotification = createDummyCommentNotification(user);
 
-		service.create(originalNotification);
+		userService.register(user);
+		notificationService.create(originalNotification);
 
-		CommentNotification notification = service.findCommentNotificationByID(0);
+		CommentNotification notification = notificationService.findCommentNotificationByID(0);
 
 		assertThat(originalNotification).isEqualTo(notification);
 	}
 
 	@Test
 	void updateCommentNotification() {
-		INotificationService service = createNotificationService();
+		IUserDAO userDAO = new InMemoryUserDAO();
+		INotificationService notificationService = createNotificationService(userDAO);
+		IUserService userService = createUserService(userDAO);
 		User user = createDummyUser();
 		CommentNotification originalNotification = createDummyCommentNotification(user);
 
-		service.create(originalNotification);
-		service.update(0, false, user, "teszt1");
-		CommentNotification notification = service.findCommentNotificationByID(0);
+		userService.register(user);
+		notificationService.create(originalNotification);
+		notificationService.update(0, false, user, "teszt1");
+		CommentNotification notification = notificationService.findCommentNotificationByID(0);
 
 		assertThat(notification.getReplyContent()).isEqualTo("teszt1");
 
@@ -42,8 +48,9 @@ public class NotificationServiceTest {
 
 	@Test
 	void checkIfUserReceivedNotification() {
-		INotificationService notificationService = createNotificationService();
-		IUserService userService = createUserService();
+		IUserDAO userDAO = new InMemoryUserDAO();
+		INotificationService notificationService = createNotificationService(userDAO);
+		IUserService userService = createUserService(userDAO);
 		User user = userService.register(createDummyUser());
 
 		CommentNotification originalNotification = createDummyCommentNotification(user);

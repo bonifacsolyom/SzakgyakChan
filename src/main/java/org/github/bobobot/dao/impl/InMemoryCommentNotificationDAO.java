@@ -1,14 +1,8 @@
 package org.github.bobobot.dao.impl;
 
-import org.github.bobobot.dao.INotificationDAO;
 import org.github.bobobot.entities.CommentNotification;
-import org.github.bobobot.entities.User;
-import org.github.bobobot.entities.VoteNotification;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Optional;
-import java.util.stream.Collectors;
 
 public class InMemoryCommentNotificationDAO extends InMemoryNotificationDAO<CommentNotification> {
 

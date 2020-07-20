@@ -1,6 +1,5 @@
 package org.github.bobobot.services.impl;
 
-import org.github.bobobot.dao.impl.InMemoryThreadDAO;
 import org.github.bobobot.dao.impl.InMemoryUserDAO;
 import org.github.bobobot.entities.Board;
 import org.github.bobobot.entities.Thread;

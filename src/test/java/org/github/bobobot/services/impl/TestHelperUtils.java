@@ -1,8 +1,9 @@
 package org.github.bobobot.services.impl;
 
+import org.github.bobobot.dao.IUserDAO;
 import org.github.bobobot.dao.impl.*;
-import org.github.bobobot.entities.*;
 import org.github.bobobot.entities.Thread;
+import org.github.bobobot.entities.*;
 
 import java.time.LocalDateTime;
 
@@ -13,11 +14,19 @@ public class TestHelperUtils {
 	}
 
 	static NotificationService createNotificationService() {
-		return new NotificationService(new InMemoryCommentNotificationDAO(), new InMemoryVoteNotificationDAO());
+		return new NotificationService(new InMemoryCommentNotificationDAO(), new InMemoryVoteNotificationDAO(), new InMemoryUserDAO());
+	}
+
+	static NotificationService createNotificationService(IUserDAO userDAO) {
+		return new NotificationService(new InMemoryCommentNotificationDAO(), new InMemoryVoteNotificationDAO(), userDAO);
 	}
 
 	static UserService createUserService() {
 		return new UserService(new InMemoryUserDAO());
+	}
+
+	static UserService createUserService(IUserDAO userDAO) {
+		return new UserService(userDAO);
 	}
 
 	static BoardService createBoardService() {
@@ -60,7 +69,7 @@ public class TestHelperUtils {
 	 * title: tesztTitle<p>
 	 *
 	 * @param board The thread's board
-	 * @param user The thread's user
+	 * @param user  The thread's user
 	 * @return The newly created thread
 	 */
 	static Thread createDummyThread(Board board, User user) {
@@ -97,7 +106,7 @@ public class TestHelperUtils {
 	 * image: Dummy image<p>
 	 *
 	 * @param thread The thread of the reply
-	 * @param user The user of the reply
+	 * @param user   The user of the reply
 	 * @return The newly created reply.
 	 */
 	static Reply createDummyReply(Thread thread, User user) {

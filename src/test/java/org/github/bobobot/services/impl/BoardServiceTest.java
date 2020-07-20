@@ -1,19 +1,13 @@
 package org.github.bobobot.services.impl;
 
-import org.github.bobobot.dao.impl.InMemoryBoardDAO;
 import org.github.bobobot.entities.Board;
 import org.github.bobobot.services.IBoardService;
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
-import org.mockito.Mock;
-import org.mockito.Mockito;
 
-import java.util.Optional;
-
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatIllegalArgumentException;
 import static org.github.bobobot.services.impl.TestHelperUtils.createBoardService;
 import static org.github.bobobot.services.impl.TestHelperUtils.createDummyBoard;
-import static org.assertj.core.api.Assertions.assertThat;
 
 public class BoardServiceTest {
 

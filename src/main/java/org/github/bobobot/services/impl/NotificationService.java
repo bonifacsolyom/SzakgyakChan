@@ -2,9 +2,10 @@ package org.github.bobobot.services.impl;
 
 import org.github.bobobot.dao.INotificationDAO;
 import org.github.bobobot.dao.IUserDAO;
-import org.github.bobobot.dao.impl.InMemoryCommentNotificationDAO;
-import org.github.bobobot.dao.impl.InMemoryVoteNotificationDAO;
-import org.github.bobobot.entities.*;
+import org.github.bobobot.entities.CommentNotification;
+import org.github.bobobot.entities.Notification;
+import org.github.bobobot.entities.User;
+import org.github.bobobot.entities.VoteNotification;
 import org.github.bobobot.services.INotificationService;
 
 import java.util.List;
@@ -16,15 +17,24 @@ public class NotificationService implements INotificationService {
 	INotificationDAO<VoteNotification> voteDAO;
 	IUserDAO userDAO;
 
-	public NotificationService(INotificationDAO<CommentNotification> iCommentNotificationDAO, INotificationDAO<VoteNotification> iVoteNotificationDAO) {
+	public NotificationService(INotificationDAO<CommentNotification> iCommentNotificationDAO, INotificationDAO<VoteNotification> iVoteNotificationDAO, IUserDAO userDAO) {
 		this.commentDAO = iCommentNotificationDAO;
 		this.voteDAO = iVoteNotificationDAO;
+		this.userDAO = userDAO;
+	}
+
+	private Notification getNotificationIfNotPresent(Optional<? extends Notification> notification) {
+		if (!notification.isPresent()) {
+			throw new IllegalArgumentException("Notification was not found!");
+		}
+		return notification.get();
 	}
 
 	@Override
 	public CommentNotification create(CommentNotification notification) {
-		//TODO: értesítések a userDAO-n keresztüli feltöltése itt
-		notification.getUser();
+		UserService userService = new UserService(userDAO);
+		User user = notification.getUser();
+		userService.addCommentNotification(user.getID(), notification);
 		return commentDAO.create(notification);
 	}
 
@@ -35,6 +45,9 @@ public class NotificationService implements INotificationService {
 
 	@Override
 	public VoteNotification create(VoteNotification notification) {
+		UserService userService = new UserService(userDAO);
+		User user = notification.getUser();
+		userService.addVoteNotification(user.getID(), notification);
 		return voteDAO.create(notification);
 	}
 
@@ -46,8 +59,7 @@ public class NotificationService implements INotificationService {
 	@Override
 	public CommentNotification update(CommentNotification tempNotification) {
 		Optional<CommentNotification> notification = commentDAO.update(tempNotification);
-		if (!notification.isPresent()) { throw new IllegalArgumentException("Comment notification was not found!"); }
-		return notification.get();
+		return (CommentNotification) getNotificationIfNotPresent(notification);
 	}
 
 	@Override
@@ -58,8 +70,7 @@ public class NotificationService implements INotificationService {
 	@Override
 	public VoteNotification update(VoteNotification tempNotification) {
 		Optional<VoteNotification> notification = voteDAO.update(tempNotification);
-		if (!notification.isPresent()) { throw new IllegalArgumentException("Vote notification was not found!"); }
-		return notification.get();
+		return (VoteNotification) getNotificationIfNotPresent(notification);
 	}
 
 	@Override
@@ -70,15 +81,13 @@ public class NotificationService implements INotificationService {
 	@Override
 	public CommentNotification findCommentNotificationByID(int ID) {
 		Optional<CommentNotification> notification = commentDAO.selectByID(ID);
-		if (!notification.isPresent()) { throw new IllegalArgumentException("Comment Notification was not found!"); }
-		return notification.get();
+		return (CommentNotification) getNotificationIfNotPresent(notification);
 	}
 
 	@Override
 	public VoteNotification findVoteNotificationByID(int ID) {
-			Optional<VoteNotification> notification = voteDAO.selectByID(ID);
-			if (!notification.isPresent()) { throw new IllegalArgumentException("Comment Notification was not found!"); }
-			return notification.get();
+		Optional<VoteNotification> notification = voteDAO.selectByID(ID);
+		return (VoteNotification) getNotificationIfNotPresent(notification);
 	}
 
 	@Override
@@ -89,25 +98,5 @@ public class NotificationService implements INotificationService {
 	@Override
 	public List<VoteNotification> listVoteNotifications() {
 		return voteDAO.list();
-	}
-
-	@Override
-	public List<Notification> getUsersNotifications(User user) {
-		return null;
-	}
-
-	@Override
-	public List<Notification> getUsersActiveNotifications(User user) {
-		return null;
-	}
-
-	@Override
-	public int getUsersNotificationCount(User user) {
-		return 0;
-	}
-
-	@Override
-	public int getUsersActiveNotificationCount(User user) {
-		return 0;
 	}
 }
