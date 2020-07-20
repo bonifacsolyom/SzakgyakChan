@@ -78,8 +78,20 @@ public interface IUserService {
 	 */
 	User update(int ID, boolean isAdmin, String name, String email, String passwordHash, List<Thread> threads, List<Reply> replies, List<CommentNotification> commentNotifications, List<VoteNotification> voteNotifications);
 
+	/**
+	 * Adds a comment notification to a user
+	 * @param ID the ID of the user
+	 * @param notification The comment notification to be added
+	 * @return The updated user
+	 */
 	User addCommentNotification(int ID, CommentNotification notification);
 
+	/**
+	 * Adds a vote notification to a user
+	 * @param ID the ID of the user
+	 * @param notification The vote notification to be added
+	 * @return The updated user
+	 */
 	User addVoteNotification(int ID, VoteNotification notification);
 
 	/**
@@ -120,11 +132,32 @@ public interface IUserService {
 	 */
 	void delete(int ID);
 
+	/**
+	 * Gets all notifications of a user
+	 * @param ID The ID of the user
+	 * @return The notifications of the user
+	 */
 	List<Notification> getUsersNotifications(int ID);
 
+
+	/**
+	 * Gets all active (not read) notifications of a user
+	 * @param ID The ID of the user
+	 * @return The active notifications of the user
+	 */
 	List<Notification> getUsersActiveNotifications(int ID);
 
+	/**
+	 * Counts a user's notifications
+	 * @param ID The ID of the user
+	 * @return The amount of notifications of the user
+	 */
 	int getUsersNotificationCount(int ID);
 
+	/**
+	 * Counts a user's active notifications
+	 * @param ID The ID of the user
+	 * @return The amount of active notifications of the user
+	 */
 	int getUsersActiveNotificationCount(int ID);
 }
