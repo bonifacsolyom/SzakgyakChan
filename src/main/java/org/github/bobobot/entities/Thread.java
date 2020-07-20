@@ -1,19 +1,29 @@
 package org.github.bobobot.entities;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
 public class Thread {
 	int ID;
 	String title;
 	Board board;
-	ArrayList<Reply> replies = new ArrayList<>();
+	List<Reply> replies = new ArrayList<>();
 	User user;
 
-	public Thread(int ID, String title, Board board) {
+	public Thread(int ID, String title, Board board, User user, List<Reply> replies) {
 		this.ID = ID;
 		this.title = title;
 		this.board = board;
+		this.user = user;
+		this.replies = replies;
+	}
+
+	public Thread(int ID, String title, Board board, User user) {
+		this.ID = ID;
+		this.title = title;
+		this.board = board;
+		this.user = user;
 	}
 
 	@Override
@@ -49,12 +59,16 @@ public class Thread {
 		this.user = user;
 	}
 
-	public ArrayList<Reply> getReplies() {
+	public List<Reply> getReplies() {
 		return replies;
 	}
 
-	public void setReplies(ArrayList<Reply> replies) {
+	public void setReplies(List<Reply> replies) {
 		this.replies = replies;
+	}
+
+	public void addReply(Reply reply) {
+		this.replies.add(reply);
 	}
 
 	public Board getBoard() {

@@ -1,13 +1,14 @@
 package org.github.bobobot.dao.impl;
 
-import org.github.bobobot.dao.ThreadDAO;
+import org.github.bobobot.dao.IThreadDAO;
 import org.github.bobobot.entities.Thread;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
-public class InMemoryThreadDAO implements ThreadDAO {
-	ArrayList<Thread> memory = new ArrayList<>();
+public class InMemoryThreadDAO implements IThreadDAO {
+	List<Thread> memory = new ArrayList<>();
 
 	@Override
 	public Thread create(Thread thread) {
@@ -39,7 +40,7 @@ public class InMemoryThreadDAO implements ThreadDAO {
 	}
 
 	@Override
-	public ArrayList<Thread> list() {
+	public List<Thread> list() {
 		return memory;
 	}
 

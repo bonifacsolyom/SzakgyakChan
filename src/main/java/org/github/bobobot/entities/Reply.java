@@ -10,14 +10,16 @@ public class Reply {
 	int votes;
 	Image image;
 	Thread thread;
+	User user;
 
-	public Reply(int ID, String content, LocalDateTime date, int votes, Image image, Thread thread) {
+	public Reply(int ID, String content, LocalDateTime date, int votes, Image image, Thread thread, User user) {
 		this.ID = ID;
 		this.content = content;
 		this.date = date;
 		this.votes = votes;
 		this.image = image;
 		this.thread = thread;
+		this.user = user;
 	}
 
 	@Override
@@ -30,12 +32,13 @@ public class Reply {
 				content.equals(reply.content) &&
 				date.equals(reply.date) &&
 				image.equals(reply.image) &&
-				thread.equals(reply.thread);
+				thread.equals(reply.thread) &&
+				user.equals(reply.user);
 	}
 
 	@Override
 	public int hashCode() {
-		return Objects.hash(ID, content, date, votes, image, thread);
+		return Objects.hash(ID, content, date, votes, image, thread, user);
 	}
 
 	public int getID() {
@@ -84,5 +87,21 @@ public class Reply {
 
 	public void setVotes(int votes) {
 		this.votes = votes;
+	}
+
+	public int upvote() {
+		return ++votes;
+	}
+
+	public int downvote() {
+		return --votes;
+	}
+
+	public User getUser() {
+		return user;
+	}
+
+	public void setUser(User user) {
+		this.user = user;
 	}
 }

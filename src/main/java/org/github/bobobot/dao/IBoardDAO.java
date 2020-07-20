@@ -2,13 +2,13 @@ package org.github.bobobot.dao;
 
 import org.github.bobobot.entities.Board;
 
-import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 /**
  * This interface defines a DAO of a board.
  */
-public interface BoardDAO {
+public interface IBoardDAO {
 
 	/**
 	 * Creates a board. Shouldn't be accessed by the user or the admin.
@@ -32,14 +32,22 @@ public interface BoardDAO {
 	 * @param ID The ID of the board to be selected.
 	 * @return The selected board wrapped in an optional, in case the board wasn't found.
 	 */
-	Optional<Board> select(int ID);
+	Optional<Board> selectByID(int ID);
+
+	/**
+	 * Selects a board by its short name.
+	 *
+	 * @param name The short name of the board
+	 * @return The selected board wrapped in an optional.
+	 */
+	Optional<Board> selectByShortName(String name);
 
 	/**
 	 * Lists all existing boards.
 	 *
 	 * @return list of all existing boards.
 	 */
-	ArrayList<Board> list();
+	List<Board> list();
 
 	/**
 	 * Deletes a board.

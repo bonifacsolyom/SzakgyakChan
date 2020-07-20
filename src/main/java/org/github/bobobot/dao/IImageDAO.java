@@ -7,7 +7,7 @@ import java.util.Optional;
 /**
  * This interface defines a DAO of an image.
  */
-public interface ImageDAO {
+public interface IImageDAO {
 
 	/**
 	 * Creates an image object.

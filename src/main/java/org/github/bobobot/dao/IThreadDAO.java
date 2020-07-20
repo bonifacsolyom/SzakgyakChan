@@ -2,13 +2,13 @@ package org.github.bobobot.dao;
 
 import org.github.bobobot.entities.Thread;
 
-import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 /**
  * This interface defines a DAO of a thread.
  */
-public interface ThreadDAO {
+public interface IThreadDAO {
 	/**
 	 * Creates a thread.
 	 *
@@ -38,7 +38,7 @@ public interface ThreadDAO {
 	 *
 	 * @return A list of all existing threads.
 	 */
-	ArrayList<Thread> list();
+	List<Thread> list();
 
 	/**
 	 * Deletes a thread.

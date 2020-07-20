@@ -1,6 +1,7 @@
 package org.github.bobobot.entities;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
 public class Board {
@@ -8,7 +9,7 @@ public class Board {
 	int ID;
 	String shortName;
 	String longName;
-	ArrayList<Thread> threads = new ArrayList<>();
+	List<Thread> threads = new ArrayList<>();
 
 	public Board(int ID, String shortName, String longName) {
 		this.ID = ID;
@@ -32,11 +33,11 @@ public class Board {
 		return Objects.hash(ID, shortName, longName, threads);
 	}
 
-	public ArrayList<Thread> getThreads() {
+	public List<Thread> getThreads() {
 		return threads;
 	}
 
-	public void setThreads(ArrayList<Thread> threads) {
+	public void setThreads(List<Thread> threads) {
 		this.threads = threads;
 	}
 
