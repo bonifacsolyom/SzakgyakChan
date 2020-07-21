@@ -8,6 +8,9 @@ import java.util.List;
 
 public interface INotificationService {
 
+	//TODO: túl sok a kódismétlődés, ezt biztos meg lehet oldani szebben is
+	//valahogy a két notificationtípust jobban kéne együtt kezelni
+
 	/**
 	 * Creates a new notification.
 	 * @param notification The notification to be created.
