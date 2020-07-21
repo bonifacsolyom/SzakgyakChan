@@ -8,6 +8,8 @@ import org.github.bobobot.services.*;
 import org.github.bobobot.services.impl.*;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 
 @Configuration
 public class ApplicationConfig {
@@ -63,7 +65,14 @@ public class ApplicationConfig {
 	}
 
 	@Bean
-	public IUserService userService(IUserDAO userDAO) {
-		return new UserService(userDAO);
+	public IUserService userService(IUserDAO userDAO, PasswordEncoder passwordEncoder) {
+		return new UserService(userDAO, passwordEncoder);
+	}
+
+	//Miscellaneous
+
+	@Bean
+	public PasswordEncoder passwordEncoder() {
+		return new BCryptPasswordEncoder();
 	}
 }

@@ -1,9 +1,12 @@
 package org.github.bobobot.services.impl;
 
+import org.github.bobobot.dao.impl.InMemoryUserDAO;
 import org.github.bobobot.entities.User;
 import org.junit.jupiter.api.Test;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 import java.util.List;
+import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.*;
 import static org.github.bobobot.services.impl.TestHelperUtils.createDummyUser;
@@ -67,5 +70,17 @@ class UserServiceTest {
 		assertThatIllegalArgumentException().isThrownBy(() -> service.register(user));
 	}
 
+	@Test
+	void testPasswordEncoding() {
+		UserService service = new UserService(new InMemoryUserDAO(), new BCryptPasswordEncoder());
+		User user = createDummyUser();
+		User newUser = new User(user);
+		newUser.setID(0);
+
+		service.register(user);
+		Optional<User> loggedInUser = service.login(newUser.getName(), newUser.getPasswordHash()); //A passwordHash itt még csak a sima jelszó
+		assertThat(loggedInUser.get()).isEqualTo(newUser);
+
+	}
 
 }

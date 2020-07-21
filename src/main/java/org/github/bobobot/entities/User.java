@@ -37,6 +37,18 @@ public class User {
 		this.passwordHash = passwordHash;
 	}
 
+	public User(User user) {
+		this.ID = user.ID;
+		this.isAdmin = user.isAdmin;
+		this.name = user.name;
+		this.email = user.email;
+		this.passwordHash = user.passwordHash;
+		this.threads = user.threads;
+		this.replies = user.replies;
+		this.commentNotifications = user.commentNotifications;
+		this.voteNotifications = user.voteNotifications;
+	}
+
 	@Override
 	public boolean equals(Object o) {
 		if (this == o) return true;
@@ -45,8 +57,7 @@ public class User {
 		return ID == user.ID &&
 				isAdmin == user.isAdmin &&
 				name.equals(user.name) &&
-				email.equals(user.email) &&
-				passwordHash.equals(user.passwordHash);
+				email.equals(user.email);
 	}
 
 	@Override

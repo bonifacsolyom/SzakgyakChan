@@ -4,6 +4,7 @@ import org.github.bobobot.entities.Thread;
 import org.github.bobobot.entities.*;
 
 import java.util.List;
+import java.util.Optional;
 
 public interface IUserService {
 	//TODO: Jelszóhash helyett ez még csak jelszót kapjon
@@ -42,6 +43,8 @@ public interface IUserService {
 	 * @return The created user.
 	 */
 	User register(boolean isAdmin, String name, String email, String passwordHash);
+
+	Optional<User> login(String name, String password);
 
 	/**
 	 * Updates a user.

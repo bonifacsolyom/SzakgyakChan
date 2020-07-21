@@ -5,16 +5,27 @@ import org.github.bobobot.dao.IUserDAO;
 import org.github.bobobot.entities.Thread;
 import org.github.bobobot.entities.*;
 import org.github.bobobot.services.IUserService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
 
+@Service
 public class UserService implements IUserService {
 
+	private PasswordEncoder passwordEncoder;
 	private final IUserDAO dao;
 
 	public UserService(IUserDAO dao) {
 		this.dao = dao;
+	}
+
+	public UserService(IUserDAO dao, PasswordEncoder passwordEncoder) {
+		this.dao = dao;
+		this.passwordEncoder = passwordEncoder;
 	}
 
 	private void validateEmail(String email) {
@@ -32,18 +43,26 @@ public class UserService implements IUserService {
 	@Override
 	public User register(User tempUser) {
 		validateEmail(tempUser.getEmail());
+		//a tempUser passwordHash-je itt még csak az enkódolatlan jelszó
+		tempUser.setPasswordHash(passwordEncoder.encode(tempUser.getPasswordHash()));
 		return dao.create(tempUser);
 	}
 
 	@Override
-	public User register(boolean isAdmin, String name, String email, String passwordHash, List<Thread> threads, List<Reply> replies, List<CommentNotification> commentNotifications, List<VoteNotification> voteNotifications) {
-		return register(new User(-1, isAdmin, name, email, passwordHash, threads, replies, commentNotifications, voteNotifications));
+	public User register(boolean isAdmin, String name, String email, String password, List<Thread> threads, List<Reply> replies, List<CommentNotification> commentNotifications, List<VoteNotification> voteNotifications) {
+		return register(new User(-1, isAdmin, name, email, password, threads, replies, commentNotifications, voteNotifications));
 	}
 
 	@Override
-	public User register(boolean isAdmin, String name, String email, String passwordHash) {
-		return register(new User(-1, isAdmin, name, email, passwordHash));
+	public User register(boolean isAdmin, String name, String email, String password) {
+		return register(new User(-1, isAdmin, name, email, password));
+	}
 
+	@Override
+	public Optional<User> login(String name, String password) {
+		User user = findByUsername(name);
+		if (passwordEncoder.matches(password, user.getPasswordHash())) return Optional.of(user);
+		return Optional.empty();
 	}
 
 	@Override
