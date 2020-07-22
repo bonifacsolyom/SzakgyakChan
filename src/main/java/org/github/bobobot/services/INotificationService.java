@@ -1,6 +1,7 @@
 package org.github.bobobot.services;
 
 import org.github.bobobot.entities.CommentNotification;
+import org.github.bobobot.entities.Notification;
 import org.github.bobobot.entities.User;
 import org.github.bobobot.entities.VoteNotification;
 
@@ -93,12 +94,12 @@ public interface INotificationService {
 	 * Lists all comment notifications
 	 * @return A list of all comment notifications
 	 */
-	List<CommentNotification> listCommentNotifications();
+	List<? extends Notification> listCommentNotifications();
 
 	/**
 	 * Lists all vote notifications
 	 * @return A list of all vote notifications
 	 */
-	List<VoteNotification> listVoteNotifications();
+	List<? extends Notification> listVoteNotifications();
 
 }

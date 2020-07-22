@@ -1,11 +1,12 @@
 package org.github.bobobot.services.impl;
 
-import org.github.bobobot.dao.INotificationDAO;
-import org.github.bobobot.dao.IReplyDAO;
 import org.github.bobobot.entities.Thread;
 import org.github.bobobot.entities.*;
 import org.github.bobobot.entities.VoteNotification.VoteType;
+import org.github.bobobot.repositories.INotificationRepository;
+import org.github.bobobot.repositories.IReplyRepository;
 import org.github.bobobot.services.IReplyService;
+import org.springframework.beans.factory.annotation.Autowired;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -13,15 +14,11 @@ import java.util.Optional;
 
 public class ReplyService implements IReplyService {
 
-	private final IReplyDAO replyDAO;
-	private final INotificationDAO<CommentNotification> commentDAO;
-	private final INotificationDAO<VoteNotification> voteDAO;
+	@Autowired
+	private IReplyRepository replyRepository;
+	@Autowired
+	private INotificationRepository<CommentNotification> commentRepository;
 
-	public ReplyService(IReplyDAO replyDAO, INotificationDAO<CommentNotification> commentDAO, INotificationDAO<VoteNotification> voteDAO) {
-		this.replyDAO = replyDAO;
-		this.commentDAO = commentDAO;
-		this.voteDAO = voteDAO;
-	}
 
 	private Reply getReplyIfPresent(Optional<Reply> reply) {
 		if (!reply.isPresent()) {
@@ -30,20 +27,20 @@ public class ReplyService implements IReplyService {
 		return reply.get();
 	}
 
-	@Override
-	public Reply post(Reply tempReply) {
-		//Értesítjük minden reply userét, hogy egy új reply érkezett a threadbe
-		notifyReplies(tempReply);
-		tempReply.getThread().addReply(tempReply);
-		return replyDAO.create(tempReply);
-	}
-
-	private void notifyReplies(Reply reply) {
+	private void notifyUsersAboutReplies(Reply reply) {
 		for (Reply r : reply.getThread().getReplies()) {
-			CommentNotification notification = commentDAO.create(new CommentNotification(-1, false, r.getUser(), reply.getContent()));
+			CommentNotification notification = commentRepository.save(new CommentNotification(-1, false, r.getUser(), reply.getContent()));
 			r.getUser().addCommentNotification(notification);
 		}
 
+	}
+
+	@Override
+	public Reply post(Reply tempReply) {
+		//Értesítjük minden reply userét, hogy egy új reply érkezett a threadbe
+		notifyUsersAboutReplies(tempReply);
+		tempReply.getThread().addReply(tempReply);
+		return replyRepository.save(tempReply);
 	}
 
 	@Override
@@ -53,8 +50,7 @@ public class ReplyService implements IReplyService {
 
 	@Override
 	public Reply update(Reply tempReply) {
-		Optional<Reply> reply = replyDAO.update(tempReply);
-		return getReplyIfPresent(reply);
+		return replyRepository.save(tempReply);
 	}
 
 	@Override
@@ -64,18 +60,18 @@ public class ReplyService implements IReplyService {
 
 	@Override
 	public List<Reply> list() {
-		return replyDAO.list();
+		return replyRepository.findAll();
 	}
 
 	@Override
 	public Reply findById(int ID) {
-		Optional<Reply> reply = replyDAO.select(ID);
+		Optional<Reply> reply = replyRepository.findById(ID);
 		return getReplyIfPresent(reply);
 	}
 
 	@Override
 	public List<Reply> listByThread(Thread thread) {
-		return replyDAO.selectByThread(thread);
+		return replyRepository.findAllByThread(thread);
 	}
 
 	@Override
@@ -100,7 +96,6 @@ public class ReplyService implements IReplyService {
 
 	@Override
 	public void delete(int ID) {
-		Optional<Reply> reply = replyDAO.delete(ID);
-		getReplyIfPresent(reply); //throw error if not found
+		replyRepository.deleteById(ID);
 	}
 }

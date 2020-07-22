@@ -10,17 +10,6 @@ import java.util.Optional;
 @Repository
 public interface IBoardRepository extends JpaRepository<Board, Integer> {
 
-	@Override
-	Board save(Board board);
-
-	@Override
-	Optional<Board> findById(Integer integer);
-
 	Optional<Board> findByShortName(String shortName);
 
-	@Override
-	List<Board> findAll();
-
-	@Override
-	void delete(Board board);
 }

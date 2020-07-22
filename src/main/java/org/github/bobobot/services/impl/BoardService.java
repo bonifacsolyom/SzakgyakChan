@@ -2,18 +2,19 @@ package org.github.bobobot.services.impl;
 
 import org.github.bobobot.dao.IBoardDAO;
 import org.github.bobobot.entities.Board;
+import org.github.bobobot.repositories.IBoardRepository;
 import org.github.bobobot.services.IBoardService;
+import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.List;
 import java.util.Optional;
 
 public class BoardService implements IBoardService {
 
-	private final IBoardDAO dao;
+	@Autowired
+	private IBoardRepository repository;
 
-	public BoardService(IBoardDAO dao) {
-		this.dao = dao;
-	}
+
 
 	private Board getBoardIfPresent(Optional<Board> board) {
 		if (!board.isPresent()) {
@@ -24,7 +25,7 @@ public class BoardService implements IBoardService {
 
 	@Override
 	public Board create(Board board) {
-		return dao.create(board);
+		return repository.save(board);
 	}
 
 	@Override
@@ -34,8 +35,7 @@ public class BoardService implements IBoardService {
 
 	@Override
 	public Board update(Board tempBoard) {
-		Optional<Board> board = dao.update(tempBoard);
-		return getBoardIfPresent(board);
+		return repository.save(tempBoard);
 	}
 
 	@Override
@@ -45,24 +45,23 @@ public class BoardService implements IBoardService {
 
 	@Override
 	public List<Board> list() {
-		return dao.list();
+		return repository.findAll();
 	}
 
 	@Override
 	public Board findById(int ID) {
-		Optional<Board> board = dao.selectByID(ID);
+		Optional<Board> board = repository.findById(ID);
 		return getBoardIfPresent(board);
 	}
 
 	@Override
 	public Board findByShortName(String shortName) {
-		Optional<Board> board = dao.selectByShortName(shortName);
+		Optional<Board> board = repository.findByShortName(shortName);
 		return getBoardIfPresent(board);
 	}
 
 	@Override
 	public void delete(int ID) {
-		Optional<Board> board = dao.delete(ID);
-		getBoardIfPresent(board); //throw error if not found
+		repository.deleteById(ID);
 	}
 }

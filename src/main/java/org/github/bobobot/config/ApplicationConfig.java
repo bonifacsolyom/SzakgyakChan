@@ -4,6 +4,7 @@ import org.github.bobobot.dao.*;
 import org.github.bobobot.dao.impl.*;
 import org.github.bobobot.entities.CommentNotification;
 import org.github.bobobot.entities.VoteNotification;
+import org.github.bobobot.repositories.IBoardRepository;
 import org.github.bobobot.services.*;
 import org.github.bobobot.services.impl.*;
 import org.springframework.context.annotation.Bean;
@@ -15,62 +16,32 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 public class ApplicationConfig {
 
 	@Bean
-	public IBoardDAO boardDAO() {
-		return new InMemoryBoardDAO();
+	public IBoardService boardService() {
+		return new BoardService();
 	}
 
 	@Bean
-	public INotificationDAO commentDAO() {
-		return new InMemoryCommentNotificationDAO();
+	public INotificationService notificationService(IUserService userService) {
+		return new NotificationService(userService);
 	}
 
 	@Bean
-	public INotificationDAO voteDAO() {
-		return new InMemoryVoteNotificationDAO();
+	public IReplyService replyService() {
+		return new ReplyService();
 	}
 
 	@Bean
-	public IReplyDAO replyDAO() {
-		return new InMemoryReplyDAO();
+	public IThreadService threadService() {
+		return new ThreadService();
 	}
 
 	@Bean
-	public IThreadDAO threadDAO() {
-		return new InMemoryThreadDAO();
+	public IUserService userService(PasswordEncoder passwordEncoder) {
+		return new UserService(passwordEncoder);
 	}
 
-	@Bean
-	public IUserDAO userDAO() {
-		return new InMemoryUserDAO();
-	}
-
-	@Bean
-	public IBoardService boardService(IBoardDAO boardDAO) {
-		return new BoardService(boardDAO);
-	}
-
-	@Bean
-	public INotificationService notificationService(INotificationDAO<CommentNotification> commentDAO, INotificationDAO<VoteNotification> voteDAO, IUserDAO userDAO) {
-		return new NotificationService(commentDAO, voteDAO, userDAO);
-	}
-
-	@Bean
-	public IReplyService replyService(IReplyDAO replyDAO, INotificationDAO<CommentNotification> commentDAO, INotificationDAO<VoteNotification> voteDAO) {
-		return new ReplyService(replyDAO, commentDAO, voteDAO);
-	}
-
-	@Bean
-	public IThreadService threadService(IThreadDAO threadDAO) {
-		return new ThreadService(threadDAO);
-	}
-
-	@Bean
-	public IUserService userService(IUserDAO userDAO, PasswordEncoder passwordEncoder) {
-		return new UserService(userDAO, passwordEncoder);
-	}
 
 	//Miscellaneous
-
 	@Bean
 	public PasswordEncoder passwordEncoder() {
 		return new BCryptPasswordEncoder();

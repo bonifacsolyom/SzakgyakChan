@@ -1,26 +1,31 @@
 package org.github.bobobot.services.impl;
 
-import org.github.bobobot.dao.INotificationDAO;
-import org.github.bobobot.dao.IUserDAO;
 import org.github.bobobot.entities.CommentNotification;
 import org.github.bobobot.entities.Notification;
 import org.github.bobobot.entities.User;
 import org.github.bobobot.entities.VoteNotification;
+import org.github.bobobot.repositories.INotificationRepository;
+import org.github.bobobot.repositories.IUserRepository;
 import org.github.bobobot.services.INotificationService;
+import org.github.bobobot.services.IUserService;
+import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.List;
 import java.util.Optional;
 
 public class NotificationService implements INotificationService {
 
-	INotificationDAO<CommentNotification> commentDAO;
-	INotificationDAO<VoteNotification> voteDAO;
-	IUserDAO userDAO;
+	@Autowired
+	private INotificationRepository<CommentNotification> commentRepository;
+	@Autowired
+	private INotificationRepository<VoteNotification> voteRepository;
+	@Autowired
+	private IUserRepository userRepository;
 
-	public NotificationService(INotificationDAO<CommentNotification> iCommentNotificationDAO, INotificationDAO<VoteNotification> iVoteNotificationDAO, IUserDAO userDAO) {
-		this.commentDAO = iCommentNotificationDAO;
-		this.voteDAO = iVoteNotificationDAO;
-		this.userDAO = userDAO;
+	IUserService userService;
+
+	public NotificationService(IUserService userService) {
+		this.userService = userService;
 	}
 
 	private Notification getNotificationIfNotPresent(Optional<? extends Notification> notification) {
@@ -32,10 +37,9 @@ public class NotificationService implements INotificationService {
 
 	@Override
 	public CommentNotification create(CommentNotification notification) {
-		UserService userService = new UserService(userDAO);
 		User user = notification.getUser();
 		userService.addCommentNotification(user.getID(), notification);
-		return commentDAO.create(notification);
+		return commentRepository.save(notification);
 	}
 
 	@Override
@@ -45,10 +49,9 @@ public class NotificationService implements INotificationService {
 
 	@Override
 	public VoteNotification create(VoteNotification notification) {
-		UserService userService = new UserService(userDAO);
 		User user = notification.getUser();
 		userService.addVoteNotification(user.getID(), notification);
-		return voteDAO.create(notification);
+		return voteRepository.save(notification);
 	}
 
 	@Override
@@ -58,8 +61,7 @@ public class NotificationService implements INotificationService {
 
 	@Override
 	public CommentNotification update(CommentNotification tempNotification) {
-		Optional<CommentNotification> notification = commentDAO.update(tempNotification);
-		return (CommentNotification) getNotificationIfNotPresent(notification);
+		return commentRepository.save(tempNotification);
 	}
 
 	@Override
@@ -69,8 +71,7 @@ public class NotificationService implements INotificationService {
 
 	@Override
 	public VoteNotification update(VoteNotification tempNotification) {
-		Optional<VoteNotification> notification = voteDAO.update(tempNotification);
-		return (VoteNotification) getNotificationIfNotPresent(notification);
+		return voteRepository.save(tempNotification);
 	}
 
 	@Override
@@ -80,23 +81,23 @@ public class NotificationService implements INotificationService {
 
 	@Override
 	public CommentNotification findCommentNotificationByID(int ID) {
-		Optional<CommentNotification> notification = commentDAO.selectByID(ID);
+		Optional<Notification> notification = commentRepository.findById(ID);
 		return (CommentNotification) getNotificationIfNotPresent(notification);
 	}
 
 	@Override
 	public VoteNotification findVoteNotificationByID(int ID) {
-		Optional<VoteNotification> notification = voteDAO.selectByID(ID);
+		Optional<Notification> notification = voteRepository.findById(ID);
 		return (VoteNotification) getNotificationIfNotPresent(notification);
 	}
 
 	@Override
-	public List<CommentNotification> listCommentNotifications() {
-		return commentDAO.list();
+	public List<? extends Notification> listCommentNotifications() {
+		return commentRepository.findAll();
 	}
 
 	@Override
-	public List<VoteNotification> listVoteNotifications() {
-		return voteDAO.list();
+	public List<? extends Notification> listVoteNotifications() {
+		return voteRepository.findAll();
 	}
 }

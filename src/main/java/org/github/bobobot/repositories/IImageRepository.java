@@ -8,12 +8,4 @@ import java.util.Optional;
 
 public interface IImageRepository extends JpaRepository<Image, Integer> {
 
-	@Override
-	Image save(Image image);
-
-	@Override
-	Optional<Image> findById(Integer integer);
-
-	@Override
-	void delete(Image image);
 }

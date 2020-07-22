@@ -4,6 +4,7 @@ import org.apache.commons.validator.routines.EmailValidator;
 import org.github.bobobot.dao.IUserDAO;
 import org.github.bobobot.entities.Thread;
 import org.github.bobobot.entities.*;
+import org.github.bobobot.repositories.IUserRepository;
 import org.github.bobobot.services.IUserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -15,15 +16,11 @@ import java.util.Optional;
 
 public class UserService implements IUserService {
 
+	@Autowired
+	private IUserRepository repository;
 	private PasswordEncoder passwordEncoder;
-	private final IUserDAO dao;
 
-	public UserService(IUserDAO dao) {
-		this.dao = dao;
-	}
-
-	public UserService(IUserDAO dao, PasswordEncoder passwordEncoder) {
-		this.dao = dao;
+	public UserService(PasswordEncoder passwordEncoder) {
 		this.passwordEncoder = passwordEncoder;
 	}
 
@@ -44,7 +41,7 @@ public class UserService implements IUserService {
 		validateEmail(tempUser.getEmail());
 		//a tempUser passwordHash-je itt még csak az enkódolatlan jelszó
 		tempUser.setPasswordHash(passwordEncoder.encode(tempUser.getPasswordHash()));
-		return dao.create(tempUser);
+		return repository.save(tempUser);
 	}
 
 	@Override
@@ -67,8 +64,7 @@ public class UserService implements IUserService {
 	@Override
 	public User update(User tempUser) {
 		validateEmail(tempUser.getEmail());
-		Optional<User> user = dao.update(tempUser);
-		return getUserIfPresent(user);
+		return repository.save(tempUser);
 	}
 
 	@Override
@@ -83,7 +79,7 @@ public class UserService implements IUserService {
 
 	@Override
 	public User addCommentNotification(int ID, CommentNotification notification) {
-		Optional<User> optionalUser = dao.selectById(ID);
+		Optional<User> optionalUser = repository.findById(ID);
 		User user = getUserIfPresent(optionalUser);
 		user.addCommentNotification(notification);
 		return update(user);
@@ -91,7 +87,7 @@ public class UserService implements IUserService {
 
 	@Override
 	public User addVoteNotification(int ID, VoteNotification notification) {
-		Optional<User> optionalUser = dao.selectById(ID);
+		Optional<User> optionalUser = repository.findById(ID);
 		User user = getUserIfPresent(optionalUser);
 		user.addVoteNotification(notification);
 		return update(user);
@@ -99,43 +95,42 @@ public class UserService implements IUserService {
 
 	@Override
 	public List<User> list() {
-		return dao.list();
+		return repository.findAll();
 	}
 
 	@Override
 	public User findById(int ID) {
-		Optional<User> user = dao.selectById(ID);
+		Optional<User> user = repository.findById(ID);
 		return getUserIfPresent(user);
 	}
 
 	@Override
 	public User findByUsername(String name) {
-		Optional<User> user = dao.selectByUsername(name);
+		Optional<User> user = repository.findByUsername(name);
 		return getUserIfPresent(user);
 	}
 
 	@Override
 	public User findByEmail(String email) {
-		Optional<User> user = dao.selectByEmail(email);
+		Optional<User> user = repository.findByEmail(email);
 		return getUserIfPresent(user);
 	}
 
 	@Override
 	public void delete(int ID) {
-		Optional<User> user = dao.delete(ID);
-		getUserIfPresent(user); //throw error if not found
+		repository.deleteById(ID);
 	}
 
 
 	@Override
 	public List<Notification> getUsersNotifications(int ID) {
-		User user = getUserIfPresent(dao.selectById(ID));
+		User user = getUserIfPresent(repository.findById(ID));
 		return user.getNotifications();
 	}
 
 	@Override
 	public List<Notification> getUsersActiveNotifications(int ID) {
-		User user = getUserIfPresent(dao.selectById(ID));
+		User user = getUserIfPresent(repository.findById(ID));
 		List<Notification> notifications = user.getNotifications();
 		notifications.removeIf(n -> n.isRead());
 		return notifications;

@@ -5,7 +5,9 @@ import org.github.bobobot.entities.Board;
 import org.github.bobobot.entities.Reply;
 import org.github.bobobot.entities.Thread;
 import org.github.bobobot.entities.User;
+import org.github.bobobot.repositories.IThreadRepository;
 import org.github.bobobot.services.IThreadService;
+import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -13,11 +15,8 @@ import java.util.Optional;
 
 public class ThreadService implements IThreadService {
 
-	private final IThreadDAO dao;
-
-	public ThreadService(IThreadDAO dao) {
-		this.dao = dao;
-	}
+	@Autowired
+	private IThreadRepository repository;
 
 	private Thread getThreadIfPresent(Optional<Thread> thread) {
 		if (!thread.isPresent()) {
@@ -29,7 +28,7 @@ public class ThreadService implements IThreadService {
 	@Override
 	public Thread create(Thread tempThread) {
 		tempThread.getUser().addThread(tempThread);
-		return dao.create(tempThread);
+		return repository.save(tempThread);
 	}
 
 	@Override
@@ -51,8 +50,7 @@ public class ThreadService implements IThreadService {
 
 	@Override
 	public Thread update(Thread tempThread) {
-		Optional<Thread> thread = dao.update(tempThread);
-		return getThreadIfPresent(thread);
+		return repository.save(tempThread);
 	}
 
 	@Override
@@ -67,18 +65,17 @@ public class ThreadService implements IThreadService {
 
 	@Override
 	public List<Thread> list() {
-		return dao.list();
+		return repository.findAll();
 	}
 
 	@Override
 	public Thread findById(int ID) {
-		Optional<Thread> thread = dao.select(ID);
+		Optional<Thread> thread = repository.findById(ID);
 		return getThreadIfPresent(thread);
 	}
 
 	@Override
 	public void delete(int ID) {
-		Optional<Thread> thread = dao.delete(ID);
-		getThreadIfPresent(thread); //throw error if not found
+		repository.deleteById(ID);
 	}
 }
