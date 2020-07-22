@@ -5,6 +5,7 @@ import org.github.bobobot.entities.Board;
 import org.github.bobobot.repositories.IBoardRepository;
 import org.github.bobobot.services.IBoardService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
@@ -13,8 +14,6 @@ public class BoardService implements IBoardService {
 
 	@Autowired
 	private IBoardRepository repository;
-
-
 
 	private Board getBoardIfPresent(Optional<Board> board) {
 		if (!board.isPresent()) {
@@ -30,7 +29,7 @@ public class BoardService implements IBoardService {
 
 	@Override
 	public Board create(String shortName, String longName) {
-		return create(new Board(-1, shortName, longName));
+		return create(new Board(shortName, longName));
 	}
 
 	@Override

@@ -9,6 +9,7 @@ import org.github.bobobot.repositories.IUserRepository;
 import org.github.bobobot.services.INotificationService;
 import org.github.bobobot.services.IUserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;

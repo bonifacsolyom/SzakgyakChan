@@ -9,7 +9,7 @@ import java.time.LocalDateTime;
 
 public class TestHelperUtils {
 
-	static ReplyService createReplyService() {
+/*	static ReplyService createReplyService() {
 		return new ReplyService(new InMemoryReplyDAO(), new InMemoryCommentNotificationDAO(), new InMemoryVoteNotificationDAO());
 	}
 
@@ -36,6 +36,7 @@ public class TestHelperUtils {
 	static ThreadService createThreadService() {
 		return new ThreadService(new InMemoryThreadDAO());
 	}
+*/
 
 	/**
 	 * Creates a dummy user for testing with the following details:<p>

@@ -24,7 +24,7 @@ public class InMemoryImageDAO implements IImageDAO {
 				.findFirst();
 
 		if (memoryImage.isPresent()) {
-			memoryImage.get().setExists(image.isExists());
+			memoryImage.get().setExisting(image.isExisting());
 			memoryImage.get().setPath(image.getPath());
 		}
 

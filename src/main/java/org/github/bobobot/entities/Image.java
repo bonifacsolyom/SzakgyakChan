@@ -2,20 +2,24 @@ package org.github.bobobot.entities;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
-import org.springframework.data.annotation.Id;
+import lombok.NoArgsConstructor;
 
 import javax.persistence.Entity;
-import java.util.Objects;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.OneToOne;
 
 @Entity
 @Data
 @AllArgsConstructor
+@NoArgsConstructor
 public class Image {
 
 	@Id
+	@GeneratedValue
 	int ID;
 
-	boolean exists;
+	boolean existing;
 
 	String path;
 }

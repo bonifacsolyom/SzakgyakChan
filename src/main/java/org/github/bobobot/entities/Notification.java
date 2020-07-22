@@ -3,16 +3,17 @@ package org.github.bobobot.entities;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.springframework.data.annotation.Id;
 
-import javax.persistence.ManyToOne;
+import javax.persistence.*;
 
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
+@Entity
 public abstract class Notification {
 
 	@Id
+	@GeneratedValue
 	int ID;
 
 	boolean read = false;

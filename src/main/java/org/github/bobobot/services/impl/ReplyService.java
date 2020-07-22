@@ -3,10 +3,12 @@ package org.github.bobobot.services.impl;
 import org.github.bobobot.entities.Thread;
 import org.github.bobobot.entities.*;
 import org.github.bobobot.entities.VoteNotification.VoteType;
+import org.github.bobobot.repositories.IImageRepository;
 import org.github.bobobot.repositories.INotificationRepository;
 import org.github.bobobot.repositories.IReplyRepository;
 import org.github.bobobot.services.IReplyService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -16,6 +18,8 @@ public class ReplyService implements IReplyService {
 
 	@Autowired
 	private IReplyRepository replyRepository;
+	@Autowired
+	private IImageRepository imageRepository;
 	@Autowired
 	private INotificationRepository<CommentNotification> commentRepository;
 
@@ -40,6 +44,7 @@ public class ReplyService implements IReplyService {
 		//Értesítjük minden reply userét, hogy egy új reply érkezett a threadbe
 		notifyUsersAboutReplies(tempReply);
 		tempReply.getThread().addReply(tempReply);
+		imageRepository.save(tempReply.getImage());
 		return replyRepository.save(tempReply);
 	}
 

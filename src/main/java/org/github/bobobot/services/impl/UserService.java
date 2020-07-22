@@ -1,14 +1,12 @@
 package org.github.bobobot.services.impl;
 
 import org.apache.commons.validator.routines.EmailValidator;
-import org.github.bobobot.dao.IUserDAO;
 import org.github.bobobot.entities.Thread;
 import org.github.bobobot.entities.*;
 import org.github.bobobot.repositories.IUserRepository;
 import org.github.bobobot.services.IUserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -18,11 +16,8 @@ public class UserService implements IUserService {
 
 	@Autowired
 	private IUserRepository repository;
+	@Autowired
 	private PasswordEncoder passwordEncoder;
-
-	public UserService(PasswordEncoder passwordEncoder) {
-		this.passwordEncoder = passwordEncoder;
-	}
 
 	private void validateEmail(String email) {
 		EmailValidator validator = EmailValidator.getInstance();
@@ -106,7 +101,7 @@ public class UserService implements IUserService {
 
 	@Override
 	public User findByUsername(String name) {
-		Optional<User> user = repository.findByUsername(name);
+		Optional<User> user = repository.findByName(name);
 		return getUserIfPresent(user);
 	}
 

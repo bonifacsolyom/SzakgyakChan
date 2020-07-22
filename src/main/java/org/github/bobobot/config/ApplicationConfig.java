@@ -8,11 +8,13 @@ import org.github.bobobot.repositories.IBoardRepository;
 import org.github.bobobot.services.*;
 import org.github.bobobot.services.impl.*;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
 @Configuration
+@ComponentScan("org.github.bobobot")
 public class ApplicationConfig {
 
 	@Bean
@@ -37,7 +39,7 @@ public class ApplicationConfig {
 
 	@Bean
 	public IUserService userService(PasswordEncoder passwordEncoder) {
-		return new UserService(passwordEncoder);
+		return new UserService();
 	}
 
 

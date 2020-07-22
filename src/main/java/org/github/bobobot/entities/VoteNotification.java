@@ -1,6 +1,7 @@
 package org.github.bobobot.entities;
 
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import javax.persistence.Entity;
 import javax.persistence.Enumerated;
@@ -8,6 +9,7 @@ import java.util.Objects;
 
 @Entity
 @Data
+@NoArgsConstructor
 public class VoteNotification extends Notification {
 	@Enumerated
 	VoteType voteType;

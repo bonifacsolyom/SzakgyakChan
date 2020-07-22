@@ -2,9 +2,12 @@ package org.github.bobobot.entities;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
-import org.springframework.data.annotation.Id;
+import lombok.NoArgsConstructor;
+
+import javax.persistence.Id;
 
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import java.util.ArrayList;
@@ -14,9 +17,11 @@ import java.util.Objects;
 @Entity
 @Data
 @AllArgsConstructor
+@NoArgsConstructor
 public class Thread {
 
 	@Id
+	@GeneratedValue
 	int ID;
 
 	String title;

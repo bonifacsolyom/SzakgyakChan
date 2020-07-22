@@ -1,29 +1,37 @@
 package org.github.bobobot.services.impl;
 
+import org.github.bobobot.config.ApplicationConfig;
 import org.github.bobobot.entities.Board;
 import org.github.bobobot.services.IBoardService;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.boot.test.autoconfigure.orm.jpa.TestEntityManager;
+import org.springframework.context.annotation.ComponentScan;
+import org.springframework.test.annotation.DirtiesContext;
+import org.springframework.test.context.ContextConfiguration;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatIllegalArgumentException;
-import static org.github.bobobot.services.impl.TestHelperUtils.createBoardService;
 import static org.github.bobobot.services.impl.TestHelperUtils.createDummyBoard;
 
 @DataJpaTest
+@DirtiesContext
+@ComponentScan("org.github.bobobot")
+@ContextConfiguration(classes = ApplicationConfig.class)
 public class BoardServiceTest {
 
 	@Autowired
 	private TestEntityManager em;
 
+	@Autowired
+	private IBoardService service;
+
 	@Test
 	void createBoard() {
-		IBoardService service = createBoardService();
-		Board originalBoard = createDummyBoard();
+		Board originalBoard = new Board("b", "random");
 
-		service.create(originalBoard);
+		em.persist(originalBoard);
 		Board board = service.findById(0);
 
 		assertThat(board).isEqualTo(originalBoard);
@@ -31,10 +39,9 @@ public class BoardServiceTest {
 
 	@Test
 	void updateBoard() {
-		IBoardService service = createBoardService();
 		Board originalBoard = createDummyBoard();
 
-		service.create(originalBoard);
+		em.persist(originalBoard);
 		service.update(0, "t1", "teszt board 1");
 		Board board = service.findById(0);
 
@@ -44,14 +51,12 @@ public class BoardServiceTest {
 
 	@Test
 	void updateBoardButDoesntExist() {
-		IBoardService service = createBoardService();
 
 		assertThatIllegalArgumentException().isThrownBy(() -> service.update(createDummyBoard()));
 	}
 
 	@Test
 	void listAllBoards() {
-		IBoardService service = createBoardService();
 		service.create(createDummyBoard());
 		service.create(createDummyBoard());
 
