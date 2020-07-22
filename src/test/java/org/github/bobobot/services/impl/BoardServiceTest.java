@@ -3,13 +3,20 @@ package org.github.bobobot.services.impl;
 import org.github.bobobot.entities.Board;
 import org.github.bobobot.services.IBoardService;
 import org.junit.jupiter.api.Test;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
+import org.springframework.boot.test.autoconfigure.orm.jpa.TestEntityManager;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatIllegalArgumentException;
 import static org.github.bobobot.services.impl.TestHelperUtils.createBoardService;
 import static org.github.bobobot.services.impl.TestHelperUtils.createDummyBoard;
 
+@DataJpaTest
 public class BoardServiceTest {
+
+	@Autowired
+	private TestEntityManager em;
 
 	@Test
 	void createBoard() {

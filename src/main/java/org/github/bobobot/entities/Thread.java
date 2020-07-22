@@ -37,9 +37,7 @@ public class Thread {
 		this.user = user;
 	}
 
-
 	public void addReply(Reply reply) {
 		this.replies.add(reply);
 	}
-
 }
