@@ -59,6 +59,7 @@ public class UserService implements IUserService {
 	public User update(User tempUser) {
 		getUserIfPresent(repository.findById(tempUser.getID())); //dobjunk errort ha nem létezik
 		validateEmail(tempUser.getEmail());
+		tempUser.setPasswordHash(passwordEncoder.encode(tempUser.getPasswordHash()));
 		return repository.save(tempUser);
 	}
 

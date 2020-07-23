@@ -23,7 +23,7 @@ public interface IUserService {
 	 * @param isAdmin              Specifies whether a user is an administrator or not.
 	 * @param name                 The name of the user.
 	 * @param email                The email of the user.
-	 * @param passwordHash         The password hash of the user.
+	 * @param password             The password hash of the user.
 	 * @param threads              The threads this user has posted.
 	 * @param replies              The replies this user has posted.
 	 * @param commentNotifications The comment notifications this user has.
@@ -31,7 +31,7 @@ public interface IUserService {
 	 * @return The created user.
 	 * @see IUserService#register(boolean, String, String, String)
 	 */
-	User register(boolean isAdmin, String name, String email, String passwordHash, List<Thread> threads, List<Reply> replies, List<CommentNotification> commentNotifications, List<VoteNotification> voteNotifications);
+	User register(boolean isAdmin, String name, String email, String password, List<Thread> threads, List<Reply> replies, List<CommentNotification> commentNotifications, List<VoteNotification> voteNotifications);
 
 	/**
 	 * Creates a user.
@@ -39,10 +39,10 @@ public interface IUserService {
 	 * @param isAdmin      Specifies whether a user is an administrator or not.
 	 * @param name         The name of the user.
 	 * @param email        The email of the user.
-	 * @param passwordHash The password hash of the user.
+	 * @param password 	   The password of the user.
 	 * @return The created user.
 	 */
-	User register(boolean isAdmin, String name, String email, String passwordHash);
+	User register(boolean isAdmin, String name, String email, String password);
 
 	Optional<User> login(String name, String password);
 
@@ -63,7 +63,7 @@ public interface IUserService {
 	 * @param email   The email of the user.
 	 * @return The updated user.
 	 */
-	User update(Long ID, boolean isAdmin, String name, String email, String passwordHash);
+	User update(Long ID, boolean isAdmin, String name, String email, String password);
 
 	/**
 	 * Updates a user.
@@ -72,14 +72,14 @@ public interface IUserService {
 	 * @param isAdmin              Specifies whether a user is an administrator or not.
 	 * @param name                 The name of the user.
 	 * @param email                The email of the user.
-	 * @param passwordHash         The password hash of the user.
+	 * @param password         The password hash of the user.
 	 * @param threads              The threads this user has posted.
 	 * @param replies              The replies this user has posted.
 	 * @param commentNotifications The comment notifications this user has.
 	 * @param voteNotifications    The vote notifications this user has.
 	 * @return The updated user.
 	 */
-	User update(Long ID, boolean isAdmin, String name, String email, String passwordHash, List<Thread> threads, List<Reply> replies, List<CommentNotification> commentNotifications, List<VoteNotification> voteNotifications);
+	User update(Long ID, boolean isAdmin, String name, String email, String password, List<Thread> threads, List<Reply> replies, List<CommentNotification> commentNotifications, List<VoteNotification> voteNotifications);
 
 	/**
 	 * Adds a comment notification to a user

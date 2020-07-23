@@ -19,7 +19,7 @@ public class Image {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	Long ID;
 
-	boolean existing;
+	boolean existing = false;
 
 	String path;
 
