@@ -12,7 +12,7 @@ public class InMemoryBoardDAO implements IBoardDAO {
 
 	@Override
 	public Board create(Board board) {
-		board.setID(memory.size());
+		board.setID((long) memory.size());
 		memory.add(board);
 		return board;
 	}
@@ -24,7 +24,6 @@ public class InMemoryBoardDAO implements IBoardDAO {
 				.findFirst();
 
 		if (memoryBoard.isPresent()) {
-			//TODO: nincs erre szebb megoldás?
 			memoryBoard.get().setShortName(board.getShortName());
 			memoryBoard.get().setLongName(board.getLongName());
 		}

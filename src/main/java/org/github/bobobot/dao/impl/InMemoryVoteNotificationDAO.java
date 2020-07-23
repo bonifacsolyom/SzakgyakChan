@@ -8,7 +8,7 @@ public class InMemoryVoteNotificationDAO extends InMemoryNotificationDAO<VoteNot
 
 	@Override
 	public VoteNotification create(VoteNotification notification) {
-		notification.setID(memory.size());
+		notification.setID((long) memory.size());
 		memory.add(notification);
 		return notification;
 	}

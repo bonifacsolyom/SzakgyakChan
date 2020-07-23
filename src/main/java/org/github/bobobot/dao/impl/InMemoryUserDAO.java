@@ -12,7 +12,7 @@ public class InMemoryUserDAO implements IUserDAO {
 
 	@Override
 	public User create(User user) {
-		user.setID(memory.size());
+		user.setID((long) memory.size());
 		memory.add(user);
 		return user;
 	}

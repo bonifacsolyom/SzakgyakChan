@@ -7,7 +7,6 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.boot.test.autoconfigure.orm.jpa.TestEntityManager;
-import org.springframework.context.annotation.ComponentScan;
 import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.context.ContextConfiguration;
 
@@ -16,8 +15,7 @@ import static org.assertj.core.api.Assertions.assertThatIllegalArgumentException
 import static org.github.bobobot.services.impl.TestHelperUtils.createDummyBoard;
 
 @DataJpaTest
-@DirtiesContext
-@ComponentScan("org.github.bobobot")
+@DirtiesContext(classMode = DirtiesContext.ClassMode.BEFORE_EACH_TEST_METHOD)
 @ContextConfiguration(classes = ApplicationConfig.class)
 public class BoardServiceTest {
 
@@ -29,12 +27,13 @@ public class BoardServiceTest {
 
 	@Test
 	void createBoard() {
-		Board originalBoard = new Board("b", "random");
+		Board originalBoard = createDummyBoard();
 
 		em.persist(originalBoard);
-		Board board = service.findById(0);
+		Board board = service.findById(1L);
 
-		assertThat(board).isEqualTo(originalBoard);
+
+		assertThat(board.getShortName()).isEqualTo(originalBoard.getShortName());
 	}
 
 	@Test
@@ -42,8 +41,8 @@ public class BoardServiceTest {
 		Board originalBoard = createDummyBoard();
 
 		em.persist(originalBoard);
-		service.update(0, "t1", "teszt board 1");
-		Board board = service.findById(0);
+		service.update(1L, "t1", "teszt board 1");
+		Board board = service.findById(1L);
 
 		assertThat(board.getShortName()).isEqualTo("t1");
 	}
@@ -51,8 +50,10 @@ public class BoardServiceTest {
 
 	@Test
 	void updateBoardButDoesntExist() {
+		Board board = createDummyBoard();
+		board.setID(1L);
 
-		assertThatIllegalArgumentException().isThrownBy(() -> service.update(createDummyBoard()));
+		assertThatIllegalArgumentException().isThrownBy(() -> service.update(board));
 	}
 
 	@Test

@@ -1,6 +1,9 @@
 package org.github.bobobot.entities;
 
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+import lombok.NonNull;
 
 import javax.persistence.*;
 import java.util.ArrayList;
@@ -13,8 +16,8 @@ import java.util.List;
 public class Board {
 
 	@Id
-	@GeneratedValue
-	int ID;
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	Long ID;
 
 	@NonNull
 	String shortName;
@@ -22,7 +25,7 @@ public class Board {
 	@NonNull
 	String longName;
 
-	@OneToMany(cascade = CascadeType.ALL)
+	@OneToMany(cascade = CascadeType.ALL, mappedBy = "board")
 	List<Thread> threads = new ArrayList<>();
 
 	public Board(@NonNull String shortName, @NonNull String longName) {
@@ -30,7 +33,7 @@ public class Board {
 		this.longName = longName;
 	}
 
-	public Board(int ID, @NonNull String shortName, @NonNull String longName) {
+	public Board(Long ID, @NonNull String shortName, @NonNull String longName) {
 		this.ID = ID;
 		this.shortName = shortName;
 		this.longName = longName;

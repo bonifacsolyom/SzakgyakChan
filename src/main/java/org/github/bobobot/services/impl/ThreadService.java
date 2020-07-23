@@ -1,6 +1,5 @@
 package org.github.bobobot.services.impl;
 
-import org.github.bobobot.dao.IThreadDAO;
 import org.github.bobobot.entities.Board;
 import org.github.bobobot.entities.Reply;
 import org.github.bobobot.entities.Thread;
@@ -8,7 +7,6 @@ import org.github.bobobot.entities.User;
 import org.github.bobobot.repositories.IThreadRepository;
 import org.github.bobobot.services.IThreadService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -34,33 +32,34 @@ public class ThreadService implements IThreadService {
 
 	@Override
 	public Thread create(String title, Board board, User user, List<Reply> replies) {
-		return create(new Thread(-1, title, board, user, replies));
+		return create(new Thread(title, board, user, replies));
 	}
 
 	@Override
 	public Thread create(String title, Board board, User user, Reply firstPost) {
 		List<Reply> replies = new ArrayList<>();
 		replies.add(firstPost);
-		return create(new Thread(-1, title, board, user, replies));
+		return create(new Thread(title, board, user, replies));
 	}
 
 	@Override
 	public Thread create(String title, Board board, User user) {
-		return create(new Thread(-1, title, board, user));
+		return create(new Thread(title, board, user));
 	}
 
 	@Override
 	public Thread update(Thread tempThread) {
+		getThreadIfPresent(repository.findById(tempThread.getID())); //dobjunk errort ha nem létezik
 		return repository.save(tempThread);
 	}
 
 	@Override
-	public Thread update(int ID, String title, Board board, User user) {
+	public Thread update(Long ID, String title, Board board, User user) {
 		return update(new Thread(ID, title, board, user));
 	}
 
 	@Override
-	public Thread update(int ID, String title, Board board, User user, List<Reply> replies) {
+	public Thread update(Long ID, String title, Board board, User user, List<Reply> replies) {
 		return update(new Thread(ID, title, board, user, replies));
 	}
 
@@ -70,13 +69,14 @@ public class ThreadService implements IThreadService {
 	}
 
 	@Override
-	public Thread findById(int ID) {
+	public Thread findById(Long ID) {
 		Optional<Thread> thread = repository.findById(ID);
 		return getThreadIfPresent(thread);
 	}
 
 	@Override
-	public void delete(int ID) {
+	public void delete(Long ID) {
+		getThreadIfPresent(repository.findById(ID)); //dobjunk errort ha nem létezik
 		repository.deleteById(ID);
 	}
 }

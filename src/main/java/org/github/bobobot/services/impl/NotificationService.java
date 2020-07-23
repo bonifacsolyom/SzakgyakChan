@@ -9,21 +9,19 @@ import org.github.bobobot.repositories.IUserRepository;
 import org.github.bobobot.services.INotificationService;
 import org.github.bobobot.services.IUserService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
 
 public class NotificationService implements INotificationService {
 
+	IUserService userService;
 	@Autowired
 	private INotificationRepository<CommentNotification> commentRepository;
 	@Autowired
 	private INotificationRepository<VoteNotification> voteRepository;
 	@Autowired
 	private IUserRepository userRepository;
-
-	IUserService userService;
 
 	public NotificationService(IUserService userService) {
 		this.userService = userService;
@@ -45,7 +43,7 @@ public class NotificationService implements INotificationService {
 
 	@Override
 	public CommentNotification create(boolean read, User user, String replyContent) {
-		return create(new CommentNotification(-1, read, user, replyContent));
+		return create(new CommentNotification(read, user, replyContent));
 	}
 
 	@Override
@@ -57,37 +55,39 @@ public class NotificationService implements INotificationService {
 
 	@Override
 	public VoteNotification create(boolean read, User user, VoteNotification.VoteType voteType) {
-		return create(new VoteNotification(-1, read, user, voteType));
+		return create(new VoteNotification(read, user, voteType));
 	}
 
 	@Override
 	public CommentNotification update(CommentNotification tempNotification) {
+		getNotificationIfNotPresent(commentRepository.findById(tempNotification.getID())); //dobjunk errort ha nem létezik
 		return commentRepository.save(tempNotification);
 	}
 
 	@Override
-	public CommentNotification update(int ID, boolean read, User user, String replyContent) {
+	public CommentNotification update(Long ID, boolean read, User user, String replyContent) {
 		return update(new CommentNotification(ID, read, user, replyContent));
 	}
 
 	@Override
 	public VoteNotification update(VoteNotification tempNotification) {
+		getNotificationIfNotPresent(voteRepository.findById(tempNotification.getID())); //dobjunk errort ha nem létezik
 		return voteRepository.save(tempNotification);
 	}
 
 	@Override
-	public VoteNotification update(int ID, boolean read, User user, VoteNotification.VoteType voteType) {
+	public VoteNotification update(Long ID, boolean read, User user, VoteNotification.VoteType voteType) {
 		return update(new VoteNotification(ID, read, user, voteType));
 	}
 
 	@Override
-	public CommentNotification findCommentNotificationByID(int ID) {
+	public CommentNotification findCommentNotificationByID(Long ID) {
 		Optional<Notification> notification = commentRepository.findById(ID);
 		return (CommentNotification) getNotificationIfNotPresent(notification);
 	}
 
 	@Override
-	public VoteNotification findVoteNotificationByID(int ID) {
+	public VoteNotification findVoteNotificationByID(Long ID) {
 		Optional<Notification> notification = voteRepository.findById(ID);
 		return (VoteNotification) getNotificationIfNotPresent(notification);
 	}

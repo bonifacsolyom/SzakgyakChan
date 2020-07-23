@@ -1,11 +1,9 @@
 package org.github.bobobot.services.impl;
 
-import org.github.bobobot.dao.IBoardDAO;
 import org.github.bobobot.entities.Board;
 import org.github.bobobot.repositories.IBoardRepository;
 import org.github.bobobot.services.IBoardService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
@@ -34,11 +32,12 @@ public class BoardService implements IBoardService {
 
 	@Override
 	public Board update(Board tempBoard) {
+		getBoardIfPresent(repository.findById(tempBoard.getID())); //dobjunk errort ha nem létezik
 		return repository.save(tempBoard);
 	}
 
 	@Override
-	public Board update(int ID, String shortName, String longName) {
+	public Board update(Long ID, String shortName, String longName) {
 		return update(new Board(ID, shortName, longName));
 	}
 
@@ -48,7 +47,7 @@ public class BoardService implements IBoardService {
 	}
 
 	@Override
-	public Board findById(int ID) {
+	public Board findById(Long ID) {
 		Optional<Board> board = repository.findById(ID);
 		return getBoardIfPresent(board);
 	}
@@ -60,7 +59,8 @@ public class BoardService implements IBoardService {
 	}
 
 	@Override
-	public void delete(int ID) {
+	public void delete(Long ID) {
+		getBoardIfPresent(repository.findById(ID)); //dobjunk errort ha nem létezik
 		repository.deleteById(ID);
 	}
 }

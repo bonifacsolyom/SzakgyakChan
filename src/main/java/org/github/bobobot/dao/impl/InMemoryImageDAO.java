@@ -12,7 +12,7 @@ public class InMemoryImageDAO implements IImageDAO {
 
 	@Override
 	public Image create(Image image) {
-		image.setID(memory.size());
+		image.setID((long) memory.size());
 		memory.add(image);
 		return image;
 	}

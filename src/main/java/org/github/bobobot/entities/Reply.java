@@ -5,7 +5,6 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
-
 import java.time.LocalDateTime;
 
 @Entity
@@ -14,8 +13,8 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 public class Reply {
 	@Id
-	@GeneratedValue
-	int ID;
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	Long ID;
 
 	String content;
 
@@ -23,14 +22,31 @@ public class Reply {
 
 	int votes;
 
-	@OneToOne
-	Image image;
-
 	@ManyToOne
 	Thread thread;
 
 	@ManyToOne
 	User user;
+
+	@OneToOne(cascade = CascadeType.ALL)
+	Image image;
+
+	public Reply(String content, LocalDateTime date, int votes, Thread thread, User user, Image image) {
+		this.content = content;
+		this.date = date;
+		this.votes = votes;
+		this.image = image;
+		this.thread = thread;
+		this.user = user;
+	}
+
+	public Reply(String content, LocalDateTime date, int votes, Thread thread, User user) {
+		this.content = content;
+		this.date = date;
+		this.votes = votes;
+		this.thread = thread;
+		this.user = user;
+	}
 
 	public int upvote() {
 		return ++votes;
@@ -39,5 +55,4 @@ public class Reply {
 	public int downvote() {
 		return --votes;
 	}
-
 }

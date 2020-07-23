@@ -14,7 +14,7 @@ public class InMemoryReplyDAO implements IReplyDAO {
 
 	@Override
 	public Reply create(Reply reply) {
-		reply.setID(memory.size());
+		reply.setID((long) memory.size());
 		memory.add(reply);
 		return reply;
 	}

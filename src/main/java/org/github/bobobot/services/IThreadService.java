@@ -69,7 +69,7 @@ public interface IThreadService {
 	 * @param user  The user that posted the thread.
 	 * @return The updated thread.
 	 */
-	Thread update(int ID, String title, Board board, User user);
+	Thread update(Long ID, String title, Board board, User user);
 
 	/**
 	 * Updates a thread.
@@ -81,7 +81,7 @@ public interface IThreadService {
 	 * @param replies The replies of the thread.
 	 * @return The updated thread.
 	 */
-	Thread update(int ID, String title, Board board, User user, List<Reply> replies);
+	Thread update(Long ID, String title, Board board, User user, List<Reply> replies);
 
 	/**
 	 * Lists all threads.
@@ -96,12 +96,12 @@ public interface IThreadService {
 	 * @param ID The ID of the thread to be found
 	 * @return The found thread, wrapped in an optional.
 	 */
-	Thread findById(int ID);
+	Thread findById(Long ID);
 
 	/**
 	 * Deletes a thread.
 	 *
 	 * @param ID The ID of the thread to be deleted.
 	 */
-	void delete(int ID);
+	void delete(Long ID);
 }

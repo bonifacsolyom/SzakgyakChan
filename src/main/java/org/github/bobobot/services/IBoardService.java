@@ -40,7 +40,7 @@ public interface IBoardService {
 	 * @param longName  The longer description of the board - should only be a couple words long.
 	 * @return The updated board.
 	 */
-	Board update(int ID, String shortName, String longName);
+	Board update(Long ID, String shortName, String longName);
 
 	/**
 	 * Lists all existing boards.
@@ -55,7 +55,7 @@ public interface IBoardService {
 	 * @param ID The ID of the board to be found.
 	 * @return The found board wrapped in an optional.
 	 */
-	Board findById(int ID);
+	Board findById(Long ID);
 
 	/**
 	 * Finds a board by its short name.
@@ -70,5 +70,5 @@ public interface IBoardService {
 	 *
 	 * @param ID The ID of the board to be deleted.
 	 */
-	void delete(int ID);
+	void delete(Long ID);
 }

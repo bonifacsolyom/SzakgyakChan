@@ -3,15 +3,11 @@ package org.github.bobobot.entities;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import lombok.NonNull;
 
-import javax.persistence.Id;
-
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.OneToMany;
+import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -22,31 +18,34 @@ import java.util.stream.Stream;
 public class User {
 
 	@Id
-	@GeneratedValue
-	int ID;
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	Long ID;
 
 	boolean isAdmin;
 
+	@NonNull
 	String name;
 
+	@NonNull
 	String email;
 
+	@NonNull
 	String passwordHash;
 
-	@OneToMany
+	@OneToMany(cascade = CascadeType.ALL, mappedBy = "user")
 	List<Thread> threads = new ArrayList<>();
 
-	@OneToMany
+	@OneToMany(cascade = CascadeType.ALL, mappedBy = "user")
 	List<Reply> replies = new ArrayList<>();
 
-	@OneToMany
+	@OneToMany(cascade = CascadeType.ALL, mappedBy = "user")
 	List<CommentNotification> commentNotifications = new ArrayList<>();
 
-	@OneToMany
+	@OneToMany(cascade = CascadeType.ALL, mappedBy = "user")
 	List<VoteNotification> voteNotifications = new ArrayList<>();
 
 
-	public User(int ID, boolean isAdmin, String name, String email, String passwordHash) {
+	public User(Long ID, boolean isAdmin, String name, String email, String passwordHash) {
 		this.ID = ID;
 		this.isAdmin = isAdmin;
 		this.name = name;
@@ -66,6 +65,23 @@ public class User {
 		this.voteNotifications = user.voteNotifications;
 	}
 
+	public User(boolean isAdmin, @NonNull String name, @NonNull String email, @NonNull String passwordHash) {
+		this.isAdmin = isAdmin;
+		this.name = name;
+		this.email = email;
+		this.passwordHash = passwordHash;
+	}
+
+	public User(boolean isAdmin, @NonNull String name, @NonNull String email, @NonNull String passwordHash, List<Thread> threads, List<Reply> replies, List<CommentNotification> commentNotifications, List<VoteNotification> voteNotifications) {
+		this.isAdmin = isAdmin;
+		this.name = name;
+		this.email = email;
+		this.passwordHash = passwordHash;
+		this.threads = threads;
+		this.replies = replies;
+		this.commentNotifications = commentNotifications;
+		this.voteNotifications = voteNotifications;
+	}
 
 	public List<Notification> getNotifications() {
 		return Stream.of(commentNotifications, voteNotifications)

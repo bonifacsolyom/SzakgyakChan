@@ -8,7 +8,7 @@ public class InMemoryCommentNotificationDAO extends InMemoryNotificationDAO<Comm
 
 	@Override
 	public CommentNotification create(CommentNotification notification) {
-		notification.setID(memory.size());
+		notification.setID((long) memory.size());
 		memory.add(notification);
 		return notification;
 	}

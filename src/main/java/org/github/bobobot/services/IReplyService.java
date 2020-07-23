@@ -47,7 +47,7 @@ public interface IReplyService {
 	 * @param user
 	 * @return The updated reply.
 	 */
-	Reply update(int ID, String content, int votes, Image image, Thread thread, User user);
+	Reply update(Long ID, String content, int votes, Image image, Thread thread, User user);
 
 	/**
 	 * Lists all replies.
@@ -62,7 +62,7 @@ public interface IReplyService {
 	 * @param ID The ID of the reply to be found
 	 * @return The found reply, wrapped in an optional.
 	 */
-	Reply findById(int ID);
+	Reply findById(Long ID);
 
 	/**
 	 * Lists all replies that belong to the specified thread.
@@ -79,12 +79,12 @@ public interface IReplyService {
 	 * @param voteType The type of the vote
 	 * @return
 	 */
-	Reply vote(int ID, VoteType voteType);
+	Reply vote(Long ID, VoteType voteType);
 
 	/**
 	 * Deletes a reply.
 	 *
 	 * @param ID The ID of the reply to be deleted.
 	 */
-	void delete(int ID);
+	void delete(Long ID);
 }

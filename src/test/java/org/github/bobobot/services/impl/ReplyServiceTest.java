@@ -1,94 +1,105 @@
-//package org.github.bobobot.services.impl;
-//
-//import org.github.bobobot.entities.Reply;
-//import org.github.bobobot.entities.Thread;
-//import org.github.bobobot.entities.VoteNotification;
-//import org.github.bobobot.services.IReplyService;
-//import org.junit.jupiter.api.Test;
-//
-//import static org.assertj.core.api.Assertions.assertThat;
-//import static org.assertj.core.api.Assertions.assertThatIllegalArgumentException;
-//import static org.github.bobobot.services.impl.TestHelperUtils.*;
-//
-//class ReplyServiceTest {
-//
-//	@Test
-//	void postReply() {
-//		IReplyService service = createReplyService();
-//		Reply originalReply = createDummyReply();
-//
-//		service.post(originalReply);
-//		Reply reply = service.findById(0);
-//
-//		assertThat(originalReply).isEqualTo(reply);
-//	}
-//
-//	@Test
-//	void checkIfReplyStoredTheThreadAfterPost() {
-//		IReplyService service = createReplyService();
-//		Thread thread = createDummyThread();
-//		Reply originalReply = createDummyReply(thread);
-//
-//		service.post(originalReply);
-//
-//		assertThat(thread.getReplies().get(0)).isEqualTo(originalReply);
-//	}
-//
-//	@Test
-//	void checkIfThreadStoredTheReplyAfterPost() {
-//		IReplyService service = createReplyService();
-//		Thread thread = createDummyThread();
-//		Reply reply = createDummyReply(thread);
-//
-//		service.post(reply);
-//
-//		assertThat(reply.getThread()).isEqualTo(thread);
-//	}
-//
-//	@Test
-//	void checkIfOtherRepliesAreNotifiedOfComment() {
-//		IReplyService service = createReplyService();
-//
-//		Thread thread = createDummyThread();
-//		Reply reply1 = createDummyReply(thread);
-//		//Az ID magától számlálódik, tehát nem baj hogy mindkettő -1
-//		Reply reply2 = createDummyReply(thread);
-//
-//		service.post(reply1);
-//		assertThat(reply1.getUser().getNotifications()).hasSize(0);
-//
-//		service.post(reply2);
-//		assertThat(reply1.getUser().getNotifications()).hasSize(1);
-//	}
-//
-//	@Test
-//	void voteOnReply() {
-//		IReplyService service = createReplyService();
-//		Reply reply = createDummyReply();
-//
-//		reply = service.post(reply);
-//		service.vote(reply.getID(), VoteNotification.VoteType.UPVOTE);
-//		reply = service.findById(reply.getID());
-//
-//		assertThat(reply.getVotes()).isEqualTo(1);
-//	}
-//
-//	@Test
-//	void deleteReply() {
-//		IReplyService service = createReplyService();
-//		Reply reply = createDummyReply();
-//
-//		service.post(reply);
-//		assertThat(service.list().size()).isEqualTo(1);
-//		service.delete(0);
-//		assertThat(service.list().size()).isEqualTo(0);
-//	}
-//
-//	@Test
-//	void deleteReplyButDoesntExist() {
-//		IReplyService service = createReplyService();
-//
-//		assertThatIllegalArgumentException().isThrownBy(() -> service.delete(0));
-//	}
-//
-//}
+package org.github.bobobot.services.impl;
+
+import org.github.bobobot.config.ApplicationConfig;
+import org.github.bobobot.entities.Reply;
+import org.github.bobobot.entities.Thread;
+import org.github.bobobot.entities.VoteNotification;
+import org.github.bobobot.services.IReplyService;
+import org.junit.jupiter.api.Test;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
+import org.springframework.boot.test.autoconfigure.orm.jpa.TestEntityManager;
+import org.springframework.test.annotation.DirtiesContext;
+import org.springframework.test.context.ContextConfiguration;
+
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatIllegalArgumentException;
+import static org.github.bobobot.services.impl.TestHelperUtils.createDummyReply;
+import static org.github.bobobot.services.impl.TestHelperUtils.createDummyThread;
+
+@DataJpaTest
+@DirtiesContext(classMode = DirtiesContext.ClassMode.BEFORE_EACH_TEST_METHOD)
+@ContextConfiguration(classes = ApplicationConfig.class)
+class ReplyServiceTest {
+
+	@Autowired
+	private TestEntityManager em;
+
+	@Autowired
+	private IReplyService service;
+
+	@Test
+	void postReply() {
+		Reply originalReply = createDummyReply();
+
+		em.persist(originalReply);
+		Reply reply = service.findById(1L);
+
+		assertThat(originalReply.getContent()).isEqualTo(reply.getContent());
+	}
+
+	@Test
+	void checkIfReplyStoredTheThreadAfterPost() {
+		Thread thread = createDummyThread();
+		Reply originalReply = createDummyReply(thread);
+
+		em.persist(originalReply);
+		service.post(originalReply);
+
+		assertThat(thread.getReplies().get(0).getContent()).isEqualTo(originalReply.getContent());
+	}
+
+	@Test
+	void checkIfThreadStoredTheReplyAfterPost() {
+		Thread thread = createDummyThread();
+		Reply reply = createDummyReply(thread);
+
+		em.persist(reply);
+		service.post(reply);
+
+		assertThat(reply.getThread()).isEqualTo(thread);
+	}
+
+	@Test
+	void checkIfOtherRepliesAreNotifiedOfComment() {
+		Thread thread = createDummyThread();
+		Reply reply1 = createDummyReply(thread);
+		Reply reply2 = createDummyReply(thread);
+
+		em.persist(reply1);
+		service.post(reply1);
+		assertThat(reply1.getUser().getNotifications()).hasSize(0);
+
+		em.persist(reply2);
+		service.post(reply2);
+		assertThat(reply1.getUser().getNotifications()).hasSize(1);
+	}
+
+	@Test
+	void voteOnReply() {
+		Reply reply = createDummyReply();
+
+		em.persist(reply);
+		reply = service.post(reply);
+		service.vote(reply.getID(), VoteNotification.VoteType.UPVOTE);
+		reply = service.findById(reply.getID());
+
+		assertThat(reply.getVotes()).isEqualTo(1);
+	}
+
+	@Test
+	void deleteReply() {
+		Reply reply = new Reply();
+
+		em.persist(reply);
+		assertThat(service.list().size()).isEqualTo(1);
+		service.delete(1L);
+		assertThat(service.list().size()).isEqualTo(0);
+	}
+
+	@Test
+	void deleteReplyButDoesntExist() {
+		assertThatIllegalArgumentException().isThrownBy(() -> service.delete(1L));
+	}
+
+}

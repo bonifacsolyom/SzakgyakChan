@@ -8,7 +8,6 @@ import org.github.bobobot.repositories.INotificationRepository;
 import org.github.bobobot.repositories.IReplyRepository;
 import org.github.bobobot.services.IReplyService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -33,7 +32,7 @@ public class ReplyService implements IReplyService {
 
 	private void notifyUsersAboutReplies(Reply reply) {
 		for (Reply r : reply.getThread().getReplies()) {
-			CommentNotification notification = commentRepository.save(new CommentNotification(-1, false, r.getUser(), reply.getContent()));
+			CommentNotification notification = commentRepository.save(new CommentNotification(false, r.getUser(), reply.getContent()));
 			r.getUser().addCommentNotification(notification);
 		}
 
@@ -44,23 +43,24 @@ public class ReplyService implements IReplyService {
 		//Értesítjük minden reply userét, hogy egy új reply érkezett a threadbe
 		notifyUsersAboutReplies(tempReply);
 		tempReply.getThread().addReply(tempReply);
-		imageRepository.save(tempReply.getImage());
+//		imageRepository.save(tempReply.getImage());
 		return replyRepository.save(tempReply);
 	}
 
 	@Override
 	public Reply post(String content, int votes, Image image, Thread thread, User user) {
-		return post(new Reply(-1, content, LocalDateTime.now(), votes, image, thread, user));
+		return post(new Reply(content, LocalDateTime.now(), votes, thread, user, image));
 	}
 
 	@Override
 	public Reply update(Reply tempReply) {
+		getReplyIfPresent(replyRepository.findById(tempReply.getID())); //dobjunk errort ha nem létezik
 		return replyRepository.save(tempReply);
 	}
 
 	@Override
-	public Reply update(int ID, String content, int votes, Image image, Thread thread, User user) {
-		return update(new Reply(ID, content, LocalDateTime.now(), votes, image, thread, user));
+	public Reply update(Long ID, String content, int votes, Image image, Thread thread, User user) {
+		return update(new Reply(ID, content, LocalDateTime.now(), votes, thread, user, image));
 	}
 
 	@Override
@@ -69,7 +69,7 @@ public class ReplyService implements IReplyService {
 	}
 
 	@Override
-	public Reply findById(int ID) {
+	public Reply findById(Long ID) {
 		Optional<Reply> reply = replyRepository.findById(ID);
 		return getReplyIfPresent(reply);
 	}
@@ -80,7 +80,7 @@ public class ReplyService implements IReplyService {
 	}
 
 	@Override
-	public Reply vote(int ID, VoteType voteType) {
+	public Reply vote(Long ID, VoteType voteType) {
 		Reply reply = findById(ID);
 		reply = changeVote(reply, voteType);
 		return update(reply);
@@ -100,7 +100,8 @@ public class ReplyService implements IReplyService {
 	}
 
 	@Override
-	public void delete(int ID) {
+	public void delete(Long ID) {
+		getReplyIfPresent(replyRepository.findById(ID)); //dobjunk errort ha nem létezik
 		replyRepository.deleteById(ID);
 	}
 }

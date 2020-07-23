@@ -1,10 +1,5 @@
 package org.github.bobobot.config;
 
-import org.github.bobobot.dao.*;
-import org.github.bobobot.dao.impl.*;
-import org.github.bobobot.entities.CommentNotification;
-import org.github.bobobot.entities.VoteNotification;
-import org.github.bobobot.repositories.IBoardRepository;
 import org.github.bobobot.services.*;
 import org.github.bobobot.services.impl.*;
 import org.springframework.context.annotation.Bean;

@@ -12,7 +12,7 @@ public class InMemoryThreadDAO implements IThreadDAO {
 
 	@Override
 	public Thread create(Thread thread) {
-		thread.setID(memory.size());
+		thread.setID((long) memory.size());
 		memory.add(thread);
 		return thread;
 	}

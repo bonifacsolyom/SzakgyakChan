@@ -7,7 +7,6 @@ import org.github.bobobot.repositories.IUserRepository;
 import org.github.bobobot.services.IUserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
@@ -41,12 +40,12 @@ public class UserService implements IUserService {
 
 	@Override
 	public User register(boolean isAdmin, String name, String email, String password, List<Thread> threads, List<Reply> replies, List<CommentNotification> commentNotifications, List<VoteNotification> voteNotifications) {
-		return register(new User(-1, isAdmin, name, email, password, threads, replies, commentNotifications, voteNotifications));
+		return register(new User(isAdmin, name, email, password, threads, replies, commentNotifications, voteNotifications));
 	}
 
 	@Override
 	public User register(boolean isAdmin, String name, String email, String password) {
-		return register(new User(-1, isAdmin, name, email, password));
+		return register(new User(isAdmin, name, email, password));
 	}
 
 	@Override
@@ -58,22 +57,23 @@ public class UserService implements IUserService {
 
 	@Override
 	public User update(User tempUser) {
+		getUserIfPresent(repository.findById(tempUser.getID())); //dobjunk errort ha nem létezik
 		validateEmail(tempUser.getEmail());
 		return repository.save(tempUser);
 	}
 
 	@Override
-	public User update(int ID, boolean isAdmin, String name, String email, String passwordHash) {
+	public User update(Long ID, boolean isAdmin, String name, String email, String passwordHash) {
 		return update(new User(ID, isAdmin, name, email, passwordHash));
 	}
 
 	@Override
-	public User update(int ID, boolean isAdmin, String name, String email, String passwordHash, List<Thread> threads, List<Reply> replies, List<CommentNotification> commentNotifications, List<VoteNotification> voteNotifications) {
+	public User update(Long ID, boolean isAdmin, String name, String email, String passwordHash, List<Thread> threads, List<Reply> replies, List<CommentNotification> commentNotifications, List<VoteNotification> voteNotifications) {
 		return update(new User(ID, isAdmin, name, email, passwordHash, threads, replies, commentNotifications, voteNotifications));
 	}
 
 	@Override
-	public User addCommentNotification(int ID, CommentNotification notification) {
+	public User addCommentNotification(Long ID, CommentNotification notification) {
 		Optional<User> optionalUser = repository.findById(ID);
 		User user = getUserIfPresent(optionalUser);
 		user.addCommentNotification(notification);
@@ -81,7 +81,7 @@ public class UserService implements IUserService {
 	}
 
 	@Override
-	public User addVoteNotification(int ID, VoteNotification notification) {
+	public User addVoteNotification(Long ID, VoteNotification notification) {
 		Optional<User> optionalUser = repository.findById(ID);
 		User user = getUserIfPresent(optionalUser);
 		user.addVoteNotification(notification);
@@ -94,7 +94,7 @@ public class UserService implements IUserService {
 	}
 
 	@Override
-	public User findById(int ID) {
+	public User findById(Long ID) {
 		Optional<User> user = repository.findById(ID);
 		return getUserIfPresent(user);
 	}
@@ -112,19 +112,20 @@ public class UserService implements IUserService {
 	}
 
 	@Override
-	public void delete(int ID) {
+	public void delete(Long ID) {
+		getUserIfPresent(repository.findById(ID)); //dobjunk errort ha nem létezik
 		repository.deleteById(ID);
 	}
 
 
 	@Override
-	public List<Notification> getUsersNotifications(int ID) {
+	public List<Notification> getUsersNotifications(Long ID) {
 		User user = getUserIfPresent(repository.findById(ID));
 		return user.getNotifications();
 	}
 
 	@Override
-	public List<Notification> getUsersActiveNotifications(int ID) {
+	public List<Notification> getUsersActiveNotifications(Long ID) {
 		User user = getUserIfPresent(repository.findById(ID));
 		List<Notification> notifications = user.getNotifications();
 		notifications.removeIf(n -> n.isRead());
@@ -132,12 +133,12 @@ public class UserService implements IUserService {
 	}
 
 	@Override
-	public int getUsersNotificationCount(int ID) {
+	public int getUsersNotificationCount(Long ID) {
 		return getUsersNotifications(ID).size();
 	}
 
 	@Override
-	public int getUsersActiveNotificationCount(int ID) {
+	public int getUsersActiveNotificationCount(Long ID) {
 		return getUsersActiveNotifications(ID).size();
 	}
 }
