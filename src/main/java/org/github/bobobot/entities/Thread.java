@@ -1,5 +1,7 @@
 package org.github.bobobot.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -22,10 +24,12 @@ public class Thread {
 	String title;
 
 	@ManyToOne
+	@JsonIgnore
 	Board board;
 
 	@ToString.Exclude
 	@ManyToOne
+	@JsonIgnore
 	User user;
 
 	@OneToMany(cascade = CascadeType.ALL, mappedBy = "thread", orphanRemoval = true)

@@ -1,3 +1,7 @@
+logging:
+  level:
+    root: INFO
+
 spring:
   h2:
     console:

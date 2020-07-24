@@ -1,5 +1,7 @@
 package org.github.bobobot.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -21,6 +23,7 @@ public abstract class Notification {
 
 	@ManyToOne
 	@NonNull
+	@JsonIgnore
 	User user;
 
 	public Notification(boolean read, @NonNull User user) {
