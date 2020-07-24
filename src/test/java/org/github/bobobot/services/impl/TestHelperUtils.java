@@ -78,7 +78,7 @@ public class TestHelperUtils {
 		return new Reply("tesztContent",
 				LocalDateTime.of(2020, 4, 20, 8, 0),
 				0,
-				thread, user, createDummyImage());
+				thread, user, "teszt/image.png");
 	}
 
 	/**
@@ -104,16 +104,6 @@ public class TestHelperUtils {
 		return createDummyReply(createDummyThread(), createDummyUser());
 	}
 
-	/**
-	 * Creates a dummy image with the following details:<p>
-	 * exists: false<p>
-	 * path: ""<p>
-	 *
-	 * @return The newly created image.
-	 */
-	static Image createDummyImage() {
-		return new Image(false, "");
-	}
 
 	/**
 	 * Creates a dummy comment notification with the following details:<p>

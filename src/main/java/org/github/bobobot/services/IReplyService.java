@@ -1,6 +1,5 @@
 package org.github.bobobot.services;
 
-import org.github.bobobot.entities.Image;
 import org.github.bobobot.entities.Reply;
 import org.github.bobobot.entities.Thread;
 import org.github.bobobot.entities.User;
@@ -24,10 +23,21 @@ public interface IReplyService {
 	 * @param content The content of the reply.
 	 * @param votes   The summarized score of the reply.
 	 * @param thread  The thread the reply belongs to.
-	 * @param user
+	 * @param user	  The user the reply belongs to.
 	 * @return The created reply.
 	 */
-	Reply post(String content, int votes, Image image, Thread thread, User user);
+	Reply post(String content, int votes, Thread thread, User user);
+
+	/**
+	 * Creates a reply.
+	 *
+	 * @param content The content of the reply.
+	 * @param votes   The summarized score of the reply.
+	 * @param thread  The thread the reply belongs to.
+	 * @param user	  The user the reply belongs to.
+	 * @return The created reply.
+	 */
+	Reply post(String content, int votes, String image, Thread thread, User user);
 
 	/**
 	 * Updates a reply.
@@ -44,10 +54,22 @@ public interface IReplyService {
 	 * @param content The content of the reply.
 	 * @param votes   The summarized score of the reply.
 	 * @param thread  The thread the reply belongs to.
-	 * @param user
+	 * @param user    The user the reply belongs to.
 	 * @return The updated reply.
 	 */
-	Reply update(Long ID, String content, int votes, Image image, Thread thread, User user);
+	Reply update(Long ID, String content, int votes, Thread thread, User user);
+
+	/**
+	 * Updates a reply.
+	 *
+	 * @param ID      The ID of the reply.
+	 * @param content The content of the reply.
+	 * @param votes   The summarized score of the reply.
+	 * @param thread  The thread the reply belongs to.
+	 * @param user    The user the reply belongs to.
+	 * @return The updated reply.
+	 */
+	Reply update(Long ID, String content, int votes, String image, Thread thread, User user);
 
 	/**
 	 * Lists all replies.

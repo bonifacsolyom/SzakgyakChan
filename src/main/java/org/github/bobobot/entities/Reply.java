@@ -6,6 +6,7 @@ import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
+import java.util.Optional;
 
 @Entity
 @Data
@@ -28,10 +29,9 @@ public class Reply {
 	@ManyToOne
 	User user;
 
-	@OneToOne(cascade = CascadeType.ALL)
-	Image image;
+	String image;
 
-	public Reply(String content, LocalDateTime date, int votes, Thread thread, User user, Image image) {
+	public Reply(String content, LocalDateTime date, int votes, Thread thread, User user, String image) {
 		this.content = content;
 		this.date = date;
 		this.votes = votes;
@@ -54,5 +54,9 @@ public class Reply {
 
 	public int downvote() {
 		return --votes;
+	}
+
+	Optional<String> getImage() {
+		return Optional.ofNullable(image);
 	}
 }

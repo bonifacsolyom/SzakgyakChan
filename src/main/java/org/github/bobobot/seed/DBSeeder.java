@@ -2,7 +2,6 @@ package org.github.bobobot.seed;
 
 import org.github.bobobot.config.ApplicationConfig;
 import org.github.bobobot.entities.Board;
-import org.github.bobobot.entities.Image;
 import org.github.bobobot.entities.Thread;
 import org.github.bobobot.entities.User;
 import org.github.bobobot.services.IBoardService;
@@ -13,11 +12,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.ApplicationArguments;
 import org.springframework.boot.ApplicationRunner;
 import org.springframework.context.annotation.ComponentScan;
+import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Component;
 
 import javax.transaction.Transactional;
+import java.awt.*;
 import java.util.List;
 
+@Profile("!test")
 @Component
 @ComponentScan("org.github.bobobot")
 @Transactional
@@ -69,12 +71,12 @@ public class DBSeeder implements ApplicationRunner {
 		List<Thread> threadList = threadService.list();
 		List<User> userList = userService.list();
 
-		replyService.post("Everything random.", 68, new Image(), threadList.get(0), userList.get(0));
-		replyService.post("Everything about longrend.", 419, new Image(), threadList.get(1), userList.get(0));
-		replyService.post("Everything about Imagine Dragons.", 1336, new Image(), threadList.get(2), userList.get(0));
-		replyService.post("wow, cool", 13, new Image(), threadList.get(0), userList.get(1));
-		replyService.post("yeah I love being random", -2, new Image(), threadList.get(0), userList.get(2));
-		replyService.post("Spring is my favorite framework!", -1, new Image(), threadList.get(3), userList.get(2));
-		replyService.post("I prefer C#", 103, new Image(), threadList.get(3), userList.get(1));
+		replyService.post("Everything random.", 68, threadList.get(0), userList.get(0));
+		replyService.post("Everything about longrend.", 419, threadList.get(1), userList.get(0));
+		replyService.post("Everything about Imagine Dragons.", 1336, threadList.get(2), userList.get(0));
+		replyService.post("wow, cool", 13, threadList.get(0), userList.get(1));
+		replyService.post("yeah I love being random", -2, threadList.get(0), userList.get(2));
+		replyService.post("Spring is my favorite framework!", -1, threadList.get(3), userList.get(2));
+		replyService.post("I prefer C#", 103, threadList.get(3), userList.get(1));
 	}
 }
