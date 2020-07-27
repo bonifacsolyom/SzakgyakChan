@@ -8,7 +8,7 @@ public class InMemoryCommentNotificationDAO extends InMemoryNotificationDAO<Comm
 
 	@Override
 	public CommentNotification create(CommentNotification notification) {
-		notification.setID((long) memory.size());
+		notification.setId((long) memory.size());
 		memory.add(notification);
 		return notification;
 	}
@@ -16,7 +16,7 @@ public class InMemoryCommentNotificationDAO extends InMemoryNotificationDAO<Comm
 	@Override
 	public Optional<CommentNotification> update(CommentNotification notification) {
 		Optional<CommentNotification> memoryNotification = memory.stream()
-				.filter(n -> n.getID() == notification.getID())
+				.filter(n -> n.getId() == notification.getId())
 				.findFirst();
 
 		if (memoryNotification.isPresent()) {

@@ -12,7 +12,7 @@ public class InMemoryUserDAO implements IUserDAO {
 
 	@Override
 	public User create(User user) {
-		user.setID((long) memory.size());
+		user.setId((long) memory.size());
 		memory.add(user);
 		return user;
 	}
@@ -20,7 +20,7 @@ public class InMemoryUserDAO implements IUserDAO {
 	@Override
 	public Optional<User> update(User user) {
 		Optional<User> memoryUser = memory.stream()
-				.filter(u -> u.getID() == user.getID())
+				.filter(u -> u.getId() == user.getId())
 				.findFirst();
 
 		if (memoryUser.isPresent()) {
@@ -34,9 +34,9 @@ public class InMemoryUserDAO implements IUserDAO {
 	}
 
 	@Override
-	public Optional<User> selectById(int ID) {
+	public Optional<User> selectById(int id) {
 		Optional<User> user = memory.stream()
-				.filter(u -> u.getID() == ID)
+				.filter(u -> u.getId() == id)
 				.findFirst();
 
 		return user;
@@ -66,9 +66,9 @@ public class InMemoryUserDAO implements IUserDAO {
 	}
 
 	@Override
-	public Optional<User> delete(int ID) {
+	public Optional<User> delete(int id) {
 		Optional<User> user = memory.stream()
-				.filter(u -> u.getID() == ID)
+				.filter(u -> u.getId() == id)
 				.findFirst();
 
 		if (user.isPresent()) {

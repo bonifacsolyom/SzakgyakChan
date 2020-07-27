@@ -44,7 +44,7 @@ class UserServiceTest {
 	void updateUserEmail() {
 		User user = service.register(createDummyUser());
 		em.persist(user);
-		Long userID = user.getID();
+		Long userID = user.getId();
 		service.update(userID, true, "tesztNev", "tesztEmail2@teszt.com", "tesztJelszo");
 		user = service.findById(userID);
 

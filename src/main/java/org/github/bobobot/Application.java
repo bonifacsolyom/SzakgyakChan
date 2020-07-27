@@ -1,6 +1,5 @@
 package org.github.bobobot;
 
-import org.github.bobobot.services.impl.BoardService;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.ApplicationContext;

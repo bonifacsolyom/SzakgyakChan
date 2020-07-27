@@ -83,8 +83,8 @@ class ReplyServiceTest {
 
 		em.persist(reply);
 		reply = service.post(reply);
-		service.vote(reply.getID(), VoteNotification.VoteType.UPVOTE);
-		reply = service.findById(reply.getID());
+		service.vote(reply.getId(), VoteNotification.VoteType.UPVOTE);
+		reply = service.findById(reply.getId());
 
 		assertThat(reply.getVotes()).isEqualTo(1);
 	}

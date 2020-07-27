@@ -23,7 +23,7 @@ public interface IReplyService {
 	 * @param content The content of the reply.
 	 * @param votes   The summarized score of the reply.
 	 * @param thread  The thread the reply belongs to.
-	 * @param user	  The user the reply belongs to.
+	 * @param user    The user the reply belongs to.
 	 * @return The created reply.
 	 */
 	Reply post(String content, int votes, Thread thread, User user);
@@ -34,7 +34,7 @@ public interface IReplyService {
 	 * @param content The content of the reply.
 	 * @param votes   The summarized score of the reply.
 	 * @param thread  The thread the reply belongs to.
-	 * @param user	  The user the reply belongs to.
+	 * @param user    The user the reply belongs to.
 	 * @return The created reply.
 	 */
 	Reply post(String content, int votes, String image, Thread thread, User user);
@@ -50,26 +50,26 @@ public interface IReplyService {
 	/**
 	 * Updates a reply.
 	 *
-	 * @param ID      The ID of the reply.
+	 * @param id      The ID of the reply.
 	 * @param content The content of the reply.
 	 * @param votes   The summarized score of the reply.
 	 * @param thread  The thread the reply belongs to.
 	 * @param user    The user the reply belongs to.
 	 * @return The updated reply.
 	 */
-	Reply update(Long ID, String content, int votes, Thread thread, User user);
+	Reply update(Long id, String content, int votes, Thread thread, User user);
 
 	/**
 	 * Updates a reply.
 	 *
-	 * @param ID      The ID of the reply.
+	 * @param id      The ID of the reply.
 	 * @param content The content of the reply.
 	 * @param votes   The summarized score of the reply.
 	 * @param thread  The thread the reply belongs to.
 	 * @param user    The user the reply belongs to.
 	 * @return The updated reply.
 	 */
-	Reply update(Long ID, String content, int votes, String image, Thread thread, User user);
+	Reply update(Long id, String content, int votes, String image, Thread thread, User user);
 
 	/**
 	 * Lists all replies.
@@ -81,10 +81,10 @@ public interface IReplyService {
 	/**
 	 * Finds a reply by its ID.
 	 *
-	 * @param ID The ID of the reply to be found
+	 * @param id The ID of the reply to be found
 	 * @return The found reply, wrapped in an optional.
 	 */
-	Reply findById(Long ID);
+	Reply findById(Long id);
 
 	/**
 	 * Lists all replies that belong to the specified thread.
@@ -97,16 +97,16 @@ public interface IReplyService {
 	/**
 	 * Votes on a reply.
 	 *
-	 * @param ID       The ID of the reply.
+	 * @param id       The ID of the reply.
 	 * @param voteType The type of the vote
 	 * @return
 	 */
-	Reply vote(Long ID, VoteType voteType);
+	Reply vote(Long id, VoteType voteType);
 
 	/**
 	 * Deletes a reply.
 	 *
-	 * @param ID The ID of the reply to be deleted.
+	 * @param id The ID of the reply to be deleted.
 	 */
-	void delete(Long ID);
+	void delete(Long id);
 }

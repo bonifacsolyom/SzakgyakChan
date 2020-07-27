@@ -1,7 +1,5 @@
 package org.github.bobobot.entities;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -21,7 +19,7 @@ public class User {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	Long ID;
+	Long id;
 
 	boolean isAdmin;
 
@@ -47,8 +45,8 @@ public class User {
 	List<VoteNotification> voteNotifications = new ArrayList<>();
 
 
-	public User(Long ID, boolean isAdmin, String name, String email, String passwordHash) {
-		this.ID = ID;
+	public User(Long id, boolean isAdmin, String name, String email, String passwordHash) {
+		this.id = id;
 		this.isAdmin = isAdmin;
 		this.name = name;
 		this.email = email;
@@ -56,7 +54,7 @@ public class User {
 	}
 
 	public User(User user) {
-		this.ID = user.ID;
+		this.id = user.id;
 		this.isAdmin = user.isAdmin;
 		this.name = user.name;
 		this.email = user.email;

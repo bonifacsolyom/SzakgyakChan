@@ -1,6 +1,5 @@
 package org.github.bobobot.controllers;
 
-import lombok.extern.java.Log;
 import lombok.extern.slf4j.Slf4j;
 import org.github.bobobot.entities.Thread;
 import org.github.bobobot.services.IThreadService;
@@ -55,7 +54,7 @@ public class ThreadController {
 
 	@PutMapping("/thread/{id}")
 	ResponseEntity<Thread> update(@RequestBody Thread thread, @PathVariable Long id) {
-		thread.setID(id);
+		thread.setId(id);
 		try {
 			ResponseEntity<Thread> updatedThread = ResponseEntity.ok(service.update(thread));
 			log.info("Updated thread with info: " + thread);

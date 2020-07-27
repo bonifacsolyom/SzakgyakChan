@@ -16,8 +16,8 @@ public class CommentNotification extends Notification {
 	@NonNull
 	String replyContent;
 
-	public CommentNotification(Long ID, boolean read, User user, String replyContent) {
-		super(ID, read, user);
+	public CommentNotification(Long id, boolean read, User user, String replyContent) {
+		super(id, read, user);
 		this.replyContent = replyContent;
 	}
 

@@ -90,7 +90,7 @@ class ThreadServiceTest {
 		em.persist(thread);
 
 		assertThat(threadService.list().size()).isEqualTo(1);
-		threadService.delete(thread.getID());
+		threadService.delete(thread.getId());
 		assertThat(threadService.list().size()).isEqualTo(0);
 	}
 

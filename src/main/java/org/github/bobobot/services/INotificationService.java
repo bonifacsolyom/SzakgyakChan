@@ -64,7 +64,7 @@ public interface INotificationService {
 	 * @param replyContent The content of the reply that the notification was
 	 * @return The updated notification
 	 */
-	CommentNotification update(Long ID, boolean read, User user, String replyContent);
+	CommentNotification update(Long id, boolean read, User user, String replyContent);
 
 	/**
 	 * Updates a vote notification.
@@ -82,23 +82,23 @@ public interface INotificationService {
 	 * @param voteType The type of the vote (UPVOTE or DOWNVOTE)
 	 * @return The updated notification.
 	 */
-	VoteNotification update(Long ID, boolean read, User user, VoteNotification.VoteType voteType);
+	VoteNotification update(Long id, boolean read, User user, VoteNotification.VoteType voteType);
 
 	/**
 	 * Finds a comment notification by its ID
 	 *
-	 * @param ID The ID of the comment notification
+	 * @param id The ID of the comment notification
 	 * @return The comment notification if found, otherwise throws an error
 	 */
-	CommentNotification findCommentNotificationByID(Long ID);
+	CommentNotification findCommentNotificationByID(Long id);
 
 	/**
 	 * Finds a vote notification by its ID
 	 *
-	 * @param ID The ID of the vote notification
+	 * @param id The ID of the vote notification
 	 * @return The vote notification if found, otherwise throws an error
 	 */
-	VoteNotification findVoteNotificationByID(Long ID);
+	VoteNotification findVoteNotificationByID(Long id);
 
 	/**
 	 * Lists all comment notifications

@@ -37,7 +37,7 @@ public class NotificationService implements INotificationService {
 	@Override
 	public CommentNotification create(CommentNotification notification) {
 		User user = notification.getUser();
-		userService.addCommentNotification(user.getID(), notification);
+		userService.addCommentNotification(user.getId(), notification);
 		return commentRepository.save(notification);
 	}
 
@@ -49,7 +49,7 @@ public class NotificationService implements INotificationService {
 	@Override
 	public VoteNotification create(VoteNotification notification) {
 		User user = notification.getUser();
-		userService.addVoteNotification(user.getID(), notification);
+		userService.addVoteNotification(user.getId(), notification);
 		return voteRepository.save(notification);
 	}
 
@@ -60,35 +60,35 @@ public class NotificationService implements INotificationService {
 
 	@Override
 	public CommentNotification update(CommentNotification tempNotification) {
-		getNotificationIfNotPresent(commentRepository.findById(tempNotification.getID())); //dobjunk errort ha nem létezik
+		getNotificationIfNotPresent(commentRepository.findById(tempNotification.getId())); //dobjunk errort ha nem létezik
 		return commentRepository.save(tempNotification);
 	}
 
 	@Override
-	public CommentNotification update(Long ID, boolean read, User user, String replyContent) {
-		return update(new CommentNotification(ID, read, user, replyContent));
+	public CommentNotification update(Long id, boolean read, User user, String replyContent) {
+		return update(new CommentNotification(id, read, user, replyContent));
 	}
 
 	@Override
 	public VoteNotification update(VoteNotification tempNotification) {
-		getNotificationIfNotPresent(voteRepository.findById(tempNotification.getID())); //dobjunk errort ha nem létezik
+		getNotificationIfNotPresent(voteRepository.findById(tempNotification.getId())); //dobjunk errort ha nem létezik
 		return voteRepository.save(tempNotification);
 	}
 
 	@Override
-	public VoteNotification update(Long ID, boolean read, User user, VoteNotification.VoteType voteType) {
-		return update(new VoteNotification(ID, read, user, voteType));
+	public VoteNotification update(Long id, boolean read, User user, VoteNotification.VoteType voteType) {
+		return update(new VoteNotification(id, read, user, voteType));
 	}
 
 	@Override
-	public CommentNotification findCommentNotificationByID(Long ID) {
-		Optional<Notification> notification = commentRepository.findById(ID);
+	public CommentNotification findCommentNotificationByID(Long id) {
+		Optional<Notification> notification = commentRepository.findById(id);
 		return (CommentNotification) getNotificationIfNotPresent(notification);
 	}
 
 	@Override
-	public VoteNotification findVoteNotificationByID(Long ID) {
-		Optional<Notification> notification = voteRepository.findById(ID);
+	public VoteNotification findVoteNotificationByID(Long id) {
+		Optional<Notification> notification = voteRepository.findById(id);
 		return (VoteNotification) getNotificationIfNotPresent(notification);
 	}
 

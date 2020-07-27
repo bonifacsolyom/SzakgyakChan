@@ -49,18 +49,18 @@ public class ThreadService implements IThreadService {
 
 	@Override
 	public Thread update(Thread tempThread) {
-		getThreadIfPresent(repository.findById(tempThread.getID())); //dobjunk errort ha nem létezik
+		getThreadIfPresent(repository.findById(tempThread.getId())); //dobjunk errort ha nem létezik
 		return repository.save(tempThread);
 	}
 
 	@Override
-	public Thread update(Long ID, String title, Board board, User user) {
-		return update(new Thread(ID, title, board, user));
+	public Thread update(Long id, String title, Board board, User user) {
+		return update(new Thread(id, title, board, user));
 	}
 
 	@Override
-	public Thread update(Long ID, String title, Board board, User user, List<Reply> replies) {
-		return update(new Thread(ID, title, board, user, replies));
+	public Thread update(Long id, String title, Board board, User user, List<Reply> replies) {
+		return update(new Thread(id, title, board, user, replies));
 	}
 
 	@Override
@@ -69,14 +69,14 @@ public class ThreadService implements IThreadService {
 	}
 
 	@Override
-	public Thread findById(Long ID) {
-		Optional<Thread> thread = repository.findById(ID);
+	public Thread findById(Long id) {
+		Optional<Thread> thread = repository.findById(id);
 		return getThreadIfPresent(thread);
 	}
 
 	@Override
-	public void delete(Long ID) {
-		getThreadIfPresent(repository.findById(ID)); //dobjunk errort ha nem létezik
-		repository.deleteById(ID);
+	public void delete(Long id) {
+		getThreadIfPresent(repository.findById(id)); //dobjunk errort ha nem létezik
+		repository.deleteById(id);
 	}
 }

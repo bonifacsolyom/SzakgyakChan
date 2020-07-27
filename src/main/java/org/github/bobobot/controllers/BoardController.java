@@ -1,18 +1,13 @@
 package org.github.bobobot.controllers;
 
-import lombok.extern.java.Log;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.coyote.Response;
 import org.github.bobobot.entities.Board;
 import org.github.bobobot.services.IBoardService;
-import org.github.bobobot.services.impl.BoardService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.logging.Logger;
 
 @Slf4j
 @RestController
@@ -59,7 +54,7 @@ public class BoardController {
 
 	@PutMapping("/board/{id}")
 	ResponseEntity<Board> update(@RequestBody Board board, @PathVariable Long id) {
-		board.setID(id);
+		board.setId(id);
 		try {
 			ResponseEntity<Board> updatedBoard = ResponseEntity.ok(service.update(board));
 			log.info("Updated board with info: " + board);

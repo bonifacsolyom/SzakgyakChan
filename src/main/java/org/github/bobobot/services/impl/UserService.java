@@ -56,33 +56,33 @@ public class UserService implements IUserService {
 
 	@Override
 	public User update(User tempUser) {
-		getUserIfPresent(repository.findById(tempUser.getID())); //dobjunk errort ha nem létezik
+		getUserIfPresent(repository.findById(tempUser.getId())); //dobjunk errort ha nem létezik
 		validateEmail(tempUser.getEmail());
 		tempUser.setPasswordHash(passwordEncoder.encode(tempUser.getPasswordHash()));
 		return repository.save(tempUser);
 	}
 
 	@Override
-	public User update(Long ID, boolean isAdmin, String name, String email, String passwordHash) {
-		return update(new User(ID, isAdmin, name, email, passwordHash));
+	public User update(Long id, boolean isAdmin, String name, String email, String passwordHash) {
+		return update(new User(id, isAdmin, name, email, passwordHash));
 	}
 
 	@Override
-	public User update(Long ID, boolean isAdmin, String name, String email, String passwordHash, List<Thread> threads, List<Reply> replies, List<CommentNotification> commentNotifications, List<VoteNotification> voteNotifications) {
-		return update(new User(ID, isAdmin, name, email, passwordHash, threads, replies, commentNotifications, voteNotifications));
+	public User update(Long id, boolean isAdmin, String name, String email, String passwordHash, List<Thread> threads, List<Reply> replies, List<CommentNotification> commentNotifications, List<VoteNotification> voteNotifications) {
+		return update(new User(id, isAdmin, name, email, passwordHash, threads, replies, commentNotifications, voteNotifications));
 	}
 
 	@Override
-	public User addCommentNotification(Long ID, CommentNotification notification) {
-		Optional<User> optionalUser = repository.findById(ID);
+	public User addCommentNotification(Long id, CommentNotification notification) {
+		Optional<User> optionalUser = repository.findById(id);
 		User user = getUserIfPresent(optionalUser);
 		user.addCommentNotification(notification);
 		return update(user);
 	}
 
 	@Override
-	public User addVoteNotification(Long ID, VoteNotification notification) {
-		Optional<User> optionalUser = repository.findById(ID);
+	public User addVoteNotification(Long id, VoteNotification notification) {
+		Optional<User> optionalUser = repository.findById(id);
 		User user = getUserIfPresent(optionalUser);
 		user.addVoteNotification(notification);
 		return update(user);
@@ -94,8 +94,8 @@ public class UserService implements IUserService {
 	}
 
 	@Override
-	public User findById(Long ID) {
-		Optional<User> user = repository.findById(ID);
+	public User findById(Long id) {
+		Optional<User> user = repository.findById(id);
 		return getUserIfPresent(user);
 	}
 
@@ -112,33 +112,33 @@ public class UserService implements IUserService {
 	}
 
 	@Override
-	public void delete(Long ID) {
-		getUserIfPresent(repository.findById(ID)); //dobjunk errort ha nem létezik
-		repository.deleteById(ID);
+	public void delete(Long id) {
+		getUserIfPresent(repository.findById(id)); //dobjunk errort ha nem létezik
+		repository.deleteById(id);
 	}
 
 
 	@Override
-	public List<Notification> getUsersNotifications(Long ID) {
-		User user = getUserIfPresent(repository.findById(ID));
+	public List<Notification> getUsersNotifications(Long id) {
+		User user = getUserIfPresent(repository.findById(id));
 		return user.getNotifications();
 	}
 
 	@Override
-	public List<Notification> getUsersActiveNotifications(Long ID) {
-		User user = getUserIfPresent(repository.findById(ID));
+	public List<Notification> getUsersActiveNotifications(Long id) {
+		User user = getUserIfPresent(repository.findById(id));
 		List<Notification> notifications = user.getNotifications();
 		notifications.removeIf(n -> n.isRead());
 		return notifications;
 	}
 
 	@Override
-	public int getUsersNotificationCount(Long ID) {
-		return getUsersNotifications(ID).size();
+	public int getUsersNotificationCount(Long id) {
+		return getUsersNotifications(id).size();
 	}
 
 	@Override
-	public int getUsersActiveNotificationCount(Long ID) {
-		return getUsersActiveNotifications(ID).size();
+	public int getUsersActiveNotificationCount(Long id) {
+		return getUsersActiveNotifications(id).size();
 	}
 }

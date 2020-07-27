@@ -1,7 +1,9 @@
 package org.github.bobobot.services.impl;
 
+import org.github.bobobot.entities.CommentNotification;
+import org.github.bobobot.entities.Reply;
 import org.github.bobobot.entities.Thread;
-import org.github.bobobot.entities.*;
+import org.github.bobobot.entities.User;
 import org.github.bobobot.entities.VoteNotification.VoteType;
 import org.github.bobobot.repositories.INotificationRepository;
 import org.github.bobobot.repositories.IReplyRepository;
@@ -56,18 +58,18 @@ public class ReplyService implements IReplyService {
 
 	@Override
 	public Reply update(Reply tempReply) {
-		getReplyIfPresent(replyRepository.findById(tempReply.getID())); //dobjunk errort ha nem létezik
+		getReplyIfPresent(replyRepository.findById(tempReply.getId())); //dobjunk errort ha nem létezik
 		return replyRepository.save(tempReply);
 	}
 
 	@Override
-	public Reply update(Long ID, String content, int votes, Thread thread, User user) {
-		return update(new Reply(ID, content, LocalDateTime.now(), votes, thread, user, null));
+	public Reply update(Long id, String content, int votes, Thread thread, User user) {
+		return update(new Reply(id, content, LocalDateTime.now(), votes, thread, user, null));
 	}
 
 	@Override
-	public Reply update(Long ID, String content, int votes, String image, Thread thread, User user) {
-		return update(new Reply(ID, content, LocalDateTime.now(), votes, thread, user, image));
+	public Reply update(Long id, String content, int votes, String image, Thread thread, User user) {
+		return update(new Reply(id, content, LocalDateTime.now(), votes, thread, user, image));
 	}
 
 	@Override
@@ -76,8 +78,8 @@ public class ReplyService implements IReplyService {
 	}
 
 	@Override
-	public Reply findById(Long ID) {
-		Optional<Reply> reply = replyRepository.findById(ID);
+	public Reply findById(Long id) {
+		Optional<Reply> reply = replyRepository.findById(id);
 		return getReplyIfPresent(reply);
 	}
 
@@ -87,8 +89,8 @@ public class ReplyService implements IReplyService {
 	}
 
 	@Override
-	public Reply vote(Long ID, VoteType voteType) {
-		Reply reply = findById(ID);
+	public Reply vote(Long id, VoteType voteType) {
+		Reply reply = findById(id);
 		reply = changeVote(reply, voteType);
 		return update(reply);
 	}
@@ -107,8 +109,8 @@ public class ReplyService implements IReplyService {
 	}
 
 	@Override
-	public void delete(Long ID) {
-		getReplyIfPresent(replyRepository.findById(ID)); //dobjunk errort ha nem létezik
-		replyRepository.deleteById(ID);
+	public void delete(Long id) {
+		getReplyIfPresent(replyRepository.findById(id)); //dobjunk errort ha nem létezik
+		replyRepository.deleteById(id);
 	}
 }

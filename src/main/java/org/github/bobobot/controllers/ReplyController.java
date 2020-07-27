@@ -1,6 +1,5 @@
 package org.github.bobobot.controllers;
 
-import lombok.extern.java.Log;
 import lombok.extern.slf4j.Slf4j;
 import org.github.bobobot.entities.Reply;
 import org.github.bobobot.services.IReplyService;
@@ -55,7 +54,7 @@ public class ReplyController {
 
 	@PutMapping("/reply/{id}")
 	ResponseEntity<Reply> update(@RequestBody Reply reply, @PathVariable Long id) {
-		reply.setID(id);
+		reply.setId(id);
 		try {
 			ResponseEntity<Reply> updatedReply = ResponseEntity.ok(service.update(reply));
 			log.info("Updated reply with info: " + reply);

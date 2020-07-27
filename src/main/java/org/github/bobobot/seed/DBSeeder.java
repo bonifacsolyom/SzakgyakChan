@@ -1,6 +1,5 @@
 package org.github.bobobot.seed;
 
-import org.github.bobobot.config.ApplicationConfig;
 import org.github.bobobot.entities.Board;
 import org.github.bobobot.entities.Thread;
 import org.github.bobobot.entities.User;
@@ -16,7 +15,6 @@ import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Component;
 
 import javax.transaction.Transactional;
-import java.awt.*;
 import java.util.List;
 
 @Profile("!test")

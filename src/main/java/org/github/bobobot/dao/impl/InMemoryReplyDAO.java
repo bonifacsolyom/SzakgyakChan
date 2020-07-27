@@ -14,7 +14,7 @@ public class InMemoryReplyDAO implements IReplyDAO {
 
 	@Override
 	public Reply create(Reply reply) {
-		reply.setID((long) memory.size());
+		reply.setId((long) memory.size());
 		memory.add(reply);
 		return reply;
 	}
@@ -22,7 +22,7 @@ public class InMemoryReplyDAO implements IReplyDAO {
 	@Override
 	public Optional<Reply> update(Reply reply) {
 		Optional<Reply> memoryReply = memory.stream()
-				.filter(r -> r.getID() == reply.getID())
+				.filter(r -> r.getId() == reply.getId())
 				.findFirst();
 
 		if (memoryReply.isPresent()) {
@@ -36,9 +36,9 @@ public class InMemoryReplyDAO implements IReplyDAO {
 	}
 
 	@Override
-	public Optional<Reply> select(int ID) {
+	public Optional<Reply> select(int id) {
 		Optional<Reply> reply = memory.stream()
-				.filter(r -> r.getID() == ID)
+				.filter(r -> r.getId() == id)
 				.findFirst();
 		return reply;
 	}
@@ -57,9 +57,9 @@ public class InMemoryReplyDAO implements IReplyDAO {
 	}
 
 	@Override
-	public Optional<Reply> delete(int ID) {
+	public Optional<Reply> delete(int id) {
 		Optional<Reply> reply = memory.stream()
-				.filter(r -> r.getID() == ID)
+				.filter(r -> r.getId() == id)
 				.findFirst();
 		if (reply.isPresent()) {
 			memory.remove(reply.get());

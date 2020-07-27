@@ -14,8 +14,8 @@ public class VoteNotification extends Notification {
 	@Enumerated
 	VoteType voteType;
 
-	public VoteNotification(Long ID, boolean read, User user, VoteType voteType) {
-		super(ID, read, user);
+	public VoteNotification(Long id, boolean read, User user, VoteType voteType) {
+		super(id, read, user);
 		this.voteType = voteType;
 	}
 

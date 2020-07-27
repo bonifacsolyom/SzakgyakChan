@@ -25,10 +25,10 @@ public interface IUserDAO {
 	/**
 	 * Selects a user by their ID.
 	 *
-	 * @param ID The ID of the user to be selected.
+	 * @param id The ID of the user to be selected.
 	 * @return The selected user, wrapped in an optional.
 	 */
-	Optional<User> selectById(int ID);
+	Optional<User> selectById(int id);
 
 	/**
 	 * Selects a user by their ID.
@@ -56,8 +56,8 @@ public interface IUserDAO {
 	/**
 	 * Deletes a user.
 	 *
-	 * @param ID The ID of the user to be deleted.
+	 * @param id The ID of the user to be deleted.
 	 * @return The deleted user, wrapped in an optional.
 	 */
-	Optional<User> delete(int ID);
+	Optional<User> delete(int id);
 }

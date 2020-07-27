@@ -1,7 +1,6 @@
 package org.github.bobobot.entities;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -19,7 +18,7 @@ public class Thread {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	Long ID;
+	Long id;
 
 	String title;
 
@@ -35,8 +34,8 @@ public class Thread {
 	@OneToMany(cascade = CascadeType.ALL, mappedBy = "thread", orphanRemoval = true)
 	List<Reply> replies = new ArrayList<>();
 
-	public Thread(Long ID, String title, Board board, User user) {
-		this.ID = ID;
+	public Thread(Long id, String title, Board board, User user) {
+		this.id = id;
 		this.title = title;
 		this.board = board;
 		this.user = user;

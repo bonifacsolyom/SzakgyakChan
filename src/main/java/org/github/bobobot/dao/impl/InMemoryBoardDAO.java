@@ -12,7 +12,7 @@ public class InMemoryBoardDAO implements IBoardDAO {
 
 	@Override
 	public Board create(Board board) {
-		board.setID((long) memory.size());
+		board.setId((long) memory.size());
 		memory.add(board);
 		return board;
 	}
@@ -20,7 +20,7 @@ public class InMemoryBoardDAO implements IBoardDAO {
 	@Override
 	public Optional<Board> update(Board board) {
 		Optional<Board> memoryBoard = memory.stream()
-				.filter(b -> b.getID() == board.getID())
+				.filter(b -> b.getId() == board.getId())
 				.findFirst();
 
 		if (memoryBoard.isPresent()) {
@@ -32,9 +32,9 @@ public class InMemoryBoardDAO implements IBoardDAO {
 	}
 
 	@Override
-	public Optional<Board> selectByID(int ID) {
+	public Optional<Board> selectByID(int id) {
 		Optional<Board> board = memory.stream()
-				.filter(b -> b.getID() == ID)
+				.filter(b -> b.getId() == id)
 				.findFirst();
 		return board;
 	}
@@ -53,9 +53,9 @@ public class InMemoryBoardDAO implements IBoardDAO {
 	}
 
 	@Override
-	public Optional<Board> delete(int ID) {
+	public Optional<Board> delete(int id) {
 		Optional<Board> board = memory.stream()
-				.filter(b -> b.getID() == ID)
+				.filter(b -> b.getId() == id)
 				.findFirst();
 		if (board.isPresent()) {
 			memory.remove(board.get());

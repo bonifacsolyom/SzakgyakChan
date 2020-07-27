@@ -13,9 +13,9 @@ public abstract class InMemoryNotificationDAO<GenericNotification extends Notifi
 	List<GenericNotification> memory = new ArrayList<>();
 
 	@Override
-	public Optional<GenericNotification> selectByID(int ID) {
+	public Optional<GenericNotification> selectByID(int id) {
 		Optional<GenericNotification> notification = memory.stream()
-				.filter(n -> n.getID() == ID)
+				.filter(n -> n.getId() == id)
 				.findFirst();
 		return notification;
 	}
@@ -34,9 +34,9 @@ public abstract class InMemoryNotificationDAO<GenericNotification extends Notifi
 	}
 
 	@Override
-	public Optional<GenericNotification> delete(int ID) {
+	public Optional<GenericNotification> delete(int id) {
 		Optional<GenericNotification> notification = memory.stream()
-				.filter(n -> n.getID() == ID)
+				.filter(n -> n.getId() == id)
 				.findFirst();
 		if (notification.isPresent()) {
 			memory.remove(notification.get());

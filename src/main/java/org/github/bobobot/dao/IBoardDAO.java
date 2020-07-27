@@ -29,10 +29,10 @@ public interface IBoardDAO {
 	/**
 	 * Selects a board by its ID.
 	 *
-	 * @param ID The ID of the board to be selected.
+	 * @param id The ID of the board to be selected.
 	 * @return The selected board wrapped in an optional, in case the board wasn't found.
 	 */
-	Optional<Board> selectByID(int ID);
+	Optional<Board> selectByID(int id);
 
 	/**
 	 * Selects a board by its short name.
@@ -52,8 +52,8 @@ public interface IBoardDAO {
 	/**
 	 * Deletes a board.
 	 *
-	 * @param ID The ID of the board to be deleted
+	 * @param id The ID of the board to be deleted
 	 * @return The deleted board, wrapped in an optional.
 	 */
-	Optional<Board> delete(int ID);
+	Optional<Board> delete(int id);
 }

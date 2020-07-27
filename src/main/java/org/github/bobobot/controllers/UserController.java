@@ -1,6 +1,5 @@
 package org.github.bobobot.controllers;
 
-import lombok.extern.java.Log;
 import lombok.extern.slf4j.Slf4j;
 import org.github.bobobot.entities.User;
 import org.github.bobobot.services.IUserService;
@@ -55,7 +54,7 @@ public class UserController {
 
 	@PutMapping("/user/{id}")
 	ResponseEntity<User> update(@RequestBody User user, @PathVariable Long id) {
-		user.setID(id);
+		user.setId(id);
 		try {
 			ResponseEntity<User> updatedUser = ResponseEntity.ok(service.update(user));
 			log.info("Updated user with info: " + user);

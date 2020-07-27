@@ -53,7 +53,7 @@ public class BoardServiceTest {
 	@Test
 	void updateBoardButDoesntExist() {
 		Board board = createDummyBoard();
-		board.setID(1L);
+		board.setId(1L);
 
 		assertThatIllegalArgumentException().isThrownBy(() -> service.update(board));
 	}
