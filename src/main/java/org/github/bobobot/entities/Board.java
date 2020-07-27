@@ -28,7 +28,6 @@ public class Board {
 	String longName;
 
 	@OneToMany(cascade = CascadeType.ALL, mappedBy = "board")
-	@JsonIgnore
 	List<Thread> threads = new ArrayList<>();
 
 	public Board(@NonNull String shortName, @NonNull String longName) {

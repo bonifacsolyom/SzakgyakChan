@@ -1,6 +1,8 @@
 logging:
   level:
     root: INFO
+  pattern:
+    console: 
 
 spring:
   h2:
@@ -9,3 +11,7 @@ spring:
       path: /h2-console
   datasource:
     url: jdbc:h2:mem:testdb
+
+  output:
+    ansi:
+      enabled:  ALWAYS

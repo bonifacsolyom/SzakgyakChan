@@ -33,7 +33,6 @@ public class UserService implements IUserService {
 	@Override
 	public User register(User tempUser) {
 		validateEmail(tempUser.getEmail());
-		//a tempUser passwordHash-je itt még csak az enkódolatlan jelszó
 		tempUser.setPasswordHash(passwordEncoder.encode(tempUser.getPasswordHash()));
 		return repository.save(tempUser);
 	}

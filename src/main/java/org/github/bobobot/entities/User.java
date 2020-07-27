@@ -35,19 +35,15 @@ public class User {
 	String passwordHash;
 
 	@OneToMany(cascade = CascadeType.ALL, mappedBy = "user")
-	@JsonIgnore
 	List<Thread> threads = new ArrayList<>();
 
 	@OneToMany(cascade = CascadeType.ALL, mappedBy = "user")
-	@JsonIgnore
 	List<Reply> replies = new ArrayList<>();
 
 	@OneToMany(cascade = CascadeType.ALL, mappedBy = "user")
-	@JsonIgnore
 	List<CommentNotification> commentNotifications = new ArrayList<>();
 
 	@OneToMany(cascade = CascadeType.ALL, mappedBy = "user")
-	@JsonIgnore
 	List<VoteNotification> voteNotifications = new ArrayList<>();
 
 

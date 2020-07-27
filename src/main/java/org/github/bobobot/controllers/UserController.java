@@ -1,5 +1,6 @@
 package org.github.bobobot.controllers;
 
+import lombok.extern.java.Log;
 import org.github.bobobot.entities.User;
 import org.github.bobobot.services.IUserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -7,6 +8,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+@Log
 @RestController
 public class UserController {
 
@@ -20,6 +22,7 @@ public class UserController {
 
 	@PostMapping("/users")
 	User newUser(@RequestBody User user) {
+		log.info("Created new user with info: " + user);
 		return service.register(user);
 	}
 
@@ -31,10 +34,11 @@ public class UserController {
 	@PutMapping("/user/{id}")
 	User update(@RequestBody User user, @PathVariable Long id) {
 		user.setID(id);
+		log.info("Updated user with info: " + user);
 		return service.update(user);
 	}
 
-	@DeleteMapping("/users/{id}")
+	@DeleteMapping("/user/{id}")
 	void delete(@PathVariable Long id) {
 		service.delete(id);
 	}
