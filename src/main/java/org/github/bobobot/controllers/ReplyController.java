@@ -1,14 +1,16 @@
 package org.github.bobobot.controllers;
 
 import lombok.extern.java.Log;
+import lombok.extern.slf4j.Slf4j;
 import org.github.bobobot.entities.Reply;
 import org.github.bobobot.services.IReplyService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-@Log
+@Slf4j
 @RestController
 public class ReplyController {
 
@@ -16,30 +18,63 @@ public class ReplyController {
 	IReplyService service;
 
 	@GetMapping("/replies")
-	List<Reply> all() {
-		return service.list();
+	ResponseEntity<List<Reply>> all() {
+		try {
+			ResponseEntity<List<Reply>> list = ResponseEntity.ok(service.list());
+			log.info("Generated a list of all replies.");
+			return list;
+		} catch (IllegalArgumentException e) {
+			log.error("Could not list replies: ", e);
+			return ResponseEntity.badRequest().body(null);
+		}
 	}
 
 	@PostMapping("/replies")
-	Reply newReply(@RequestBody Reply reply) {
-		log.info("Created new reply with info: " + reply);
-		return service.post(reply);
+	ResponseEntity<Reply> newReply(@RequestBody Reply reply) {
+		try {
+			ResponseEntity<Reply> createdReply = ResponseEntity.ok(service.post(reply));
+			log.info("Created new reply with info: " + reply);
+			return createdReply;
+		} catch (IllegalArgumentException e) {
+			log.error("Could not create new reply with info: " + reply, e);
+			return ResponseEntity.badRequest().body(reply);
+		}
 	}
 
 	@GetMapping("/reply/{id}")
-	Reply get(@PathVariable Long id) {
-		return service.findById(id);
+	ResponseEntity<Reply> get(@PathVariable Long id) {
+		try {
+			ResponseEntity<Reply> foundReply = ResponseEntity.ok(service.findById(id));
+			log.info("Returned reply with id: " + id);
+			return foundReply;
+		} catch (Exception e) {
+			log.error("Could not get reply with id: " + id, e);
+			return ResponseEntity.badRequest().body(null);
+		}
 	}
 
 	@PutMapping("/reply/{id}")
-	Reply update(@RequestBody Reply reply, @PathVariable Long id) {
+	ResponseEntity<Reply> update(@RequestBody Reply reply, @PathVariable Long id) {
 		reply.setID(id);
-		log.info("Updated reply with info: " + reply);
-		return service.update(reply);
+		try {
+			ResponseEntity<Reply> updatedReply = ResponseEntity.ok(service.update(reply));
+			log.info("Updated reply with info: " + reply);
+			return updatedReply;
+		} catch (Exception e) {
+			log.error("Could not update reply with info: " + reply, e);
+			return ResponseEntity.badRequest().body(null);
+		}
 	}
 
 	@DeleteMapping("/reply/{id}")
-	void delete(@PathVariable Long id) {
-		service.delete(id);
+	ResponseEntity<Void> delete(@PathVariable Long id) {
+		try {
+			service.delete(id);
+			log.info("Deleted reply with id: " + id);
+			return ResponseEntity.ok().body(null);
+		} catch (Exception e) {
+			log.error("Could not delete reply: ", e);
+			return ResponseEntity.badRequest().body(null);
+		}
 	}
 }

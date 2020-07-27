@@ -7,8 +7,6 @@ import java.util.List;
 import java.util.Optional;
 
 public interface IUserService {
-	//TODO: Jelszóhash helyett ez még csak jelszót kapjon
-
 	/**
 	 * Creates a user.
 	 *
