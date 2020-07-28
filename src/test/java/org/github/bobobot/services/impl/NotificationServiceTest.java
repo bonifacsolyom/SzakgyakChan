@@ -2,6 +2,7 @@ package org.github.bobobot.services.impl;
 
 import org.github.bobobot.config.ApplicationConfig;
 import org.github.bobobot.entities.CommentNotification;
+import org.github.bobobot.entities.Reply;
 import org.github.bobobot.entities.User;
 import org.github.bobobot.services.INotificationService;
 import org.github.bobobot.services.IUserService;
@@ -14,8 +15,7 @@ import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.ContextConfiguration;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.github.bobobot.services.impl.TestHelperUtils.createDummyCommentNotification;
-import static org.github.bobobot.services.impl.TestHelperUtils.createDummyUser;
+import static org.github.bobobot.services.impl.TestHelperUtils.*;
 
 @ActiveProfiles("test")
 @DataJpaTest
@@ -33,37 +33,41 @@ public class NotificationServiceTest {
 
 	@Test
 	void createCommentNotification() {
-		User user = createDummyUser();
-		CommentNotification originalNotification = createDummyCommentNotification(user);
+		Reply reply = createDummyReply();
+		CommentNotification originalNotification = createDummyCommentNotification(reply);
 
-		em.persist(user);
+		em.persist(reply);
 		em.persist(originalNotification);
 
 		CommentNotification notification = notificationService.findCommentNotificationByID(1L);
 
-		assertThat(originalNotification.getReplyContent()).isEqualTo(notification.getReplyContent());
+		assertThat(originalNotification.getOtherUsersReply().getContent()).isEqualTo(notification.getOtherUsersReply().getContent());
 	}
 
 	@Test
 	void updateCommentNotification() {
-		User user = createDummyUser();
-		CommentNotification originalNotification = createDummyCommentNotification(user);
+		Reply reply = createDummyReply();
+		CommentNotification originalNotification = createDummyCommentNotification(reply);
 
-		em.persist(user);
+		em.persist(reply);
 		em.persist(originalNotification);
-		notificationService.update(1L, false, user, "teszt1");
+		Reply newReply = originalNotification.getOtherUsersReply();
+		newReply.setContent("teszt1");
+		notificationService.update(1L, false, originalNotification.getOriginalReply(), newReply);
 		CommentNotification notification = notificationService.findCommentNotificationByID(1L);
 
-		assertThat(notification.getReplyContent()).isEqualTo("teszt1");
+		assertThat(notification.getOtherUsersReply().getContent()).isEqualTo("teszt1");
 
 	}
 
 	@Test
 	void checkIfUserReceivedNotification() {
 		User user = userService.register(createDummyUser());
-		CommentNotification originalNotification = createDummyCommentNotification(user);
+		Reply reply = createDummyReply(user);
+		CommentNotification originalNotification = createDummyCommentNotification(reply);
 
 		em.persist(user);
+		em.persist(reply);
 		em.persist(originalNotification);
 		notificationService.create(originalNotification);
 

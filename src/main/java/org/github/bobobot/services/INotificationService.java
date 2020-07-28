@@ -1,9 +1,6 @@
 package org.github.bobobot.services;
 
-import org.github.bobobot.entities.CommentNotification;
-import org.github.bobobot.entities.Notification;
-import org.github.bobobot.entities.User;
-import org.github.bobobot.entities.VoteNotification;
+import org.github.bobobot.entities.*;
 
 import java.util.List;
 
@@ -24,11 +21,12 @@ public interface INotificationService {
 	 * Creates a comment notification with the arguments provided.
 	 *
 	 * @param read         Whether the notification was read or not
-	 * @param user         The user that the notification belongs to
-	 * @param replyContent The content of the reply that the notification was
+	 * @param originalReply The original reply of the user
+	 * @param otherUsersReply The reply of the other user
 	 * @return The newly created notification
 	 */
-	CommentNotification create(boolean read, User user, String replyContent);
+
+	CommentNotification create(boolean read, Reply originalReply, Reply otherUsersReply);
 
 	/**
 	 * Creates a vote notification.
@@ -42,11 +40,11 @@ public interface INotificationService {
 	 * Creates a vote notification with the arguments provided.
 	 *
 	 * @param read     Whether the notification was read or not
-	 * @param user     The user that the notification belongs to
+	 * @param originalReply The reply that has gotten a vote
 	 * @param voteType The type of the vote (UPVOTE or DOWNVOTE)
 	 * @return The newly created notification.
 	 */
-	VoteNotification create(boolean read, User user, VoteNotification.VoteType voteType);
+	VoteNotification create(boolean read, Reply originalReply, VoteNotification.VoteType voteType);
 
 	/**
 	 * Updates a comment notification.
@@ -60,11 +58,11 @@ public interface INotificationService {
 	 * Updates a comment notification with the arguments provided.
 	 *
 	 * @param read         Whether the notification was read or not
-	 * @param user         The user that the notification belongs to
-	 * @param replyContent The content of the reply that the notification was
+	 * @param originalReply The content of the reply that the notification was
+	 * @param otherUsersReply
 	 * @return The updated notification
 	 */
-	CommentNotification update(Long id, boolean read, User user, String replyContent);
+	CommentNotification update(Long id, boolean read, Reply originalReply, Reply otherUsersReply);
 
 	/**
 	 * Updates a vote notification.
@@ -78,11 +76,11 @@ public interface INotificationService {
 	 * Updates a vote notification with the arguments provided.
 	 *
 	 * @param read     Whether the notification was read or not
-	 * @param user     The user that the notification belongs to
+	 * @param originalReply
 	 * @param voteType The type of the vote (UPVOTE or DOWNVOTE)
 	 * @return The updated notification.
 	 */
-	VoteNotification update(Long id, boolean read, User user, VoteNotification.VoteType voteType);
+	VoteNotification update(Long id, boolean read, Reply originalReply, VoteNotification.VoteType voteType);
 
 	/**
 	 * Finds a comment notification by its ID
@@ -99,6 +97,10 @@ public interface INotificationService {
 	 * @return The vote notification if found, otherwise throws an error
 	 */
 	VoteNotification findVoteNotificationByID(Long id);
+
+	List<CommentNotification> getCommentNotificationsByUserId(Long id);
+
+	List<VoteNotification> getVoteNotificationsByUserId(Long id);
 
 	/**
 	 * Lists all comment notifications

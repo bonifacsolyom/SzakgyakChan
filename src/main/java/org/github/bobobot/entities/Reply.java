@@ -1,6 +1,8 @@
 package org.github.bobobot.entities;
 
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -9,6 +11,7 @@ import javax.persistence.*;
 import java.time.LocalDateTime;
 import java.util.Optional;
 
+@JsonIdentityInfo(generator = ObjectIdGenerators.IntSequenceGenerator.class, property = "@id")
 @Entity
 @Data
 @AllArgsConstructor
@@ -25,11 +28,9 @@ public class Reply {
 	int votes;
 
 	@ManyToOne
-	@JsonIgnore
 	Thread thread;
 
 	@ManyToOne
-	@JsonIgnore
 	User user;
 
 	String image;

@@ -1,12 +1,16 @@
 package org.github.bobobot.entities;
 
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 import lombok.NonNull;
 
 import javax.persistence.Entity;
+import javax.persistence.ManyToOne;
 
+@JsonIdentityInfo(generator = ObjectIdGenerators.IntSequenceGenerator.class, property = "@id")
 @EqualsAndHashCode(callSuper = true)
 @Entity
 @Data
@@ -14,15 +18,16 @@ import javax.persistence.Entity;
 public class CommentNotification extends Notification {
 
 	@NonNull
-	String replyContent;
+	@ManyToOne
+	Reply otherUsersReply;
 
-	public CommentNotification(Long id, boolean read, User user, String replyContent) {
-		super(id, read, user);
-		this.replyContent = replyContent;
+	public CommentNotification(Long id, boolean read, Reply originalReply, Reply otherUsersReply) {
+		super(id, read, originalReply);
+		this.otherUsersReply = otherUsersReply;
 	}
 
-	public CommentNotification(@NonNull boolean read, @NonNull User user, @NonNull String replyContent) {
-		super(read, user);
-		this.replyContent = replyContent;
+	public CommentNotification(@NonNull boolean read, @NonNull Reply originalReply, @NonNull Reply otherUsersReply) {
+		super(read, originalReply);
+		this.otherUsersReply = otherUsersReply;
 	}
 }

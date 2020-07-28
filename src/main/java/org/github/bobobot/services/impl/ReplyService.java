@@ -29,10 +29,10 @@ public class ReplyService implements IReplyService {
 		return reply.get();
 	}
 
-	private void notifyUsersAboutReplies(Reply reply) {
-		for (Reply r : reply.getThread().getReplies()) {
-			CommentNotification notification = commentRepository.save(new CommentNotification(false, r.getUser(), reply.getContent()));
-			r.getUser().addCommentNotification(notification);
+	private void notifyUsersAboutReplies(Reply newReply) {
+		for (Reply threadReply : newReply.getThread().getReplies()) {
+			CommentNotification notification = commentRepository.save(new CommentNotification(false, threadReply, newReply));
+			threadReply.getUser().addCommentNotification(notification);
 		}
 
 	}
@@ -42,7 +42,6 @@ public class ReplyService implements IReplyService {
 		//Értesítjük minden reply userét, hogy egy új reply érkezett a threadbe
 		notifyUsersAboutReplies(tempReply);
 		tempReply.getThread().addReply(tempReply);
-//		imageRepository.save(tempReply.getImage());
 		return replyRepository.save(tempReply);
 	}
 

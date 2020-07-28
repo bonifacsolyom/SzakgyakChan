@@ -1,12 +1,8 @@
 package org.github.bobobot.seed;
 
-import org.github.bobobot.entities.Board;
+import org.github.bobobot.entities.*;
 import org.github.bobobot.entities.Thread;
-import org.github.bobobot.entities.User;
-import org.github.bobobot.services.IBoardService;
-import org.github.bobobot.services.IReplyService;
-import org.github.bobobot.services.IThreadService;
-import org.github.bobobot.services.IUserService;
+import org.github.bobobot.services.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.ApplicationArguments;
 import org.springframework.boot.ApplicationRunner;
@@ -34,6 +30,9 @@ public class DBSeeder implements ApplicationRunner {
 
 	@Autowired
 	IReplyService replyService;
+
+	@Autowired
+	INotificationService notificationService;
 
 	@Override
 	public void run(ApplicationArguments args) throws Exception {
@@ -76,5 +75,12 @@ public class DBSeeder implements ApplicationRunner {
 		replyService.post("yeah I love being random", -2, threadList.get(0), userList.get(2));
 		replyService.post("Spring is my favorite framework!", -1, threadList.get(3), userList.get(2));
 		replyService.post("I prefer C#", 103, threadList.get(3), userList.get(1));
+	}
+
+	public void seedNotifications() {
+		List<User> userList = userService.list();
+		List<Reply> replyList = replyService.list();
+
+		notificationService.create(true, replyList.get(0), VoteNotification.VoteType.UPVOTE);
 	}
 }

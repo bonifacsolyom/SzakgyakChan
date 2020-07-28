@@ -50,7 +50,7 @@ public interface INotificationDAO<GenericNotification extends Notification> {
 	 * Deletes a notification.
 	 *
 	 * @param id The ID of the notification to be deleted.
-	 * @return The deleted norification, wrapped in an optional.
+	 * @return The deleted notification, wrapped in an optional.
 	 */
 	Optional<GenericNotification> delete(int id);
 }

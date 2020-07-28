@@ -110,18 +110,18 @@ public class TestHelperUtils {
 	 * read: false<p>
 	 * reply content: tesztContent<p>
 	 *
-	 * @param user The user that the notification belongs to
+	 * @param originalReply The reply of the user who's being notified
 	 * @return The newly created dummy comment notification.
 	 */
-	static CommentNotification createDummyCommentNotification(User user) {
-		return new CommentNotification(false, user, "tesztContent");
+	static CommentNotification createDummyCommentNotification(Reply originalReply) {
+		return new CommentNotification(false, originalReply, createDummyReply());
 	}
 
 	/**
-	 * @see TestHelperUtils#createDummyCommentNotification(User)
+	 * @see TestHelperUtils#createDummyCommentNotification(Reply)
 	 */
 	static CommentNotification createDummyCommentNotification() {
-		return createDummyCommentNotification(createDummyUser());
+		return createDummyCommentNotification(createDummyReply());
 	}
 
 	/**
@@ -129,17 +129,17 @@ public class TestHelperUtils {
 	 * read: false<p>
 	 * vote type: UPVOTE<p>
 	 *
-	 * @param user The user that the notification belongs to
+	 * @param originalReply The reply of the user who's being notified
 	 * @return The newly created dummy vote notification
 	 */
-	static VoteNotification createDummyVoteNotification(User user) {
-		return new VoteNotification(false, user, VoteNotification.VoteType.UPVOTE);
+	static VoteNotification createDummyVoteNotification(Reply originalReply) {
+		return new VoteNotification(false, originalReply, VoteNotification.VoteType.UPVOTE);
 	}
 
 	/**
-	 * @see TestHelperUtils#createDummyVoteNotification(User)
+	 * @see TestHelperUtils#createDummyVoteNotification(Reply)
 	 */
 	static VoteNotification createDummyVoteNotification() {
-		return createDummyVoteNotification(createDummyUser());
+		return createDummyVoteNotification(createDummyReply());
 	}
 }

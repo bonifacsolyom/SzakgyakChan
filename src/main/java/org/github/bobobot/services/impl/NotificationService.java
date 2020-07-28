@@ -1,9 +1,6 @@
 package org.github.bobobot.services.impl;
 
-import org.github.bobobot.entities.CommentNotification;
-import org.github.bobobot.entities.Notification;
-import org.github.bobobot.entities.User;
-import org.github.bobobot.entities.VoteNotification;
+import org.github.bobobot.entities.*;
 import org.github.bobobot.repositories.INotificationRepository;
 import org.github.bobobot.repositories.IUserRepository;
 import org.github.bobobot.services.INotificationService;
@@ -34,16 +31,23 @@ public class NotificationService implements INotificationService {
 		return notification.get();
 	}
 
+	private void checkIfRepliesInTheSameThread(Reply originalReply, Reply newReply) {
+		if (originalReply.getThread().getId().equals(newReply.getThread().getId())) {
+			throw new IllegalArgumentException("Replies not in the same thread!");
+		}
+	}
+
 	@Override
 	public CommentNotification create(CommentNotification notification) {
+		checkIfRepliesInTheSameThread(notification.getOriginalReply(), notification.getOtherUsersReply());
 		User user = notification.getUser();
 		userService.addCommentNotification(user.getId(), notification);
 		return commentRepository.save(notification);
 	}
 
 	@Override
-	public CommentNotification create(boolean read, User user, String replyContent) {
-		return create(new CommentNotification(read, user, replyContent));
+	public CommentNotification create(boolean read, Reply originalReply, Reply otherUsersReply) {
+		return create(new CommentNotification(read, originalReply, otherUsersReply));
 	}
 
 	@Override
@@ -54,19 +58,20 @@ public class NotificationService implements INotificationService {
 	}
 
 	@Override
-	public VoteNotification create(boolean read, User user, VoteNotification.VoteType voteType) {
-		return create(new VoteNotification(read, user, voteType));
+	public VoteNotification create(boolean read, Reply originalReply, VoteNotification.VoteType voteType) {
+		return create(new VoteNotification(read, originalReply, voteType));
 	}
 
 	@Override
 	public CommentNotification update(CommentNotification tempNotification) {
+		checkIfRepliesInTheSameThread(tempNotification.getOriginalReply(), tempNotification.getOtherUsersReply());
 		getNotificationIfPresent(commentRepository.findById(tempNotification.getId())); //dobjunk errort ha nem létezik
 		return commentRepository.save(tempNotification);
 	}
 
 	@Override
-	public CommentNotification update(Long id, boolean read, User user, String replyContent) {
-		return update(new CommentNotification(id, read, user, replyContent));
+	public CommentNotification update(Long id, boolean read, Reply originalReply, Reply otherUsersReply) {
+		return update(new CommentNotification(id, read, originalReply, otherUsersReply));
 	}
 
 	@Override
@@ -76,8 +81,8 @@ public class NotificationService implements INotificationService {
 	}
 
 	@Override
-	public VoteNotification update(Long id, boolean read, User user, VoteNotification.VoteType voteType) {
-		return update(new VoteNotification(id, read, user, voteType));
+	public VoteNotification update(Long id, boolean read, Reply originalReply, VoteNotification.VoteType voteType) {
+		return update(new VoteNotification(id, read, originalReply, voteType));
 	}
 
 	@Override
@@ -93,15 +98,26 @@ public class NotificationService implements INotificationService {
 	}
 
 	@Override
+	public List<CommentNotification> getCommentNotificationsByUserId(Long id) {
+		return commentRepository.getByUserId(id);
+	}
+
+	@Override
+	public List<VoteNotification> getVoteNotificationsByUserId(Long id) {
+		return voteRepository.getByUserId(id);
+
+	}
+
+	@Override
 	public List<CommentNotification> listCommentNotifications() {
 		//fúj
-		return (List<CommentNotification>)(List<? extends Notification>)commentRepository.findAll();
+		return (List<CommentNotification>) (List<? extends Notification>) commentRepository.findAll();
 	}
 
 	@Override
 	public List<VoteNotification> listVoteNotifications() {
 		//fúj 2.0
-		return (List<VoteNotification>)(List<? extends Notification>)voteRepository.findAll();
+		return (List<VoteNotification>) (List<? extends Notification>) voteRepository.findAll();
 	}
 
 	@Override

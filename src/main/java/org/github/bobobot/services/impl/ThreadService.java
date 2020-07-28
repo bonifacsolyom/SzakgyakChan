@@ -27,6 +27,7 @@ public class ThreadService implements IThreadService {
 	@Override
 	public Thread create(Thread tempThread) {
 		tempThread.getUser().addThread(tempThread);
+		tempThread.getBoard().addThread(tempThread);
 		return repository.save(tempThread);
 	}
 

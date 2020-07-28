@@ -1,6 +1,7 @@
 package org.github.bobobot.entities;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -8,6 +9,7 @@ import lombok.NonNull;
 
 import javax.persistence.*;
 
+@JsonIdentityInfo(generator = ObjectIdGenerators.IntSequenceGenerator.class, property = "@id")
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
@@ -22,11 +24,14 @@ public abstract class Notification {
 
 	@ManyToOne
 	@NonNull
-	@JsonIgnore
-	User user;
+	Reply originalReply;
 
-	public Notification(boolean read, @NonNull User user) {
+	public Notification(boolean read, @NonNull Reply originalReply) {
 		this.read = read;
-		this.user = user;
+		this.originalReply = originalReply;
+	}
+
+	public User getUser() {
+		return originalReply.getUser();
 	}
 }

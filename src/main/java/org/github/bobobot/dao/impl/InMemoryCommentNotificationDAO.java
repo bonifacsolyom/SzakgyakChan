@@ -21,7 +21,8 @@ public class InMemoryCommentNotificationDAO extends InMemoryNotificationDAO<Comm
 
 		if (memoryNotification.isPresent()) {
 			memoryNotification.get().setRead(notification.isRead());
-			memoryNotification.get().setReplyContent(notification.getReplyContent());
+			memoryNotification.get().setOriginalReply(notification.getOriginalReply());
+			memoryNotification.get().setOtherUsersReply((notification.getOtherUsersReply()));
 		}
 
 		return memoryNotification;

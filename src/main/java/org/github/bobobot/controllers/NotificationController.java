@@ -2,7 +2,6 @@ package org.github.bobobot.controllers;
 
 import lombok.extern.slf4j.Slf4j;
 import org.github.bobobot.entities.CommentNotification;
-import org.github.bobobot.entities.Notification;
 import org.github.bobobot.entities.VoteNotification;
 import org.github.bobobot.services.INotificationService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -136,6 +135,30 @@ public class NotificationController {
 			return ResponseEntity.ok().body(null);
 		} catch (Exception e) {
 			log.error("Could not delete notification: ", e);
+			return ResponseEntity.badRequest().body(null);
+		}
+	}
+
+	@GetMapping("/users/{id}/commentNotifications")
+	ResponseEntity<List<CommentNotification>> getCommentNotificationsByUserId(@PathVariable Long id) {
+		try {
+			ResponseEntity<List<CommentNotification>> notifications = ResponseEntity.ok(service.getCommentNotificationsByUserId(id));
+			log.info("Gathered comment notifications of user " + id);
+			return notifications;
+		} catch (Exception e) {
+			log.error("Could not gather comment notifications of user " + id);
+			return ResponseEntity.badRequest().body(null);
+		}
+	}
+
+	@GetMapping("/users/{id}/voteNotifications")
+	ResponseEntity<List<VoteNotification>> getVoteNotificationsByUserId(@PathVariable Long id) {
+		try {
+			ResponseEntity<List<VoteNotification>> notifications = ResponseEntity.ok(service.getVoteNotificationsByUserId(id));
+			log.info("Gathered vote notifications of user " + id);
+			return notifications;
+		} catch (Exception e) {
+			log.error("Could not gather vote notifications of user " + id);
 			return ResponseEntity.badRequest().body(null);
 		}
 	}
