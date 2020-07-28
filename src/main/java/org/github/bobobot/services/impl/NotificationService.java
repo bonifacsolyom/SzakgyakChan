@@ -27,7 +27,7 @@ public class NotificationService implements INotificationService {
 		this.userService = userService;
 	}
 
-	private Notification getNotificationIfNotPresent(Optional<? extends Notification> notification) {
+	private Notification getNotificationIfPresent(Optional<? extends Notification> notification) {
 		if (!notification.isPresent()) {
 			throw new IllegalArgumentException("Notification was not found!");
 		}
@@ -60,7 +60,7 @@ public class NotificationService implements INotificationService {
 
 	@Override
 	public CommentNotification update(CommentNotification tempNotification) {
-		getNotificationIfNotPresent(commentRepository.findById(tempNotification.getId())); //dobjunk errort ha nem létezik
+		getNotificationIfPresent(commentRepository.findById(tempNotification.getId())); //dobjunk errort ha nem létezik
 		return commentRepository.save(tempNotification);
 	}
 
@@ -71,7 +71,7 @@ public class NotificationService implements INotificationService {
 
 	@Override
 	public VoteNotification update(VoteNotification tempNotification) {
-		getNotificationIfNotPresent(voteRepository.findById(tempNotification.getId())); //dobjunk errort ha nem létezik
+		getNotificationIfPresent(voteRepository.findById(tempNotification.getId())); //dobjunk errort ha nem létezik
 		return voteRepository.save(tempNotification);
 	}
 
@@ -83,22 +83,36 @@ public class NotificationService implements INotificationService {
 	@Override
 	public CommentNotification findCommentNotificationByID(Long id) {
 		Optional<Notification> notification = commentRepository.findById(id);
-		return (CommentNotification) getNotificationIfNotPresent(notification);
+		return (CommentNotification) getNotificationIfPresent(notification);
 	}
 
 	@Override
 	public VoteNotification findVoteNotificationByID(Long id) {
 		Optional<Notification> notification = voteRepository.findById(id);
-		return (VoteNotification) getNotificationIfNotPresent(notification);
+		return (VoteNotification) getNotificationIfPresent(notification);
 	}
 
 	@Override
-	public List<? extends Notification> listCommentNotifications() {
-		return commentRepository.findAll();
+	public List<CommentNotification> listCommentNotifications() {
+		//fúj
+		return (List<CommentNotification>)(List<? extends Notification>)commentRepository.findAll();
 	}
 
 	@Override
-	public List<? extends Notification> listVoteNotifications() {
-		return voteRepository.findAll();
+	public List<VoteNotification> listVoteNotifications() {
+		//fúj 2.0
+		return (List<VoteNotification>)(List<? extends Notification>)voteRepository.findAll();
+	}
+
+	@Override
+	public void deleteCommentNotification(Long id) {
+		getNotificationIfPresent(commentRepository.findById(id));
+		commentRepository.deleteById(id);
+	}
+
+	@Override
+	public void deleteVoteNotification(Long id) {
+		getNotificationIfPresent(voteRepository.findById(id));
+		voteRepository.deleteById(id);
 	}
 }

@@ -105,13 +105,25 @@ public interface INotificationService {
 	 *
 	 * @return A list of all comment notifications
 	 */
-	List<? extends Notification> listCommentNotifications();
+	List<CommentNotification> listCommentNotifications();
 
 	/**
 	 * Lists all vote notifications
 	 *
 	 * @return A list of all vote notifications
 	 */
-	List<? extends Notification> listVoteNotifications();
+	List<VoteNotification> listVoteNotifications();
+
+	/**
+	 * Deletes a comment notification.
+	 * @param id The id of the notification to be deleted.
+	 */
+	void deleteCommentNotification(Long id);
+
+	/**
+	 * Deletes a vote notification.
+	 * @param id The id of the notification to be deleted.
+	 */
+	void deleteVoteNotification(Long id);
 
 }
