@@ -10,7 +10,7 @@ import lombok.NonNull;
 import javax.persistence.Entity;
 import javax.persistence.Enumerated;
 
-@JsonIdentityInfo(generator = ObjectIdGenerators.IntSequenceGenerator.class, property = "@id")
+@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
 @EqualsAndHashCode(callSuper = true)
 @Entity
 @Data

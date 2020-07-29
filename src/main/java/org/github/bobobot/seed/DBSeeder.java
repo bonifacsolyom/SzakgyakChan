@@ -40,6 +40,7 @@ public class DBSeeder implements ApplicationRunner {
 		seedBoards();
 		seedThreads();
 		seedReplies();
+		seedNotifications();
 	}
 
 	public void seedUsers() {
@@ -78,7 +79,6 @@ public class DBSeeder implements ApplicationRunner {
 	}
 
 	public void seedNotifications() {
-		List<User> userList = userService.list();
 		List<Reply> replyList = replyService.list();
 
 		notificationService.create(true, replyList.get(0), VoteNotification.VoteType.UPVOTE);

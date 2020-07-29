@@ -11,7 +11,7 @@ import javax.persistence.*;
 import java.time.LocalDateTime;
 import java.util.Optional;
 
-@JsonIdentityInfo(generator = ObjectIdGenerators.IntSequenceGenerator.class, property = "@id")
+@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
 @Entity
 @Data
 @AllArgsConstructor

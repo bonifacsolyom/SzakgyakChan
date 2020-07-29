@@ -9,11 +9,11 @@ import lombok.NonNull;
 
 import javax.persistence.*;
 
-@JsonIdentityInfo(generator = ObjectIdGenerators.IntSequenceGenerator.class, property = "@id")
+@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-@Entity
+@MappedSuperclass
 public abstract class Notification {
 
 	@Id

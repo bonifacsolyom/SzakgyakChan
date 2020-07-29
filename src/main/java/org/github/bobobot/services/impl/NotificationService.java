@@ -1,8 +1,9 @@
 package org.github.bobobot.services.impl;
 
 import org.github.bobobot.entities.*;
-import org.github.bobobot.repositories.INotificationRepository;
+import org.github.bobobot.repositories.ICommentNotificationRepository;
 import org.github.bobobot.repositories.IUserRepository;
+import org.github.bobobot.repositories.IVoteNotificationRepository;
 import org.github.bobobot.services.INotificationService;
 import org.github.bobobot.services.IUserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,9 +15,9 @@ public class NotificationService implements INotificationService {
 
 	IUserService userService;
 	@Autowired
-	private INotificationRepository<CommentNotification> commentRepository;
+	private ICommentNotificationRepository commentRepository;
 	@Autowired
-	private INotificationRepository<VoteNotification> voteRepository;
+	private IVoteNotificationRepository voteRepository;
 	@Autowired
 	private IUserRepository userRepository;
 
@@ -38,28 +39,26 @@ public class NotificationService implements INotificationService {
 	}
 
 	@Override
-	public CommentNotification create(CommentNotification notification) {
+	public void create(CommentNotification notification) {
 		checkIfRepliesInTheSameThread(notification.getOriginalReply(), notification.getOtherUsersReply());
 		User user = notification.getUser();
 		userService.addCommentNotification(user.getId(), notification);
-		return commentRepository.save(notification);
 	}
 
 	@Override
-	public CommentNotification create(boolean read, Reply originalReply, Reply otherUsersReply) {
-		return create(new CommentNotification(read, originalReply, otherUsersReply));
+	public void create(boolean read, Reply originalReply, Reply otherUsersReply) {
+		create(new CommentNotification(read, originalReply, otherUsersReply));
 	}
 
 	@Override
-	public VoteNotification create(VoteNotification notification) {
+	public void create(VoteNotification notification) {
 		User user = notification.getUser();
 		userService.addVoteNotification(user.getId(), notification);
-		return voteRepository.save(notification);
 	}
 
 	@Override
-	public VoteNotification create(boolean read, Reply originalReply, VoteNotification.VoteType voteType) {
-		return create(new VoteNotification(read, originalReply, voteType));
+	public void create(boolean read, Reply originalReply, VoteNotification.VoteType voteType) {
+		create(new VoteNotification(read, originalReply, voteType));
 	}
 
 	@Override
@@ -87,13 +86,13 @@ public class NotificationService implements INotificationService {
 
 	@Override
 	public CommentNotification findCommentNotificationByID(Long id) {
-		Optional<Notification> notification = commentRepository.findById(id);
+		Optional<CommentNotification> notification = commentRepository.findById(id);
 		return (CommentNotification) getNotificationIfPresent(notification);
 	}
 
 	@Override
 	public VoteNotification findVoteNotificationByID(Long id) {
-		Optional<Notification> notification = voteRepository.findById(id);
+		Optional<VoteNotification> notification = voteRepository.findById(id);
 		return (VoteNotification) getNotificationIfPresent(notification);
 	}
 
@@ -105,7 +104,6 @@ public class NotificationService implements INotificationService {
 	@Override
 	public List<VoteNotification> getVoteNotificationsByUserId(Long id) {
 		return voteRepository.getByUserId(id);
-
 	}
 
 	@Override

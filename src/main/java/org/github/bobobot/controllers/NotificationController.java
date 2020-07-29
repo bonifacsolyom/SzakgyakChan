@@ -42,26 +42,26 @@ public class NotificationController {
 	}
 
 	@PostMapping("/commentNotifications")
-	ResponseEntity<CommentNotification> newCommentNotification(@RequestBody CommentNotification notification) {
+	ResponseEntity<Void> newCommentNotification(@RequestBody CommentNotification notification) {
 		try {
-			ResponseEntity<CommentNotification> createdNotification = ResponseEntity.ok(service.create(notification));
+			service.create(notification);
 			log.info("Created new comment notification with info: " + notification);
-			return createdNotification;
+			return ResponseEntity.ok().body(null);
 		} catch (IllegalArgumentException e) {
 			log.error("Could not create new comment notification with info: " + notification, e);
-			return ResponseEntity.badRequest().body(notification);
+			return ResponseEntity.badRequest().body(null);
 		}
 	}
 
 	@PostMapping("/voteNotifications")
-	ResponseEntity<VoteNotification> newVoteNotification(@RequestBody VoteNotification notification) {
+	ResponseEntity<Void> newVoteNotification(@RequestBody VoteNotification notification) {
 		try {
-			ResponseEntity<VoteNotification> createdNotification = ResponseEntity.ok(service.create(notification));
+			service.create(notification);
 			log.info("Created new vote notification with info: " + notification);
-			return createdNotification;
+			return ResponseEntity.ok().body(null);
 		} catch (IllegalArgumentException e) {
 			log.error("Could not create new vote notification with info: " + notification, e);
-			return ResponseEntity.badRequest().body(notification);
+			return ResponseEntity.badRequest().body(null);
 		}
 	}
 
@@ -146,7 +146,7 @@ public class NotificationController {
 			log.info("Gathered comment notifications of user " + id);
 			return notifications;
 		} catch (Exception e) {
-			log.error("Could not gather comment notifications of user " + id);
+			log.error("Could not gather comment notifications of user " + id, e);
 			return ResponseEntity.badRequest().body(null);
 		}
 	}
@@ -158,7 +158,7 @@ public class NotificationController {
 			log.info("Gathered vote notifications of user " + id);
 			return notifications;
 		} catch (Exception e) {
-			log.error("Could not gather vote notifications of user " + id);
+			log.error("Could not gather vote notifications of user " + id, e);
 			return ResponseEntity.badRequest().body(null);
 		}
 	}

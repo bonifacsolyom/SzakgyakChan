@@ -10,6 +10,11 @@ import java.util.List;
 @Repository
 public interface IReplyRepository extends JpaRepository<Reply, Long> {
 
+	/**
+	 * Finds all replies that belong to a specific thread.
+	 * @param thread The thread that the replies should belong to.
+	 * @return A list of all replies that belong to a specific thread.
+	 */
 	List<Reply> findAllByThread(Thread thread);
 
 }

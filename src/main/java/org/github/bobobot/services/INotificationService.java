@@ -6,16 +6,13 @@ import java.util.List;
 
 public interface INotificationService {
 
-	//TODO: túl sok a kódismétlődés, ezt biztos meg lehet oldani szebben is
-	//valahogy a két notificationtípust jobban kéne együtt kezelni
-
 	/**
 	 * Creates a new notification.
 	 *
 	 * @param notification The notification to be created.
 	 * @return The newly created notification.
 	 */
-	CommentNotification create(CommentNotification notification);
+	void create(CommentNotification notification);
 
 	/**
 	 * Creates a comment notification with the arguments provided.
@@ -26,7 +23,7 @@ public interface INotificationService {
 	 * @return The newly created notification
 	 */
 
-	CommentNotification create(boolean read, Reply originalReply, Reply otherUsersReply);
+	void create(boolean read, Reply originalReply, Reply otherUsersReply);
 
 	/**
 	 * Creates a vote notification.
@@ -34,7 +31,7 @@ public interface INotificationService {
 	 * @param notification The notification to be created
 	 * @return The newly created notification.
 	 */
-	VoteNotification create(VoteNotification notification);
+	void create(VoteNotification notification);
 
 	/**
 	 * Creates a vote notification with the arguments provided.
@@ -44,7 +41,7 @@ public interface INotificationService {
 	 * @param voteType The type of the vote (UPVOTE or DOWNVOTE)
 	 * @return The newly created notification.
 	 */
-	VoteNotification create(boolean read, Reply originalReply, VoteNotification.VoteType voteType);
+	void create(boolean read, Reply originalReply, VoteNotification.VoteType voteType);
 
 	/**
 	 * Updates a comment notification.
