@@ -23,14 +23,17 @@ public class ReplyService implements IReplyService {
 
 
 	private Reply getReplyIfPresent(Optional<Reply> reply) {
-		if (!reply.isPresent()) {
+		if ( !reply.isPresent() ) {
 			throw new IllegalArgumentException("Reply was not found!");
 		}
 		return reply.get();
 	}
 
 	private void notifyUsersAboutReplies(Reply newReply) {
-		for (Reply threadReply : newReply.getThread().getReplies()) {
+		for ( Reply threadReply : newReply.getThread().getReplies() ) {
+
+			//A NotificationService#create hasonló dolgot csinál, csak előtte van valamiyen validáció, itt ez nincs meg, nem tudom lehet-e ez probléma. Ezért
+			// célszerű, hogy a service-ek egymást hivogassák ne közvetlenül a db réteget, mert üzleti logika kimaradhat.
 			CommentNotification notification = commentRepository.save(new CommentNotification(false, threadReply, newReply));
 			threadReply.getUser().addCommentNotification(notification);
 		}

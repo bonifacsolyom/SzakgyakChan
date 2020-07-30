@@ -19,6 +19,8 @@ public class UserService implements IUserService {
 	private PasswordEncoder passwordEncoder;
 
 	private void validateEmail(String email) {
+		//TODO: +1, viszont hogy teszetnéd a funkciót ha nem csak annyi lenne hogy rossz email címet kell megadni. Ez egy ugyan olyan "service" obejektum,
+		// mint mondjuk a password encoder.
 		EmailValidator validator = EmailValidator.getInstance();
 		if (!validator.isValid(email)) throw new IllegalArgumentException("Hibás email cím!");
 	}

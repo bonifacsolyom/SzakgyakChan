@@ -12,13 +12,16 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
+
+//TODO: Kicsit el lehet veszni a rengeteg create update variációban, ha nincs érdemi különbség köztük, egymás hivogatják különböző paraméterekkel, akkor
+// célszerű az inteface-be felvinni default metódusként.
 public class ThreadService implements IThreadService {
 
 	@Autowired
 	private IThreadRepository repository;
 
 	private Thread getThreadIfPresent(Optional<Thread> thread) {
-		if (!thread.isPresent()) {
+		if ( !thread.isPresent() ) {
 			throw new IllegalArgumentException("Thread was not found!");
 		}
 		return thread.get();
@@ -26,7 +29,7 @@ public class ThreadService implements IThreadService {
 
 	@Override
 	public Thread create(Thread tempThread) {
-		tempThread.getUser().addThread(tempThread);
+		tempThread.getUser().addThread(tempThread); //TODO: Ilyen esetbe a user-t és a boardot updatelni szükséges nem?
 		tempThread.getBoard().addThread(tempThread);
 		return repository.save(tempThread);
 	}

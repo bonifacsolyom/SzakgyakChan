@@ -19,6 +19,7 @@
         <java.version>1.8</java.version>
     </properties>
 
+    <!--    TODO: Érdemes átnézni a függőségeket olyan szempontból, hogy van-e olyan dependency, ami tranzitívan jön, így felesleges manuálisan felvenni. -->
     <dependencies>
         <!-- https://mvnrepository.com/artifact/org.junit.jupiter/junit-jupiter-api -->
         <dependency>

@@ -11,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import java.util.List;
 import java.util.Optional;
 
+//TODO: Mi lesz a célja a Notification-nek? A felhasználó értesítve lesz valahogy? Akkor szükséges ezt menteni?
 public class NotificationService implements INotificationService {
 
 	IUserService userService;

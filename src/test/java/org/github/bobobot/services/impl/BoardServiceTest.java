@@ -19,6 +19,7 @@ import static org.github.bobobot.services.impl.TestHelperUtils.createDummyBoard;
 @DataJpaTest
 @DirtiesContext(classMode = DirtiesContext.ClassMode.BEFORE_EACH_TEST_METHOD)
 @ContextConfiguration(classes = ApplicationConfig.class)
+//TODO: Ha nem csak a jpa része kell a "test slice"-nak akkor lehet @SprinBootTest-et használni.
 public class BoardServiceTest {
 
 	@Autowired

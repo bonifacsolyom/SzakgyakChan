@@ -13,6 +13,7 @@ import java.util.List;
 @RestController
 public class BoardController {
 
+	//TODO: van oka annak, hogy package private a láthatósága? célszerű mindig az elégséges legszigorúbbat választani.
 	@Autowired
 	IBoardService service;
 
@@ -22,6 +23,8 @@ public class BoardController {
 			ResponseEntity<List<Board>> list = ResponseEntity.ok(service.list());
 			log.info("Generated a list of all boards.");
 			return list;
+			//TODO: Így is meglehet oldani a hibás eset kezelését, de látszólag mindehol ugyan úgy van kezelve, ez kiemelhető közös helyre, esetleg a
+			// "@ExceptionHandler" mechanikának tudom javasolni.
 		} catch (IllegalArgumentException e) {
 			log.error("Could not list boards: ", e);
 			return ResponseEntity.badRequest().body(null);
