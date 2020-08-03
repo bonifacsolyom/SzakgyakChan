@@ -5,6 +5,7 @@ import org.github.bobobot.entities.Thread;
 import org.github.bobobot.entities.User;
 import org.github.bobobot.entities.VoteNotification.VoteType;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 public interface IReplyService {
@@ -26,7 +27,9 @@ public interface IReplyService {
 	 * @param user    The user the reply belongs to.
 	 * @return The created reply.
 	 */
-	Reply post(String content, int votes, Thread thread, User user);
+	default Reply post(String content, int votes, Thread thread, User user) {
+		return post(new Reply(content, LocalDateTime.now(), votes, thread, user, null));
+	}
 
 	/**
 	 * Creates a reply.
@@ -37,7 +40,9 @@ public interface IReplyService {
 	 * @param user    The user the reply belongs to.
 	 * @return The created reply.
 	 */
-	Reply post(String content, int votes, String image, Thread thread, User user);
+	default Reply post(String content, int votes, String image, Thread thread, User user) {
+		return post(new Reply(content, LocalDateTime.now(), votes, thread, user, image));
+	}
 
 	/**
 	 * Updates a reply.
@@ -57,7 +62,9 @@ public interface IReplyService {
 	 * @param user    The user the reply belongs to.
 	 * @return The updated reply.
 	 */
-	Reply update(Long id, String content, int votes, Thread thread, User user);
+	default Reply update(Long id, String content, int votes, Thread thread, User user) {
+		return update(new Reply(id, content, LocalDateTime.now(), votes, thread, user, null));
+	}
 
 	/**
 	 * Updates a reply.
@@ -69,7 +76,9 @@ public interface IReplyService {
 	 * @param user    The user the reply belongs to.
 	 * @return The updated reply.
 	 */
-	Reply update(Long id, String content, int votes, String image, Thread thread, User user);
+	default Reply update(Long id, String content, int votes, String image, Thread thread, User user) {
+		return update(new Reply(id, content, LocalDateTime.now(), votes, thread, user, image));
+	}
 
 	/**
 	 * Lists all replies.

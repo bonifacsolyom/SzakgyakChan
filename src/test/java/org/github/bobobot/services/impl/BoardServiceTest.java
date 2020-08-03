@@ -7,6 +7,7 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.boot.test.autoconfigure.orm.jpa.TestEntityManager;
+import org.springframework.context.annotation.ComponentScan;
 import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.ContextConfiguration;
@@ -18,8 +19,12 @@ import static org.github.bobobot.services.impl.TestHelperUtils.createDummyBoard;
 @ActiveProfiles("test")
 @DataJpaTest
 @DirtiesContext(classMode = DirtiesContext.ClassMode.BEFORE_EACH_TEST_METHOD)
-@ContextConfiguration(classes = ApplicationConfig.class)
+@ComponentScan("org.github.bobobot")
 //TODO: Ha nem csak a jpa része kell a "test slice"-nak akkor lehet @SprinBootTest-et használni.
+
+//Próbáltam, de ugye akkor nem injektel be entitymanagert, és a többi tesztben anélkül halál megoldani bármit is
+//pl. a replytest-ben akkor ha létre akarok hozni egy reply-t, akkor minden egyes tesztben létre kéne hozni hozzá egy boardot,
+//egy threadet, és egy usert, különben transient exceptionöket dobál
 public class BoardServiceTest {
 
 	@Autowired

@@ -30,13 +30,9 @@ public class ThreadService implements IThreadService {
 	@Override
 	public Thread create(Thread tempThread) {
 		tempThread.getUser().addThread(tempThread); //TODO: Ilyen esetbe a user-t és a boardot updatelni szükséges nem?
-		tempThread.getBoard().addThread(tempThread);
+		tempThread.getBoard().addThread(tempThread); //amennyire én látom, nem, bekerül az adatbázisba rendesen
+													 //gondolom valami cascade magic miatt
 		return repository.save(tempThread);
-	}
-
-	@Override
-	public Thread create(String title, Board board, User user, List<Reply> replies) {
-		return create(new Thread(title, board, user, replies));
 	}
 
 	@Override
@@ -47,24 +43,9 @@ public class ThreadService implements IThreadService {
 	}
 
 	@Override
-	public Thread create(String title, Board board, User user) {
-		return create(new Thread(title, board, user));
-	}
-
-	@Override
 	public Thread update(Thread tempThread) {
 		getThreadIfPresent(repository.findById(tempThread.getId())); //dobjunk errort ha nem létezik
 		return repository.save(tempThread);
-	}
-
-	@Override
-	public Thread update(Long id, String title, Board board, User user) {
-		return update(new Thread(id, title, board, user));
-	}
-
-	@Override
-	public Thread update(Long id, String title, Board board, User user, List<Reply> replies) {
-		return update(new Thread(id, title, board, user, replies));
 	}
 
 	@Override

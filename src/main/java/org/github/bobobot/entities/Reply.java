@@ -6,6 +6,7 @@ import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import lombok.ToString;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
@@ -27,9 +28,11 @@ public class Reply {
 
 	int votes;
 
+	@ToString.Exclude
 	@ManyToOne
 	Thread thread;
 
+	@ToString.Exclude
 	@ManyToOne
 	User user;
 

@@ -12,6 +12,9 @@ import java.util.List;
 import java.util.Optional;
 
 //TODO: Mi lesz a célja a Notification-nek? A felhasználó értesítve lesz valahogy? Akkor szükséges ezt menteni?
+//a főképernyőn, ha a felhasználó be van lépve, jobb felül mutatni fogja majd az értesítéseket, a facebook-hoz hasonlóan.
+//pl. ha valaki szavaz a kommentedre, akkor ha legközelebb fellátogatsz az oldalra, akkor ezt látni fogod jobb felül a főoldalon, ezért van elmentve.
+//a notification 'read' flagje meg azt tárolja, hogy a felhasználó látta-e már az értesítést, ugyancsak facebook-stílusban
 public class NotificationService implements INotificationService {
 
 	IUserService userService;
@@ -34,32 +37,25 @@ public class NotificationService implements INotificationService {
 	}
 
 	private void checkIfRepliesInTheSameThread(Reply originalReply, Reply newReply) {
-		if (originalReply.getThread().getId().equals(newReply.getThread().getId())) {
+		if (!originalReply.getThread().getId().equals(newReply.getThread().getId())) {
 			throw new IllegalArgumentException("Replies not in the same thread!");
 		}
 	}
 
 	@Override
-	public void create(CommentNotification notification) {
+	public CommentNotification create(CommentNotification notification) {
 		checkIfRepliesInTheSameThread(notification.getOriginalReply(), notification.getOtherUsersReply());
+		notification = commentRepository.save(notification);
 		User user = notification.getUser();
-		userService.addCommentNotification(user.getId(), notification);
+		userService.addCommentNotification(user, notification);
+		return notification;
 	}
 
 	@Override
-	public void create(boolean read, Reply originalReply, Reply otherUsersReply) {
-		create(new CommentNotification(read, originalReply, otherUsersReply));
-	}
-
-	@Override
-	public void create(VoteNotification notification) {
+	public VoteNotification create(VoteNotification notification) {
 		User user = notification.getUser();
-		userService.addVoteNotification(user.getId(), notification);
-	}
-
-	@Override
-	public void create(boolean read, Reply originalReply, VoteNotification.VoteType voteType) {
-		create(new VoteNotification(read, originalReply, voteType));
+		userService.addVoteNotification(user, notification);
+		return notification;
 	}
 
 	@Override
@@ -70,19 +66,9 @@ public class NotificationService implements INotificationService {
 	}
 
 	@Override
-	public CommentNotification update(Long id, boolean read, Reply originalReply, Reply otherUsersReply) {
-		return update(new CommentNotification(id, read, originalReply, otherUsersReply));
-	}
-
-	@Override
 	public VoteNotification update(VoteNotification tempNotification) {
 		getNotificationIfPresent(voteRepository.findById(tempNotification.getId())); //dobjunk errort ha nem létezik
 		return voteRepository.save(tempNotification);
-	}
-
-	@Override
-	public VoteNotification update(Long id, boolean read, Reply originalReply, VoteNotification.VoteType voteType) {
-		return update(new VoteNotification(id, read, originalReply, voteType));
 	}
 
 	@Override

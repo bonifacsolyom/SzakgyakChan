@@ -7,7 +7,9 @@ import org.github.bobobot.entities.User;
 import org.github.bobobot.entities.VoteNotification.VoteType;
 import org.github.bobobot.repositories.ICommentNotificationRepository;
 import org.github.bobobot.repositories.IReplyRepository;
+import org.github.bobobot.services.INotificationService;
 import org.github.bobobot.services.IReplyService;
+import org.github.bobobot.services.IUserService;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import java.time.LocalDateTime;
@@ -18,60 +20,43 @@ public class ReplyService implements IReplyService {
 
 	@Autowired
 	private IReplyRepository replyRepository;
+
 	@Autowired
-	private ICommentNotificationRepository commentRepository;
+	private INotificationService notificationService;
+
+	@Autowired
+	private IUserService userService;
 
 
 	private Reply getReplyIfPresent(Optional<Reply> reply) {
-		if ( !reply.isPresent() ) {
+		if (!reply.isPresent()) {
 			throw new IllegalArgumentException("Reply was not found!");
 		}
 		return reply.get();
 	}
 
 	private void notifyUsersAboutReplies(Reply newReply) {
-		for ( Reply threadReply : newReply.getThread().getReplies() ) {
-
+		for (Reply threadReply : newReply.getThread().getReplies()) {
 			//A NotificationService#create hasonló dolgot csinál, csak előtte van valamiyen validáció, itt ez nincs meg, nem tudom lehet-e ez probléma. Ezért
 			// célszerű, hogy a service-ek egymást hivogassák ne közvetlenül a db réteget, mert üzleti logika kimaradhat.
-			CommentNotification notification = commentRepository.save(new CommentNotification(false, threadReply, newReply));
-			threadReply.getUser().addCommentNotification(notification);
-		}
 
+			CommentNotification notification = notificationService.create(false, threadReply, newReply);
+		}
 	}
 
 	@Override
 	public Reply post(Reply tempReply) {
 		//Értesítjük minden reply userét, hogy egy új reply érkezett a threadbe
-		notifyUsersAboutReplies(tempReply);
-		tempReply.getThread().addReply(tempReply);
-		return replyRepository.save(tempReply);
-	}
-
-	@Override
-	public Reply post(String content, int votes, Thread thread, User user) {
-		return post(new Reply(content, LocalDateTime.now(), votes, thread, user, null));
-	}
-
-	@Override
-	public Reply post(String content, int votes, String image, Thread thread, User user) {
-		return post(new Reply(content, LocalDateTime.now(), votes, thread, user, image));
+		Reply reply = replyRepository.save(tempReply);
+		notifyUsersAboutReplies(reply);
+		reply.getThread().addReply(reply);
+		return reply;
 	}
 
 	@Override
 	public Reply update(Reply tempReply) {
 		getReplyIfPresent(replyRepository.findById(tempReply.getId())); //dobjunk errort ha nem létezik
 		return replyRepository.save(tempReply);
-	}
-
-	@Override
-	public Reply update(Long id, String content, int votes, Thread thread, User user) {
-		return update(new Reply(id, content, LocalDateTime.now(), votes, thread, user, null));
-	}
-
-	@Override
-	public Reply update(Long id, String content, int votes, String image, Thread thread, User user) {
-		return update(new Reply(id, content, LocalDateTime.now(), votes, thread, user, image));
 	}
 
 	@Override

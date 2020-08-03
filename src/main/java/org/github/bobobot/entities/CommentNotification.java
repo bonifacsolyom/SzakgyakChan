@@ -26,7 +26,7 @@ public class CommentNotification extends Notification {
 		this.otherUsersReply = otherUsersReply;
 	}
 
-	public CommentNotification(@NonNull boolean read, @NonNull Reply originalReply, @NonNull Reply otherUsersReply) {
+	public CommentNotification(boolean read, @NonNull Reply originalReply, @NonNull Reply otherUsersReply) {
 		super(read, originalReply);
 		this.otherUsersReply = otherUsersReply;
 	}

@@ -21,7 +21,9 @@ public interface IBoardService {
 	 * @param longName  The longer description of the board - should only be a couple words long.
 	 * @return The created board.
 	 */
-	Board create(String shortName, String longName);
+	default Board create(String shortName, String longName) {
+		return create(new Board(shortName, longName));
+	}
 
 	/**
 	 * Updates a board
@@ -40,7 +42,9 @@ public interface IBoardService {
 	 * @param longName  The longer description of the board - should only be a couple words long.
 	 * @return The updated board.
 	 */
-	Board update(Long id, String shortName, String longName);
+	default Board update(Long id, String shortName, String longName) {
+		return update(new Board(id, shortName, longName));
+	}
 
 	/**
 	 * Lists all existing boards.
