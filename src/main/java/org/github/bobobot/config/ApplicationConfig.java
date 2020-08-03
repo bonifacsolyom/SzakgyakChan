@@ -1,15 +1,16 @@
 package org.github.bobobot.config;
 
+import org.apache.commons.validator.routines.EmailValidator;
 import org.github.bobobot.services.*;
 import org.github.bobobot.services.impl.*;
 import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.factory.PasswordEncoderFactories;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
 @Configuration
-@ComponentScan("org.github.bobobot")
+//TODO: Mivel a fő osztályon (Application) már van @SpringBootApplication annotáció, és az önmagában már tartalmaz @ComponentScan annotációt, és az a
+// legkülső package-en van, így nincs szükség több ComponentScan-re.
 public class ApplicationConfig {
 
 	@Bean
@@ -40,7 +41,13 @@ public class ApplicationConfig {
 
 	//Miscellaneous
 	@Bean
+	//TODO: +1, ennél már csak ez lett volna szebb "PasswordEncoderFactories.createDelegatingPasswordEncoder()"
 	public PasswordEncoder passwordEncoder() {
-		return new BCryptPasswordEncoder();
+		return PasswordEncoderFactories.createDelegatingPasswordEncoder();
+	}
+
+	@Bean
+	public EmailValidator emailValidator() {
+		return EmailValidator.getInstance();
 	}
 }

@@ -7,6 +7,7 @@ import org.github.bobobot.services.INotificationService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.ModelAndView;
 
 import java.util.List;
 
@@ -15,151 +16,92 @@ import java.util.List;
 public class NotificationController {
 
 	@Autowired
-	INotificationService service;
+	private INotificationService service;
+
+	@ExceptionHandler
+	ModelAndView handleErrors(Exception e) {
+		log.error("Error in notification controller: ", e);
+		ModelAndView modelAndView = new ModelAndView();
+		modelAndView.setViewName("error");
+		modelAndView.addObject("message", e.getMessage());
+		return modelAndView;
+	}
 
 	@GetMapping("/commentNotifications")
 	ResponseEntity<List<CommentNotification>> allCommentNotifications() {
-		try {
-			ResponseEntity<List<CommentNotification>> list = ResponseEntity.ok(service.listCommentNotifications());
-			log.info("Generated a list of all comment notifications.");
-			return list;
-		} catch (IllegalArgumentException e) {
-			log.error("Could not list comment notifications: ", e);
-			return ResponseEntity.badRequest().body(null);
-		}
+		log.info("Generating a list of all comment notifications");
+		return ResponseEntity.ok(service.listCommentNotifications());
 	}
 
 	@GetMapping("/voteNotifications")
 	ResponseEntity<List<VoteNotification>> allVoteNotifications() {
-		try {
-			ResponseEntity<List<VoteNotification>> list = ResponseEntity.ok(service.listVoteNotifications());
-			log.info("Generated a list of all vote notifications.");
-			return list;
-		} catch (IllegalArgumentException e) {
-			log.error("Could not list vote notifications: ", e);
-			return ResponseEntity.badRequest().body(null);
-		}
+		log.info("Generating a list of all vote notifications.");
+		return ResponseEntity.ok(service.listVoteNotifications());
 	}
 
 	@PostMapping("/commentNotifications")
 	ResponseEntity<Void> newCommentNotification(@RequestBody CommentNotification notification) {
-		try {
-			service.create(notification);
-			log.info("Created new comment notification with info: " + notification);
-			return ResponseEntity.ok().body(null);
-		} catch (IllegalArgumentException e) {
-			log.error("Could not create new comment notification with info: " + notification, e);
-			return ResponseEntity.badRequest().body(null);
-		}
+		log.info("Creating new comment notification with info: " + notification);
+		service.create(notification);
+		return ResponseEntity.ok().body(null);
 	}
 
 	@PostMapping("/voteNotifications")
 	ResponseEntity<Void> newVoteNotification(@RequestBody VoteNotification notification) {
-		try {
+			log.info("Creating new vote notification with info: " + notification);
 			service.create(notification);
-			log.info("Created new vote notification with info: " + notification);
 			return ResponseEntity.ok().body(null);
-		} catch (IllegalArgumentException e) {
-			log.error("Could not create new vote notification with info: " + notification, e);
-			return ResponseEntity.badRequest().body(null);
-		}
 	}
 
 	@GetMapping("/commentNotification/{id}")
 	ResponseEntity<CommentNotification> getCommentNotification(@PathVariable Long id) {
-		try {
-			ResponseEntity<CommentNotification> foundNotification = ResponseEntity.ok(service.findCommentNotificationByID(id));
-			log.info("Returned comment notification with id: " + id);
-			return foundNotification;
-		} catch (Exception e) {
-			log.error("Could not get comment notification with id: " + id, e);
-			return ResponseEntity.badRequest().body(null);
-		}
+		log.info("Returning comment notification with id: " + id);
+		return ResponseEntity.ok(service.findCommentNotificationByID(id));
 	}
 
 	@GetMapping("/voteNotification/{id}")
 	ResponseEntity<VoteNotification> getVoteNotification(@PathVariable Long id) {
-		try {
-			ResponseEntity<VoteNotification> foundNotification = ResponseEntity.ok(service.findVoteNotificationByID(id));
-			log.info("Returned vote notification with id: " + id);
-			return foundNotification;
-		} catch (Exception e) {
-			log.error("Could not get vote notification with id: " + id, e);
-			return ResponseEntity.badRequest().body(null);
-		}
+			log.info("Returning vote notification with id: " + id);
+			return ResponseEntity.ok(service.findVoteNotificationByID(id));
 	}
 
 	@PutMapping("/commentNotification/{id}")
 	ResponseEntity<CommentNotification> update(@RequestBody CommentNotification notification, @PathVariable Long id) {
 		notification.setId(id);
-		try {
-			ResponseEntity<CommentNotification> updatedNotification = ResponseEntity.ok(service.update(notification));
-			log.info("Updated comment notification with info: " + notification);
-			return updatedNotification;
-		} catch (Exception e) {
-			log.error("Could not update comment notification with info: " + notification, e);
-			return ResponseEntity.badRequest().body(null);
-		}
+		log.info("Updating comment notification with info: " + notification);
+		return ResponseEntity.ok(service.update(notification));
 	}
 
 	@PutMapping("/voteNotification/{id}")
 	ResponseEntity<VoteNotification> update(@RequestBody VoteNotification notification, @PathVariable Long id) {
 		notification.setId(id);
-		try {
-			ResponseEntity<VoteNotification> updatedNotification = ResponseEntity.ok(service.update(notification));
-			log.info("Updated vote notification with info: " + notification);
-			return updatedNotification;
-		} catch (Exception e) {
-			log.error("Could not update vote notification with info: " + notification, e);
-			return ResponseEntity.badRequest().body(null);
-		}
+		log.info("Updating vote notification with info: " + notification);
+		return ResponseEntity.ok(service.update(notification));
 	}
 
 	@DeleteMapping("/commentNotification/{id}")
 	ResponseEntity<Void> deleteCommentNotification(@PathVariable Long id) {
-		try {
-			service.deleteCommentNotification(id);
-			log.info("Deleted notification with id: " + id);
-			return ResponseEntity.ok().body(null);
-		} catch (Exception e) {
-			log.error("Could not delete notification: ", e);
-			return ResponseEntity.badRequest().body(null);
-		}
+		log.info("Deleting notification with id: " + id);
+		service.deleteCommentNotification(id);
+		return ResponseEntity.ok().body(null);
 	}
 
 	@DeleteMapping("/voteNotification/{id}")
 	ResponseEntity<Void> deleteVoteNotification(@PathVariable Long id) {
-		try {
+			log.info("Deleting notification with id: " + id);
 			service.deleteVoteNotification(id);
-			log.info("Deleted notification with id: " + id);
 			return ResponseEntity.ok().body(null);
-		} catch (Exception e) {
-			log.error("Could not delete notification: ", e);
-			return ResponseEntity.badRequest().body(null);
-		}
 	}
 
 	@GetMapping("/users/{id}/commentNotifications")
 	ResponseEntity<List<CommentNotification>> getCommentNotificationsByUserId(@PathVariable Long id) {
-		try {
-			ResponseEntity<List<CommentNotification>> notifications = ResponseEntity.ok(service.getCommentNotificationsByUserId(id));
-			log.info("Gathered comment notifications of user " + id);
-			return notifications;
-		} catch (Exception e) {
-			log.error("Could not gather comment notifications of user " + id, e);
-			return ResponseEntity.badRequest().body(null);
-		}
+			log.info("Gathering comment notifications of user " + id);
+			return ResponseEntity.ok(service.getCommentNotificationsByUserId(id));
 	}
 
 	@GetMapping("/users/{id}/voteNotifications")
 	ResponseEntity<List<VoteNotification>> getVoteNotificationsByUserId(@PathVariable Long id) {
-		try {
-			ResponseEntity<List<VoteNotification>> notifications = ResponseEntity.ok(service.getVoteNotificationsByUserId(id));
-			log.info("Gathered vote notifications of user " + id);
-			return notifications;
-		} catch (Exception e) {
-			log.error("Could not gather vote notifications of user " + id, e);
-			return ResponseEntity.badRequest().body(null);
-		}
+			log.info("Gathering vote notifications of user " + id);
+			return ResponseEntity.ok(service.getVoteNotificationsByUserId(id));
 	}
 }

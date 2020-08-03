@@ -26,19 +26,9 @@ public class BoardService implements IBoardService {
 	}
 
 	@Override
-	public Board create(String shortName, String longName) {
-		return create(new Board(shortName, longName));
-	}
-
-	@Override
 	public Board update(Board tempBoard) {
 		getBoardIfPresent(repository.findById(tempBoard.getId())); //dobjunk errort ha nem létezik
 		return repository.save(tempBoard);
-	}
-
-	@Override
-	public Board update(Long id, String shortName, String longName) {
-		return update(new Board(id, shortName, longName));
 	}
 
 	@Override

@@ -8,14 +8,16 @@ public interface INotificationService {
 
 	/**
 	 * Creates a new notification.
+	 * Does NOT add the notification to the user entity.
 	 *
 	 * @param notification The notification to be created.
 	 * @return The newly created notification.
 	 */
-	void create(CommentNotification notification);
+	CommentNotification create(CommentNotification notification);
 
 	/**
 	 * Creates a comment notification with the arguments provided.
+	 * Does NOT add the notification to the user entity.
 	 *
 	 * @param read         Whether the notification was read or not
 	 * @param originalReply The original reply of the user
@@ -23,25 +25,31 @@ public interface INotificationService {
 	 * @return The newly created notification
 	 */
 
-	void create(boolean read, Reply originalReply, Reply otherUsersReply);
+	default CommentNotification create(boolean read, Reply originalReply, Reply otherUsersReply) {
+		return create(new CommentNotification(read, originalReply, otherUsersReply));
+	}
 
 	/**
 	 * Creates a vote notification.
+	 * Does NOT add the notification to the user entity.
 	 *
 	 * @param notification The notification to be created
 	 * @return The newly created notification.
 	 */
-	void create(VoteNotification notification);
+	VoteNotification create(VoteNotification notification);
 
 	/**
 	 * Creates a vote notification with the arguments provided.
+	 * Does NOT add the notification to the user entity.
 	 *
 	 * @param read     Whether the notification was read or not
 	 * @param originalReply The reply that has gotten a vote
 	 * @param voteType The type of the vote (UPVOTE or DOWNVOTE)
 	 * @return The newly created notification.
 	 */
-	void create(boolean read, Reply originalReply, VoteNotification.VoteType voteType);
+	default VoteNotification create(boolean read, Reply originalReply, VoteNotification.VoteType voteType) {
+		return create(new VoteNotification(read, originalReply, voteType));
+	}
 
 	/**
 	 * Updates a comment notification.
@@ -59,7 +67,9 @@ public interface INotificationService {
 	 * @param otherUsersReply
 	 * @return The updated notification
 	 */
-	CommentNotification update(Long id, boolean read, Reply originalReply, Reply otherUsersReply);
+	default CommentNotification update(Long id, boolean read, Reply originalReply, Reply otherUsersReply) {
+		return update(new CommentNotification(id, read, originalReply, otherUsersReply));
+	}
 
 	/**
 	 * Updates a vote notification.
@@ -77,7 +87,9 @@ public interface INotificationService {
 	 * @param voteType The type of the vote (UPVOTE or DOWNVOTE)
 	 * @return The updated notification.
 	 */
-	VoteNotification update(Long id, boolean read, Reply originalReply, VoteNotification.VoteType voteType);
+	default VoteNotification update(Long id, boolean read, Reply originalReply, VoteNotification.VoteType voteType) {
+		return update(new VoteNotification(id, read, originalReply, voteType));
+	}
 
 	/**
 	 * Finds a comment notification by its ID

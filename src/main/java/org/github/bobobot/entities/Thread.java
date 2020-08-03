@@ -25,6 +25,7 @@ public class Thread {
 
 	String title;
 
+	@ToString.Exclude
 	@ManyToOne
 	Board board;
 

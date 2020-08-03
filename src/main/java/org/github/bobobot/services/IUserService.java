@@ -29,7 +29,9 @@ public interface IUserService {
 	 * @return The created user.
 	 * @see IUserService#register(boolean, String, String, String)
 	 */
-	User register(boolean isAdmin, String name, String email, String password, List<Thread> threads, List<Reply> replies, List<CommentNotification> commentNotifications, List<VoteNotification> voteNotifications);
+	default User register(boolean isAdmin, String name, String email, String password, List<Thread> threads, List<Reply> replies, List<CommentNotification> commentNotifications, List<VoteNotification> voteNotifications) {
+		return register(new User(isAdmin, name, email, password, threads, replies, commentNotifications, voteNotifications));
+	}
 
 	/**
 	 * Creates a user.
@@ -40,7 +42,9 @@ public interface IUserService {
 	 * @param password The password of the user.
 	 * @return The created user.
 	 */
-	User register(boolean isAdmin, String name, String email, String password);
+	default User register(boolean isAdmin, String name, String email, String password) {
+		return register(new User(isAdmin, name, email, password));
+	}
 
 	Optional<User> login(String name, String password);
 
@@ -61,7 +65,9 @@ public interface IUserService {
 	 * @param email   The email of the user.
 	 * @return The updated user.
 	 */
-	User update(Long id, boolean isAdmin, String name, String email, String password);
+	default User update(Long id, boolean isAdmin, String name, String email, String password) {
+		return update(new User(id, isAdmin, name, email, password));
+	}
 
 	/**
 	 * Updates a user.
@@ -77,16 +83,18 @@ public interface IUserService {
 	 * @param voteNotifications    The vote notifications this user has.
 	 * @return The updated user.
 	 */
-	User update(Long id, boolean isAdmin, String name, String email, String password, List<Thread> threads, List<Reply> replies, List<CommentNotification> commentNotifications, List<VoteNotification> voteNotifications);
+	default User update(Long id, boolean isAdmin, String name, String email, String password, List<Thread> threads, List<Reply> replies, List<CommentNotification> commentNotifications, List<VoteNotification> voteNotifications) {
+		return update(new User(id, isAdmin, name, email, password, threads, replies, commentNotifications, voteNotifications));
+	}
 
 	/**
 	 * Adds a comment notification to a user
 	 *
-	 * @param id           the ID of the user
+	 * @param user           the ID of the user
 	 * @param notification The comment notification to be added
 	 * @return The updated user
 	 */
-	User addCommentNotification(Long id, CommentNotification notification);
+	User addCommentNotification(User user, CommentNotification notification);
 
 	/**
 	 * Adds a vote notification to a user
@@ -95,7 +103,7 @@ public interface IUserService {
 	 * @param notification The vote notification to be added
 	 * @return The updated user
 	 */
-	User addVoteNotification(Long id, VoteNotification notification);
+	User addVoteNotification(User user, VoteNotification notification);
 
 	/**
 	 * Lists all users.

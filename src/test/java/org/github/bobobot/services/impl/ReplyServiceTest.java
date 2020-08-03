@@ -9,6 +9,7 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.boot.test.autoconfigure.orm.jpa.TestEntityManager;
+import org.springframework.context.annotation.ComponentScan;
 import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.ContextConfiguration;
@@ -21,7 +22,7 @@ import static org.github.bobobot.services.impl.TestHelperUtils.createDummyThread
 @ActiveProfiles("test")
 @DataJpaTest
 @DirtiesContext(classMode = DirtiesContext.ClassMode.BEFORE_EACH_TEST_METHOD)
-@ContextConfiguration(classes = ApplicationConfig.class)
+@ComponentScan("org.github.bobobot")
 class ReplyServiceTest {
 
 	@Autowired
@@ -65,6 +66,7 @@ class ReplyServiceTest {
 	@Test
 	void checkIfOtherRepliesAreNotifiedOfComment() {
 		Thread thread = createDummyThread();
+		thread = em.persist(thread);
 		Reply reply1 = createDummyReply(thread);
 		Reply reply2 = createDummyReply(thread);
 

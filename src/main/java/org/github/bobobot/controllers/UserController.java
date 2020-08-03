@@ -6,6 +6,7 @@ import org.github.bobobot.services.IUserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.ModelAndView;
 
 import java.util.List;
 
@@ -14,66 +15,46 @@ import java.util.List;
 public class UserController {
 
 	@Autowired
-	IUserService service;
+	private IUserService service;
+
+	@ExceptionHandler
+	ModelAndView handleErrors(Exception e) {
+		log.error("Error in user controller: ", e);
+		ModelAndView modelAndView = new ModelAndView();
+		modelAndView.setViewName("error");
+		modelAndView.addObject("message", e.getMessage());
+		return modelAndView;
+	}
 
 	@GetMapping("/users")
 	ResponseEntity<List<User>> all() {
-		try {
-			ResponseEntity<List<User>> list = ResponseEntity.ok(service.list());
-			log.info("Generated a list of all users.");
-			return list;
-		} catch (IllegalArgumentException e) {
-			log.error("Could not list users: ", e);
-			return ResponseEntity.badRequest().body(null);
-		}
+		log.info("Generating a list of all users.");
+		return ResponseEntity.ok(service.list());
 	}
 
 	@PostMapping("/users")
 	ResponseEntity<User> newUser(@RequestBody User user) {
-		try {
-			ResponseEntity<User> createdUser = ResponseEntity.ok(service.register(user));
-			log.info("Created new user with info: " + user);
-			return createdUser;
-		} catch (IllegalArgumentException e) {
-			log.error("Could not create new user with info: " + user, e);
-			return ResponseEntity.badRequest().body(user);
-		}
+		log.info("Creating new user with info: " + user);
+		return ResponseEntity.ok(service.register(user));
 	}
 
 	@GetMapping("/user/{id}")
 	ResponseEntity<User> get(@PathVariable Long id) {
-		try {
-			ResponseEntity<User> foundUser = ResponseEntity.ok(service.findById(id));
-			log.info("Returned user with id: " + id);
-			return foundUser;
-		} catch (Exception e) {
-			log.error("Could not get user with id: " + id, e);
-			return ResponseEntity.badRequest().body(null);
-		}
+		log.info("Returning user with id: " + id);
+		return ResponseEntity.ok(service.findById(id));
 	}
 
 	@PutMapping("/user/{id}")
 	ResponseEntity<User> update(@RequestBody User user, @PathVariable Long id) {
 		user.setId(id);
-		try {
-			ResponseEntity<User> updatedUser = ResponseEntity.ok(service.update(user));
-			log.info("Updated user with info: " + user);
-			return updatedUser;
-		} catch (Exception e) {
-			log.error("Could not update user with info: " + user, e);
-			return ResponseEntity.badRequest().body(null);
-		}
+		log.info("Updating user with info: " + user);
+		return ResponseEntity.ok(service.update(user));
 	}
 
 	@DeleteMapping("/user/{id}")
 	ResponseEntity<Void> delete(@PathVariable Long id) {
-		try {
-			service.delete(id);
-			log.info("Deleted user with id: " + id);
-			return ResponseEntity.ok().body(null);
-		} catch (Exception e) {
-			log.error("Could not delete user: ", e);
-			return ResponseEntity.badRequest().body(null);
-		}
+		log.info("Deleting user with id: " + id);
+		service.delete(id);
+		return ResponseEntity.ok().body(null);
 	}
 }

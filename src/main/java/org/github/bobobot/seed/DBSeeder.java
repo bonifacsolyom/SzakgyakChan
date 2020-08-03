@@ -13,26 +13,29 @@ import org.springframework.stereotype.Component;
 import javax.transaction.Transactional;
 import java.util.List;
 
-@Profile("!test")
+@Profile("!test") //TODO: Ez nem test módba kéne futnia inkább?
+//teszt módban minden teszt maga tölti fel az adatbázist, amit a tesztek között resetelek hogy azok egymástól függetlenek legyenek.
+//ez az osztály csak arra kellett hogy manuálisan is tudjak tesztelgetni,
+//meg pl. ránézni h2-consolból, a kész programban valószínűleg nem lesz már rá szükség
 @Component
 @ComponentScan("org.github.bobobot")
 @Transactional
 public class DBSeeder implements ApplicationRunner {
 
 	@Autowired
-	IUserService userService;
+	private IUserService userService;
 
 	@Autowired
-	IBoardService boardService;
+	private IBoardService boardService;
 
 	@Autowired
-	IThreadService threadService;
+	private IThreadService threadService;
 
 	@Autowired
-	IReplyService replyService;
+	private IReplyService replyService;
 
 	@Autowired
-	INotificationService notificationService;
+	private INotificationService notificationService;
 
 	@Override
 	public void run(ApplicationArguments args) throws Exception {
@@ -43,19 +46,19 @@ public class DBSeeder implements ApplicationRunner {
 		seedNotifications();
 	}
 
-	public void seedUsers() {
+	private void seedUsers() {
 		userService.register(true, "admin", "admin@chan.com", "admin");
 		userService.register(false, "user1", "user1@chan.com", "user1");
 		userService.register(false, "user2", "user2@chan.com", "user2");
 	}
 
-	public void seedBoards() {
+	private void seedBoards() {
 		boardService.create("b", "random");
 		boardService.create("l", "longrend");
 		boardService.create("i", "Imagine Dragons");
 	}
 
-	public void seedThreads() {
+	private void seedThreads() {
 		List<Board> boardList = boardService.list();
 		List<User> userList = userService.list();
 
@@ -65,7 +68,7 @@ public class DBSeeder implements ApplicationRunner {
 		threadService.create("Spring boot", boardList.get(0), userList.get(1));
 	}
 
-	public void seedReplies() {
+	private void seedReplies() {
 		List<Thread> threadList = threadService.list();
 		List<User> userList = userService.list();
 
@@ -78,7 +81,7 @@ public class DBSeeder implements ApplicationRunner {
 		replyService.post("I prefer C#", 103, threadList.get(3), userList.get(1));
 	}
 
-	public void seedNotifications() {
+	private void seedNotifications() {
 		List<Reply> replyList = replyService.list();
 
 		notificationService.create(true, replyList.get(0), VoteNotification.VoteType.UPVOTE);

@@ -17,10 +17,13 @@ public class UserService implements IUserService {
 	private IUserRepository repository;
 	@Autowired
 	private PasswordEncoder passwordEncoder;
+	@Autowired
+	private EmailValidator emailValidator;
 
 	private void validateEmail(String email) {
-		EmailValidator validator = EmailValidator.getInstance();
-		if (!validator.isValid(email)) throw new IllegalArgumentException("Hibás email cím!");
+		//TODO: +1, viszont hogy teszetnéd a funkciót ha nem csak annyi lenne hogy rossz email címet kell megadni. Ez egy ugyan olyan "service" obejektum,
+		// mint mondjuk a password encoder.
+		if (!emailValidator.isValid(email)) throw new IllegalArgumentException("Hibás email cím!");
 	}
 
 	private User getUserIfPresent(Optional<User> user) {
@@ -35,16 +38,6 @@ public class UserService implements IUserService {
 		validateEmail(tempUser.getEmail());
 		tempUser.setPasswordHash(passwordEncoder.encode(tempUser.getPasswordHash()));
 		return repository.save(tempUser);
-	}
-
-	@Override
-	public User register(boolean isAdmin, String name, String email, String password, List<Thread> threads, List<Reply> replies, List<CommentNotification> commentNotifications, List<VoteNotification> voteNotifications) {
-		return register(new User(isAdmin, name, email, password, threads, replies, commentNotifications, voteNotifications));
-	}
-
-	@Override
-	public User register(boolean isAdmin, String name, String email, String password) {
-		return register(new User(isAdmin, name, email, password));
 	}
 
 	@Override
@@ -63,27 +56,15 @@ public class UserService implements IUserService {
 	}
 
 	@Override
-	public User update(Long id, boolean isAdmin, String name, String email, String passwordHash) {
-		return update(new User(id, isAdmin, name, email, passwordHash));
-	}
-
-	@Override
-	public User update(Long id, boolean isAdmin, String name, String email, String passwordHash, List<Thread> threads, List<Reply> replies, List<CommentNotification> commentNotifications, List<VoteNotification> voteNotifications) {
-		return update(new User(id, isAdmin, name, email, passwordHash, threads, replies, commentNotifications, voteNotifications));
-	}
-
-	@Override
-	public User addCommentNotification(Long id, CommentNotification notification) {
-		Optional<User> optionalUser = repository.findById(id);
-		User user = getUserIfPresent(optionalUser);
+	public User addCommentNotification(User user, CommentNotification notification) {
 		user.addCommentNotification(notification);
-		return update(user);
+		//TODO: ez lehet hogy így rossz hajjaj remélem hogy nem
+		//return update(user);
+		return user;
 	}
 
 	@Override
-	public User addVoteNotification(Long id, VoteNotification notification) {
-		Optional<User> optionalUser = repository.findById(id);
-		User user = getUserIfPresent(optionalUser);
+	public User addVoteNotification(User user, VoteNotification notification) {
 		user.addVoteNotification(notification);
 		return update(user);
 	}
