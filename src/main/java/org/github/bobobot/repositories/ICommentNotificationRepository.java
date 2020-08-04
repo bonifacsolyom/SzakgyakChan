@@ -20,7 +20,7 @@ public interface ICommentNotificationRepository extends JpaRepository<CommentNot
 			"SELECT * " +
 			"FROM " +
 			"  User_comment_notifications " +
-			"  INNER JOIN User ON User_comment_notifications.USER_ID = User.ID " +
+			"  INNER JOIN User ON User_comment_notifications.USER_ID = Ruser.ID " +
 			"  INNER JOIN Comment_notification ON User_comment_notifications.COMMENT_NOTIFICATIONS_ID = Comment_notification.ID " +
 			"WHERE " +
 			"  ORIGINAL_REPLY_ID = ?1", nativeQuery = true)

@@ -3,12 +3,10 @@ logging:
     root: INFO
 
 spring:
-  h2:
-    console:
-      enabled: true
-      path: /h2-console
   datasource:
-    url: jdbc:h2:file:./src/main/resources/data
+    url: jdbc:oracle:thin:@192.168.99.100:49161:xe
+    username: system
+    password: oracle
   liquibase:
     enabled: true
     change-log: classpath:liquibase-outputChangeLog.xml

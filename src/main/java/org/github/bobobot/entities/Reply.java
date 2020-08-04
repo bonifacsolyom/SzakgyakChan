@@ -19,11 +19,13 @@ import java.util.Optional;
 @NoArgsConstructor
 public class Reply {
 	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@GeneratedValue(strategy=GenerationType.SEQUENCE, generator = "id_Sequence")
+	@SequenceGenerator(name = "id_Sequence", sequenceName = "ID_SEQ")
 	Long id;
 
 	String content;
 
+	@Column(name = "postDate")
 	LocalDateTime date;
 
 	int votes;

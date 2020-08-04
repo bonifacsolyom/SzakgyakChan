@@ -19,7 +19,7 @@ public interface IVoteNotificationRepository extends JpaRepository<VoteNotificat
 			"SELECT * " +
 			"FROM " +
 			"  User_vote_notifications " +
-			"  INNER JOIN User ON User_vote_notifications.USER_ID = User.ID " +
+			"  INNER JOIN User ON User_vote_notifications.USER_ID = Ruser.ID " +
 			"  INNER JOIN Vote_notification ON User_vote_notifications.VOTE_NOTIFICATIONS_ID = Vote_notification.ID " +
 			"WHERE " +
 			"  ORIGINAL_REPLY_ID = ?1", nativeQuery = true)
