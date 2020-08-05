@@ -17,8 +17,8 @@ import javax.persistence.*;
 public abstract class Notification {
 
 	@Id
-	@GeneratedValue(strategy=GenerationType.SEQUENCE, generator = "id_Sequence")
-	@SequenceGenerator(name = "id_Sequence", sequenceName = "ID_SEQ", allocationSize = 1)
+	@GeneratedValue(strategy = GenerationType.IDENTITY, generator = "notif_Sequence")
+	@SequenceGenerator(name = "notif_Sequence", sequenceName = "NOTIF_SEQ", allocationSize = 1)
 	Long id;
 
 	boolean read = false;

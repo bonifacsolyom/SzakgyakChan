@@ -90,7 +90,7 @@ public interface IUserService {
 	/**
 	 * Adds a comment notification to a user
 	 *
-	 * @param user           the ID of the user
+	 * @param user         the ID of the user
 	 * @param notification The comment notification to be added
 	 * @return The updated user
 	 */

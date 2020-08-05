@@ -34,14 +34,14 @@ public class ThreadController {
 
 	@PostMapping("/threads")
 	ResponseEntity<Thread> newThread(@RequestBody Thread thread) {
-			log.info("Creating new thread with info: " + thread);
-			return ResponseEntity.ok(service.create(thread));
+		log.info("Creating new thread with info: " + thread);
+		return ResponseEntity.ok(service.create(thread));
 	}
 
 	@GetMapping("/thread/{id}")
 	ResponseEntity<Thread> get(@PathVariable Long id) {
-			log.info("Returning thread with id: " + id);
-			return ResponseEntity.ok(service.findById(id));
+		log.info("Returning thread with id: " + id);
+		return ResponseEntity.ok(service.findById(id));
 	}
 
 	@PutMapping("/thread/{id}")

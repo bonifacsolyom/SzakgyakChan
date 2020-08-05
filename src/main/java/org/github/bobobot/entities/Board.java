@@ -19,8 +19,8 @@ import java.util.List;
 public class Board {
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "id_Sequence")
-	@SequenceGenerator(name = "id_Sequence", sequenceName = "ID_SEQ", allocationSize = 1)
+	@GeneratedValue(strategy = GenerationType.IDENTITY, generator = "board_Sequence")
+	@SequenceGenerator(name = "board_Sequence", sequenceName = "BOARD_SEQ", allocationSize = 1)
 	Long id;
 
 	@NonNull

@@ -19,13 +19,13 @@ public interface IThreadService {
 
 	/**
 	 * Creates a thread. Consider using the alternative method with only the first reply as the parameter.
-	 * @see    IThreadService#create(String, Board, User, Reply)
 	 *
 	 * @param title   The title of the thread.
 	 * @param board   The board this thread was posted on.
 	 * @param user    The user who posted the thread.
 	 * @param replies A list of replies to the thread.
 	 * @return The created thread.
+	 * @see IThreadService#create(String, Board, User, Reply)
 	 */
 	default Thread create(String title, Board board, User user, List<Reply> replies) {
 		return create(new Thread(title, board, user, replies));

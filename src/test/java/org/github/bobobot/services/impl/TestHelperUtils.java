@@ -5,7 +5,6 @@ import org.github.bobobot.entities.*;
 
 import java.time.LocalDateTime;
 
-//TODO: +1
 public class TestHelperUtils {
 
 	/**

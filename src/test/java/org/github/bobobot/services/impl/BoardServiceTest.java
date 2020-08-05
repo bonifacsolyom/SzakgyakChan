@@ -20,11 +20,6 @@ import static org.github.bobobot.services.impl.TestHelperUtils.createDummyBoard;
 @DataJpaTest
 @DirtiesContext(classMode = DirtiesContext.ClassMode.BEFORE_EACH_TEST_METHOD)
 @ComponentScan("org.github.bobobot")
-//TODO: Ha nem csak a jpa része kell a "test slice"-nak akkor lehet @SprinBootTest-et használni.
-
-//Próbáltam, de ugye akkor nem injektel be entitymanagert, és a többi tesztben anélkül halál megoldani bármit is
-//pl. a replytest-ben akkor ha létre akarok hozni egy reply-t, akkor minden egyes tesztben létre kéne hozni hozzá egy boardot,
-//egy threadet, és egy usert, különben transient exceptionöket dobál
 public class BoardServiceTest {
 
 	@Autowired

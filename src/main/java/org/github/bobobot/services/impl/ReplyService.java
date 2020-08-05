@@ -3,16 +3,13 @@ package org.github.bobobot.services.impl;
 import org.github.bobobot.entities.CommentNotification;
 import org.github.bobobot.entities.Reply;
 import org.github.bobobot.entities.Thread;
-import org.github.bobobot.entities.User;
 import org.github.bobobot.entities.VoteNotification.VoteType;
-import org.github.bobobot.repositories.ICommentNotificationRepository;
 import org.github.bobobot.repositories.IReplyRepository;
 import org.github.bobobot.services.INotificationService;
 import org.github.bobobot.services.IReplyService;
 import org.github.bobobot.services.IUserService;
 import org.springframework.beans.factory.annotation.Autowired;
 
-import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 

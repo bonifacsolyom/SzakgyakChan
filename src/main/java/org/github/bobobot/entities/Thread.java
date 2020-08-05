@@ -1,7 +1,6 @@
 package org.github.bobobot.entities;
 
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -20,8 +19,8 @@ import java.util.List;
 public class Thread {
 
 	@Id
-	@GeneratedValue(strategy=GenerationType.SEQUENCE, generator = "id_Sequence")
-	@SequenceGenerator(name = "id_Sequence", sequenceName = "ID_SEQ", allocationSize = 1)
+	@GeneratedValue(strategy = GenerationType.IDENTITY, generator = "thread_Sequence")
+	@SequenceGenerator(name = "thread_Sequence", sequenceName = "THREAD_SEQ", allocationSize = 1)
 	Long id;
 
 	String title;

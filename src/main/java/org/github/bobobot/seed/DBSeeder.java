@@ -1,7 +1,7 @@
 package org.github.bobobot.seed;
 
-import org.github.bobobot.entities.*;
 import org.github.bobobot.entities.Thread;
+import org.github.bobobot.entities.*;
 import org.github.bobobot.services.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.ApplicationArguments;
@@ -13,10 +13,7 @@ import org.springframework.stereotype.Component;
 import javax.transaction.Transactional;
 import java.util.List;
 
-@Profile("!test") //TODO: Ez nem test módba kéne futnia inkább?
-//teszt módban minden teszt maga tölti fel az adatbázist, amit a tesztek között resetelek hogy azok egymástól függetlenek legyenek.
-//ez az osztály csak arra kellett hogy manuálisan is tudjak tesztelgetni,
-//meg pl. ránézni h2-consolból, a kész programban valószínűleg nem lesz már rá szükség
+@Profile("!test")
 @Component
 @ComponentScan("org.github.bobobot")
 @Transactional

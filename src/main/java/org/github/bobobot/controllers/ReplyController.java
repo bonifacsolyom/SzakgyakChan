@@ -28,14 +28,14 @@ public class ReplyController {
 
 	@GetMapping("/replies")
 	ResponseEntity<List<Reply>> all() {
-			log.info("Generating a list of all replies.");
-			return ResponseEntity.ok(service.list());
+		log.info("Generating a list of all replies.");
+		return ResponseEntity.ok(service.list());
 	}
 
 	@PostMapping("/replies")
 	ResponseEntity<Reply> newReply(@RequestBody Reply reply) {
-			log.info("Creating new reply with info: " + reply);
-			return ResponseEntity.ok(service.post(reply));
+		log.info("Creating new reply with info: " + reply);
+		return ResponseEntity.ok(service.post(reply));
 	}
 
 	@GetMapping("/reply/{id}")

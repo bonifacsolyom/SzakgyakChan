@@ -1,7 +1,6 @@
 package org.github.bobobot.entities;
 
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -19,8 +18,8 @@ import java.util.Optional;
 @NoArgsConstructor
 public class Reply {
 	@Id
-	@GeneratedValue(strategy=GenerationType.SEQUENCE, generator = "id_Sequence")
-	@SequenceGenerator(name = "id_Sequence", sequenceName = "ID_SEQ", allocationSize = 1)
+	@GeneratedValue(strategy = GenerationType.IDENTITY, generator = "reply_Sequence")
+	@SequenceGenerator(name = "reply_Sequence", sequenceName = "REPLY_SEQ", allocationSize = 1)
 	Long id;
 
 	String content;

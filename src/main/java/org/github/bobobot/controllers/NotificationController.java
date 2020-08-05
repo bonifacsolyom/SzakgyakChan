@@ -48,9 +48,9 @@ public class NotificationController {
 
 	@PostMapping("/voteNotifications")
 	ResponseEntity<Void> newVoteNotification(@RequestBody VoteNotification notification) {
-			log.info("Creating new vote notification with info: " + notification);
-			service.create(notification);
-			return ResponseEntity.ok().body(null);
+		log.info("Creating new vote notification with info: " + notification);
+		service.create(notification);
+		return ResponseEntity.ok().body(null);
 	}
 
 	@GetMapping("/commentNotification/{id}")
@@ -61,8 +61,8 @@ public class NotificationController {
 
 	@GetMapping("/voteNotification/{id}")
 	ResponseEntity<VoteNotification> getVoteNotification(@PathVariable Long id) {
-			log.info("Returning vote notification with id: " + id);
-			return ResponseEntity.ok(service.findVoteNotificationByID(id));
+		log.info("Returning vote notification with id: " + id);
+		return ResponseEntity.ok(service.findVoteNotificationByID(id));
 	}
 
 	@PutMapping("/commentNotification/{id}")
@@ -88,20 +88,20 @@ public class NotificationController {
 
 	@DeleteMapping("/voteNotification/{id}")
 	ResponseEntity<Void> deleteVoteNotification(@PathVariable Long id) {
-			log.info("Deleting notification with id: " + id);
-			service.deleteVoteNotification(id);
-			return ResponseEntity.ok().body(null);
+		log.info("Deleting notification with id: " + id);
+		service.deleteVoteNotification(id);
+		return ResponseEntity.ok().body(null);
 	}
 
 	@GetMapping("/users/{id}/commentNotifications")
 	ResponseEntity<List<CommentNotification>> getCommentNotificationsByUserId(@PathVariable Long id) {
-			log.info("Gathering comment notifications of user " + id);
-			return ResponseEntity.ok(service.getCommentNotificationsByUserId(id));
+		log.info("Gathering comment notifications of user " + id);
+		return ResponseEntity.ok(service.getCommentNotificationsByUserId(id));
 	}
 
 	@GetMapping("/users/{id}/voteNotifications")
 	ResponseEntity<List<VoteNotification>> getVoteNotificationsByUserId(@PathVariable Long id) {
-			log.info("Gathering vote notifications of user " + id);
-			return ResponseEntity.ok(service.getVoteNotificationsByUserId(id));
+		log.info("Gathering vote notifications of user " + id);
+		return ResponseEntity.ok(service.getVoteNotificationsByUserId(id));
 	}
 }

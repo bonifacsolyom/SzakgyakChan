@@ -1,8 +1,10 @@
 package org.github.bobobot.services.impl;
 
 import org.apache.commons.validator.routines.EmailValidator;
-import org.github.bobobot.entities.Thread;
-import org.github.bobobot.entities.*;
+import org.github.bobobot.entities.CommentNotification;
+import org.github.bobobot.entities.Notification;
+import org.github.bobobot.entities.User;
+import org.github.bobobot.entities.VoteNotification;
 import org.github.bobobot.repositories.IUserRepository;
 import org.github.bobobot.services.IUserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,8 +23,6 @@ public class UserService implements IUserService {
 	private EmailValidator emailValidator;
 
 	private void validateEmail(String email) {
-		//TODO: +1, viszont hogy teszetnéd a funkciót ha nem csak annyi lenne hogy rossz email címet kell megadni. Ez egy ugyan olyan "service" obejektum,
-		// mint mondjuk a password encoder.
 		if (!emailValidator.isValid(email)) throw new IllegalArgumentException("Hibás email cím!");
 	}
 

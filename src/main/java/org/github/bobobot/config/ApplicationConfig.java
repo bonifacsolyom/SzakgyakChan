@@ -9,8 +9,6 @@ import org.springframework.security.crypto.factory.PasswordEncoderFactories;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
 @Configuration
-//TODO: Mivel a fő osztályon (Application) már van @SpringBootApplication annotáció, és az önmagában már tartalmaz @ComponentScan annotációt, és az a
-// legkülső package-en van, így nincs szükség több ComponentScan-re.
 public class ApplicationConfig {
 
 	@Bean
@@ -41,7 +39,6 @@ public class ApplicationConfig {
 
 	//Miscellaneous
 	@Bean
-	//TODO: +1, ennél már csak ez lett volna szebb "PasswordEncoderFactories.createDelegatingPasswordEncoder()"
 	public PasswordEncoder passwordEncoder() {
 		return PasswordEncoderFactories.createDelegatingPasswordEncoder();
 	}

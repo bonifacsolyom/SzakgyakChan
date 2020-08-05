@@ -1,6 +1,8 @@
 package org.github.bobobot.services;
 
-import org.github.bobobot.entities.*;
+import org.github.bobobot.entities.CommentNotification;
+import org.github.bobobot.entities.Reply;
+import org.github.bobobot.entities.VoteNotification;
 
 import java.util.List;
 
@@ -19,8 +21,8 @@ public interface INotificationService {
 	 * Creates a comment notification with the arguments provided.
 	 * Does NOT add the notification to the user entity.
 	 *
-	 * @param read         Whether the notification was read or not
-	 * @param originalReply The original reply of the user
+	 * @param read            Whether the notification was read or not
+	 * @param originalReply   The original reply of the user
 	 * @param otherUsersReply The reply of the other user
 	 * @return The newly created notification
 	 */
@@ -42,9 +44,9 @@ public interface INotificationService {
 	 * Creates a vote notification with the arguments provided.
 	 * Does NOT add the notification to the user entity.
 	 *
-	 * @param read     Whether the notification was read or not
+	 * @param read          Whether the notification was read or not
 	 * @param originalReply The reply that has gotten a vote
-	 * @param voteType The type of the vote (UPVOTE or DOWNVOTE)
+	 * @param voteType      The type of the vote (UPVOTE or DOWNVOTE)
 	 * @return The newly created notification.
 	 */
 	default VoteNotification create(boolean read, Reply originalReply, VoteNotification.VoteType voteType) {
@@ -62,8 +64,8 @@ public interface INotificationService {
 	/**
 	 * Updates a comment notification with the arguments provided.
 	 *
-	 * @param read         Whether the notification was read or not
-	 * @param originalReply The content of the reply that the notification was
+	 * @param read            Whether the notification was read or not
+	 * @param originalReply   The content of the reply that the notification was
 	 * @param otherUsersReply
 	 * @return The updated notification
 	 */
@@ -82,9 +84,9 @@ public interface INotificationService {
 	/**
 	 * Updates a vote notification with the arguments provided.
 	 *
-	 * @param read     Whether the notification was read or not
+	 * @param read          Whether the notification was read or not
 	 * @param originalReply
-	 * @param voteType The type of the vote (UPVOTE or DOWNVOTE)
+	 * @param voteType      The type of the vote (UPVOTE or DOWNVOTE)
 	 * @return The updated notification.
 	 */
 	default VoteNotification update(Long id, boolean read, Reply originalReply, VoteNotification.VoteType voteType) {
@@ -127,12 +129,14 @@ public interface INotificationService {
 
 	/**
 	 * Deletes a comment notification.
+	 *
 	 * @param id The id of the notification to be deleted.
 	 */
 	void deleteCommentNotification(Long id);
 
 	/**
 	 * Deletes a vote notification.
+	 *
 	 * @param id The id of the notification to be deleted.
 	 */
 	void deleteVoteNotification(Long id);

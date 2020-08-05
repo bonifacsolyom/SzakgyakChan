@@ -14,7 +14,6 @@ import java.util.List;
 @RestController
 public class BoardController {
 
-	//TODO: van oka annak, hogy package private a láthatósága? célszerű mindig az elégséges legszigorúbbat választani.
 	@Autowired
 	private IBoardService service;
 
@@ -29,10 +28,6 @@ public class BoardController {
 
 	@GetMapping("/boards")
 	ResponseEntity<List<Board>> all() {
-		//TODO: Így is meglehet oldani a hibás eset kezelését, de látszólag mindehol ugyan úgy van kezelve, ez kiemelhető közös helyre, esetleg a
-		// "@ExceptionHandler" mechanikának tudom javasolni.
-		//nekem ez így annyira nem szimpi, mert nem tudok custom log üzeneteket kiírni szituációfüggően, de i guess
-		//nagyrészt működik és rövidíti a kódot
 		log.info("Generating a list of all boards");
 		return ResponseEntity.ok(service.list());
 	}

@@ -11,10 +11,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import java.util.List;
 import java.util.Optional;
 
-//TODO: Mi lesz a célja a Notification-nek? A felhasználó értesítve lesz valahogy? Akkor szükséges ezt menteni?
-//a főképernyőn, ha a felhasználó be van lépve, jobb felül mutatni fogja majd az értesítéseket, a facebook-hoz hasonlóan.
-//pl. ha valaki szavaz a kommentedre, akkor ha legközelebb fellátogatsz az oldalra, akkor ezt látni fogod jobb felül a főoldalon, ezért van elmentve.
-//a notification 'read' flagje meg azt tárolja, hogy a felhasználó látta-e már az értesítést, ugyancsak facebook-stílusban
 public class NotificationService implements INotificationService {
 
 	IUserService userService;
@@ -96,13 +92,13 @@ public class NotificationService implements INotificationService {
 	@Override
 	public List<CommentNotification> listCommentNotifications() {
 		//fúj
-		return (List<CommentNotification>) (List<? extends Notification>) commentRepository.findAll();
+		return commentRepository.findAll();
 	}
 
 	@Override
 	public List<VoteNotification> listVoteNotifications() {
 		//fúj 2.0
-		return (List<VoteNotification>) (List<? extends Notification>) voteRepository.findAll();
+		return voteRepository.findAll();
 	}
 
 	@Override

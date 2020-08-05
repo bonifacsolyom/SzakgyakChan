@@ -22,8 +22,8 @@ import java.util.stream.Stream;
 public class User {
 
 	@Id
-	@GeneratedValue(strategy=GenerationType.SEQUENCE, generator = "id_Sequence")
-	@SequenceGenerator(name = "id_Sequence", sequenceName = "ID_SEQ", allocationSize = 1)
+	@GeneratedValue(strategy = GenerationType.IDENTITY, generator = "user_Sequence")
+	@SequenceGenerator(name = "user_Sequence", sequenceName = "RUSER_SEQ", allocationSize = 1)
 	Long id;
 
 	boolean isAdmin;
