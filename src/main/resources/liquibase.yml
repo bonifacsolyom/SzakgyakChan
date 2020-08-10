@@ -1,0 +1,4 @@
+outputChangeLogFile: src/main/resources/liquibase-outputChangeLog.xml
+changeLogFile: src/main/resources/liquibase-outputChangeLog.xml
+url: jdbc:oracle:thin:@192.168.99.100:49161:xe
+username: BOARDADMIN

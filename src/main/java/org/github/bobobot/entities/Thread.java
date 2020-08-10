@@ -1,89 +1,62 @@
 package org.github.bobobot.entities;
 
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+import lombok.ToString;
+
+import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
 
+@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
+@Entity
+@Data
+@AllArgsConstructor
+@NoArgsConstructor
 public class Thread {
-	int ID;
+
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY, generator = "thread_Sequence")
+	@SequenceGenerator(name = "thread_Sequence", sequenceName = "THREAD_SEQ", allocationSize = 1)
+	Long id;
+
 	String title;
+
+	@ToString.Exclude
+	@ManyToOne
 	Board board;
-	List<Reply> replies = new ArrayList<>();
+
+	@ToString.Exclude
+	@ManyToOne
 	User user;
 
-	public Thread(int ID, String title, Board board, User user, List<Reply> replies) {
-		this.ID = ID;
-		this.title = title;
-		this.board = board;
-		this.user = user;
-		this.replies = replies;
-	}
+	@OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
+	List<Reply> replies = new ArrayList<>();
 
-	public Thread(int ID, String title, Board board, User user) {
-		this.ID = ID;
+	public Thread(Long id, String title, Board board, User user) {
+		this.id = id;
 		this.title = title;
 		this.board = board;
 		this.user = user;
 	}
 
-	@Override
-	public boolean equals(Object o) {
-		if (this == o) return true;
-		if (o == null || getClass() != o.getClass()) return false;
-		Thread thread = (Thread) o;
-		return ID == thread.ID &&
-				title.equals(thread.title) &&
-				board.equals(thread.board) &&
-				replies.equals(thread.replies) &&
-				user.equals(thread.user);
-	}
-
-	@Override
-	public int hashCode() {
-		return Objects.hash(ID, title, board, replies, user);
-	}
-
-	public int getID() {
-		return ID;
-	}
-
-	public void setID(int ID) {
-		this.ID = ID;
-	}
-
-	public User getUser() {
-		return user;
-	}
-
-	public void setUser(User user) {
+	public Thread(String title, Board board, User user) {
+		this.title = title;
+		this.board = board;
 		this.user = user;
 	}
 
-	public List<Reply> getReplies() {
-		return replies;
-	}
-
-	public void setReplies(List<Reply> replies) {
+	public Thread(String title, Board board, User user, List<Reply> replies) {
+		this.title = title;
+		this.board = board;
+		this.user = user;
 		this.replies = replies;
 	}
 
 	public void addReply(Reply reply) {
 		this.replies.add(reply);
-	}
-
-	public Board getBoard() {
-		return board;
-	}
-
-	public void setBoard(Board board) {
-		this.board = board;
-	}
-
-	public String getTitle() {
-		return title;
-	}
-
-	public void setTitle(String title) {
-		this.title = title;
 	}
 }

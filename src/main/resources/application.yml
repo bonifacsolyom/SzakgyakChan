@@ -1,0 +1,15 @@
+logging:
+  level:
+    root: INFO
+
+spring:
+  datasource:
+    url: jdbc:oracle:thin:@192.168.99.100:49161:xe
+    username: BOARDADMIN
+  liquibase:
+    enabled: true
+    change-log: classpath:liquibase-outputChangeLog.xml
+
+  output:
+    ansi:
+      enabled:  ALWAYS

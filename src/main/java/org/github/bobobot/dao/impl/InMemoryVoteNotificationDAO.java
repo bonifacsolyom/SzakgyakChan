@@ -8,7 +8,7 @@ public class InMemoryVoteNotificationDAO extends InMemoryNotificationDAO<VoteNot
 
 	@Override
 	public VoteNotification create(VoteNotification notification) {
-		notification.setID(memory.size());
+		notification.setId((long) memory.size());
 		memory.add(notification);
 		return notification;
 	}
@@ -16,7 +16,7 @@ public class InMemoryVoteNotificationDAO extends InMemoryNotificationDAO<VoteNot
 	@Override
 	public Optional<VoteNotification> update(VoteNotification notification) {
 		Optional<VoteNotification> memoryNotification = memory.stream()
-				.filter(n -> n.getID() == notification.getID())
+				.filter(n -> n.getId() == notification.getId())
 				.findFirst();
 
 		if (memoryNotification.isPresent()) {

@@ -1,68 +1,49 @@
 package org.github.bobobot.entities;
 
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+import lombok.NonNull;
+
+import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
 
+@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
+@Entity
+@Data
+@AllArgsConstructor
+@NoArgsConstructor
 public class Board {
 
-	int ID;
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY, generator = "board_Sequence")
+	@SequenceGenerator(name = "board_Sequence", sequenceName = "BOARD_SEQ", allocationSize = 1)
+	Long id;
+
+	@NonNull
 	String shortName;
+
+	@NonNull
 	String longName;
+
+	@OneToMany(cascade = CascadeType.ALL)
 	List<Thread> threads = new ArrayList<>();
 
-	public Board(int ID, String shortName, String longName) {
-		this.ID = ID;
+	public Board(@NonNull String shortName, @NonNull String longName) {
 		this.shortName = shortName;
 		this.longName = longName;
 	}
 
-	@Override
-	public boolean equals(Object o) {
-		if (this == o) return true;
-		if (o == null || getClass() != o.getClass()) return false;
-		Board board = (Board) o;
-		return ID == board.ID &&
-				shortName.equals(board.shortName) &&
-				longName.equals(board.longName) &&
-				threads.equals(board.threads);
-	}
-
-	@Override
-	public int hashCode() {
-		return Objects.hash(ID, shortName, longName, threads);
-	}
-
-	public List<Thread> getThreads() {
-		return threads;
-	}
-
-	public void setThreads(List<Thread> threads) {
-		this.threads = threads;
-	}
-
-	public int getID() {
-		return ID;
-	}
-
-
-	public void setID(int ID) {
-		this.ID = ID;
-	}
-
-	public String getShortName() {
-		return shortName;
-	}
-
-	public void setShortName(String shortName) {
+	public Board(Long id, @NonNull String shortName, @NonNull String longName) {
+		this.id = id;
 		this.shortName = shortName;
-	}
-
-	public String getLongName() {
-		return longName;
-	}
-
-	public void setLongName(String longName) {
 		this.longName = longName;
+	}
+
+	public void addThread(Thread thread) {
+		threads.add(thread);
 	}
 }

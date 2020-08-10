@@ -30,10 +30,10 @@ public interface IReplyDAO {
 	/**
 	 * Selects a reply by its ID.
 	 *
-	 * @param ID The ID of the reply to be selected
+	 * @param id The ID of the reply to be selected
 	 * @return The selected reply, wrapped in an optional.
 	 */
-	Optional<Reply> select(int ID);
+	Optional<Reply> select(int id);
 
 	/**
 	 * Selects a reply by the thread it belongs to.
@@ -53,8 +53,8 @@ public interface IReplyDAO {
 	/**
 	 * Deletes a reply.
 	 *
-	 * @param ID The ID of the reply to be deleted.
+	 * @param id The ID of the reply to be deleted.
 	 * @return The deleted reply.
 	 */
-	Optional<Reply> delete(int ID);
+	Optional<Reply> delete(int id);
 }

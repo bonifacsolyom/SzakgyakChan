@@ -1,19 +1,45 @@
 package org.github.bobobot.entities;
 
-import java.time.LocalDateTime;
-import java.util.Objects;
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+import lombok.ToString;
 
+import javax.persistence.*;
+import java.time.LocalDateTime;
+import java.util.Optional;
+
+@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
+@Entity
+@Data
+@AllArgsConstructor
+@NoArgsConstructor
 public class Reply {
-	int ID;
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY, generator = "reply_Sequence")
+	@SequenceGenerator(name = "reply_Sequence", sequenceName = "REPLY_SEQ", allocationSize = 1)
+	Long id;
+
 	String content;
+
+	@Column(name = "postDate")
 	LocalDateTime date;
+
 	int votes;
-	Image image;
+
+	@ToString.Exclude
+	@ManyToOne
 	Thread thread;
+
+	@ToString.Exclude
+	@ManyToOne
 	User user;
 
-	public Reply(int ID, String content, LocalDateTime date, int votes, Image image, Thread thread, User user) {
-		this.ID = ID;
+	String image;
+
+	public Reply(String content, LocalDateTime date, int votes, Thread thread, User user, String image) {
 		this.content = content;
 		this.date = date;
 		this.votes = votes;
@@ -22,71 +48,12 @@ public class Reply {
 		this.user = user;
 	}
 
-	@Override
-	public boolean equals(Object o) {
-		if (this == o) return true;
-		if (o == null || getClass() != o.getClass()) return false;
-		Reply reply = (Reply) o;
-		return ID == reply.ID &&
-				votes == reply.votes &&
-				content.equals(reply.content) &&
-				date.equals(reply.date) &&
-				image.equals(reply.image) &&
-				thread.equals(reply.thread) &&
-				user.equals(reply.user);
-	}
-
-	@Override
-	public int hashCode() {
-		return Objects.hash(ID, content, date, votes, image, thread, user);
-	}
-
-	public int getID() {
-		return ID;
-	}
-
-	public void setID(int ID) {
-		this.ID = ID;
-	}
-
-	public Image getImage() {
-		return image;
-	}
-
-	public void setImage(Image image) {
-		this.image = image;
-	}
-
-	public Thread getThread() {
-		return thread;
-	}
-
-	public void setThread(Thread thread) {
-		this.thread = thread;
-	}
-
-	public String getContent() {
-		return content;
-	}
-
-	public void setContent(String content) {
+	public Reply(String content, LocalDateTime date, int votes, Thread thread, User user) {
 		this.content = content;
-	}
-
-	public LocalDateTime getDate() {
-		return date;
-	}
-
-	public void setDate(LocalDateTime date) {
 		this.date = date;
-	}
-
-	public int getVotes() {
-		return votes;
-	}
-
-	public void setVotes(int votes) {
 		this.votes = votes;
+		this.thread = thread;
+		this.user = user;
 	}
 
 	public int upvote() {
@@ -97,11 +64,7 @@ public class Reply {
 		return --votes;
 	}
 
-	public User getUser() {
-		return user;
-	}
-
-	public void setUser(User user) {
-		this.user = user;
+	Optional<String> getImage() {
+		return Optional.ofNullable(image);
 	}
 }

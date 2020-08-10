@@ -1,11 +1,11 @@
 package org.github.bobobot.services;
 
-import org.github.bobobot.entities.Image;
 import org.github.bobobot.entities.Reply;
 import org.github.bobobot.entities.Thread;
 import org.github.bobobot.entities.User;
 import org.github.bobobot.entities.VoteNotification.VoteType;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 public interface IReplyService {
@@ -24,10 +24,25 @@ public interface IReplyService {
 	 * @param content The content of the reply.
 	 * @param votes   The summarized score of the reply.
 	 * @param thread  The thread the reply belongs to.
-	 * @param user
+	 * @param user    The user the reply belongs to.
 	 * @return The created reply.
 	 */
-	Reply post(String content, int votes, Image image, Thread thread, User user);
+	default Reply post(String content, int votes, Thread thread, User user) {
+		return post(new Reply(content, LocalDateTime.now(), votes, thread, user, null));
+	}
+
+	/**
+	 * Creates a reply.
+	 *
+	 * @param content The content of the reply.
+	 * @param votes   The summarized score of the reply.
+	 * @param thread  The thread the reply belongs to.
+	 * @param user    The user the reply belongs to.
+	 * @return The created reply.
+	 */
+	default Reply post(String content, int votes, String image, Thread thread, User user) {
+		return post(new Reply(content, LocalDateTime.now(), votes, thread, user, image));
+	}
 
 	/**
 	 * Updates a reply.
@@ -40,14 +55,30 @@ public interface IReplyService {
 	/**
 	 * Updates a reply.
 	 *
-	 * @param ID      The ID of the reply.
+	 * @param id      The ID of the reply.
 	 * @param content The content of the reply.
 	 * @param votes   The summarized score of the reply.
 	 * @param thread  The thread the reply belongs to.
-	 * @param user
+	 * @param user    The user the reply belongs to.
 	 * @return The updated reply.
 	 */
-	Reply update(int ID, String content, int votes, Image image, Thread thread, User user);
+	default Reply update(Long id, String content, int votes, Thread thread, User user) {
+		return update(new Reply(id, content, LocalDateTime.now(), votes, thread, user, null));
+	}
+
+	/**
+	 * Updates a reply.
+	 *
+	 * @param id      The ID of the reply.
+	 * @param content The content of the reply.
+	 * @param votes   The summarized score of the reply.
+	 * @param thread  The thread the reply belongs to.
+	 * @param user    The user the reply belongs to.
+	 * @return The updated reply.
+	 */
+	default Reply update(Long id, String content, int votes, String image, Thread thread, User user) {
+		return update(new Reply(id, content, LocalDateTime.now(), votes, thread, user, image));
+	}
 
 	/**
 	 * Lists all replies.
@@ -59,10 +90,10 @@ public interface IReplyService {
 	/**
 	 * Finds a reply by its ID.
 	 *
-	 * @param ID The ID of the reply to be found
+	 * @param id The ID of the reply to be found
 	 * @return The found reply, wrapped in an optional.
 	 */
-	Reply findById(int ID);
+	Reply findById(Long id);
 
 	/**
 	 * Lists all replies that belong to the specified thread.
@@ -75,16 +106,16 @@ public interface IReplyService {
 	/**
 	 * Votes on a reply.
 	 *
-	 * @param ID       The ID of the reply.
+	 * @param id       The ID of the reply.
 	 * @param voteType The type of the vote
 	 * @return
 	 */
-	Reply vote(int ID, VoteType voteType);
+	Reply vote(Long id, VoteType voteType);
 
 	/**
 	 * Deletes a reply.
 	 *
-	 * @param ID The ID of the reply to be deleted.
+	 * @param id The ID of the reply to be deleted.
 	 */
-	void delete(int ID);
+	void delete(Long id);
 }

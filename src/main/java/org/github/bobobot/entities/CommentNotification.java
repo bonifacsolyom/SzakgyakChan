@@ -1,33 +1,33 @@
 package org.github.bobobot.entities;
 
-import java.util.Objects;
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
+import lombok.Data;
+import lombok.EqualsAndHashCode;
+import lombok.NoArgsConstructor;
+import lombok.NonNull;
 
+import javax.persistence.Entity;
+import javax.persistence.ManyToOne;
+
+@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
+@EqualsAndHashCode(callSuper = true)
+@Entity
+@Data
+@NoArgsConstructor
 public class CommentNotification extends Notification {
-	String replyContent;
 
-	public CommentNotification(int ID, boolean read, User user, String replyContent) {
-		super(ID, read, user);
-		this.replyContent = replyContent;
+	@NonNull
+	@ManyToOne
+	Reply otherUsersReply;
+
+	public CommentNotification(Long id, boolean read, Reply originalReply, Reply otherUsersReply) {
+		super(id, read, originalReply);
+		this.otherUsersReply = otherUsersReply;
 	}
 
-	public String getReplyContent() {
-		return replyContent;
-	}
-
-	public void setReplyContent(String replyContent) {
-		this.replyContent = replyContent;
-	}
-
-	@Override
-	public boolean equals(Object o) {
-		if (this == o) return true;
-		if (o == null || getClass() != o.getClass()) return false;
-		CommentNotification that = (CommentNotification) o;
-		return replyContent.equals(that.replyContent);
-	}
-
-	@Override
-	public int hashCode() {
-		return Objects.hash(replyContent);
+	public CommentNotification(boolean read, @NonNull Reply originalReply, @NonNull Reply otherUsersReply) {
+		super(read, originalReply);
+		this.otherUsersReply = otherUsersReply;
 	}
 }

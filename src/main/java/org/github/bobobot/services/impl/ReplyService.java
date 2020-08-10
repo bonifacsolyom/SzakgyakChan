@@ -1,27 +1,29 @@
 package org.github.bobobot.services.impl;
 
-import org.github.bobobot.dao.INotificationDAO;
-import org.github.bobobot.dao.IReplyDAO;
+import org.github.bobobot.entities.CommentNotification;
+import org.github.bobobot.entities.Reply;
 import org.github.bobobot.entities.Thread;
-import org.github.bobobot.entities.*;
 import org.github.bobobot.entities.VoteNotification.VoteType;
+import org.github.bobobot.repositories.IReplyRepository;
+import org.github.bobobot.services.INotificationService;
 import org.github.bobobot.services.IReplyService;
+import org.github.bobobot.services.IUserService;
+import org.springframework.beans.factory.annotation.Autowired;
 
-import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 
 public class ReplyService implements IReplyService {
 
-	private final IReplyDAO replyDAO;
-	private final INotificationDAO<CommentNotification> commentDAO;
-	private final INotificationDAO<VoteNotification> voteDAO;
+	@Autowired
+	private IReplyRepository replyRepository;
 
-	public ReplyService(IReplyDAO replyDAO, INotificationDAO<CommentNotification> commentDAO, INotificationDAO<VoteNotification> voteDAO) {
-		this.replyDAO = replyDAO;
-		this.commentDAO = commentDAO;
-		this.voteDAO = voteDAO;
-	}
+	@Autowired
+	private INotificationService notificationService;
+
+	@Autowired
+	private IUserService userService;
+
 
 	private Reply getReplyIfPresent(Optional<Reply> reply) {
 		if (!reply.isPresent()) {
@@ -30,57 +32,49 @@ public class ReplyService implements IReplyService {
 		return reply.get();
 	}
 
+	private void notifyUsersAboutReplies(Reply newReply) {
+		for (Reply threadReply : newReply.getThread().getReplies()) {
+			//A NotificationService#create hasonló dolgot csinál, csak előtte van valamiyen validáció, itt ez nincs meg, nem tudom lehet-e ez probléma. Ezért
+			// célszerű, hogy a service-ek egymást hivogassák ne közvetlenül a db réteget, mert üzleti logika kimaradhat.
+
+			CommentNotification notification = notificationService.create(false, threadReply, newReply);
+		}
+	}
+
 	@Override
 	public Reply post(Reply tempReply) {
 		//Értesítjük minden reply userét, hogy egy új reply érkezett a threadbe
-		notifyReplies(tempReply);
-		tempReply.getThread().addReply(tempReply);
-		return replyDAO.create(tempReply);
-	}
-
-	private void notifyReplies(Reply reply) {
-		for (Reply r : reply.getThread().getReplies()) {
-			CommentNotification notification = commentDAO.create(new CommentNotification(-1, false, r.getUser(), reply.getContent()));
-			r.getUser().addCommentNotification(notification);
-		}
-
-	}
-
-	@Override
-	public Reply post(String content, int votes, Image image, Thread thread, User user) {
-		return post(new Reply(-1, content, LocalDateTime.now(), votes, image, thread, user));
+		Reply reply = replyRepository.save(tempReply);
+		notifyUsersAboutReplies(reply);
+		reply.getThread().addReply(reply);
+		return reply;
 	}
 
 	@Override
 	public Reply update(Reply tempReply) {
-		Optional<Reply> reply = replyDAO.update(tempReply);
-		return getReplyIfPresent(reply);
-	}
-
-	@Override
-	public Reply update(int ID, String content, int votes, Image image, Thread thread, User user) {
-		return update(new Reply(ID, content, LocalDateTime.now(), votes, image, thread, user));
+		getReplyIfPresent(replyRepository.findById(tempReply.getId())); //dobjunk errort ha nem létezik
+		return replyRepository.save(tempReply);
 	}
 
 	@Override
 	public List<Reply> list() {
-		return replyDAO.list();
+		return replyRepository.findAll();
 	}
 
 	@Override
-	public Reply findById(int ID) {
-		Optional<Reply> reply = replyDAO.select(ID);
+	public Reply findById(Long id) {
+		Optional<Reply> reply = replyRepository.findById(id);
 		return getReplyIfPresent(reply);
 	}
 
 	@Override
 	public List<Reply> listByThread(Thread thread) {
-		return replyDAO.selectByThread(thread);
+		return replyRepository.findAllByThread(thread);
 	}
 
 	@Override
-	public Reply vote(int ID, VoteType voteType) {
-		Reply reply = findById(ID);
+	public Reply vote(Long id, VoteType voteType) {
+		Reply reply = findById(id);
 		reply = changeVote(reply, voteType);
 		return update(reply);
 	}
@@ -99,8 +93,8 @@ public class ReplyService implements IReplyService {
 	}
 
 	@Override
-	public void delete(int ID) {
-		Optional<Reply> reply = replyDAO.delete(ID);
-		getReplyIfPresent(reply); //throw error if not found
+	public void delete(Long id) {
+		getReplyIfPresent(replyRepository.findById(id)); //dobjunk errort ha nem létezik
+		replyRepository.deleteById(id);
 	}
 }

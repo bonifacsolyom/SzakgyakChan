@@ -26,10 +26,10 @@ public interface INotificationDAO<GenericNotification extends Notification> {
 	/**
 	 * Selects a notification by its ID.
 	 *
-	 * @param ID The ID of the notification to be selected.
+	 * @param id The ID of the notification to be selected.
 	 * @return The selected notification, wrapped in an optional.
 	 */
-	Optional<GenericNotification> selectByID(int ID);
+	Optional<GenericNotification> selectByID(int id);
 
 	/**
 	 * Selects all of a user's notifications.
@@ -49,8 +49,8 @@ public interface INotificationDAO<GenericNotification extends Notification> {
 	/**
 	 * Deletes a notification.
 	 *
-	 * @param ID The ID of the notification to be deleted.
-	 * @return The deleted norification, wrapped in an optional.
+	 * @param id The ID of the notification to be deleted.
+	 * @return The deleted notification, wrapped in an optional.
 	 */
-	Optional<GenericNotification> delete(int ID);
+	Optional<GenericNotification> delete(int id);
 }

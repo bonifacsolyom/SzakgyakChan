@@ -21,7 +21,9 @@ public interface IBoardService {
 	 * @param longName  The longer description of the board - should only be a couple words long.
 	 * @return The created board.
 	 */
-	Board create(String shortName, String longName);
+	default Board create(String shortName, String longName) {
+		return create(new Board(shortName, longName));
+	}
 
 	/**
 	 * Updates a board
@@ -35,12 +37,14 @@ public interface IBoardService {
 	/**
 	 * Updates a board
 	 *
-	 * @param ID        the ID of the board to be updated
+	 * @param id        the ID of the board to be updated
 	 * @param shortName The short name of the board.
 	 * @param longName  The longer description of the board - should only be a couple words long.
 	 * @return The updated board.
 	 */
-	Board update(int ID, String shortName, String longName);
+	default Board update(Long id, String shortName, String longName) {
+		return update(new Board(id, shortName, longName));
+	}
 
 	/**
 	 * Lists all existing boards.
@@ -52,10 +56,10 @@ public interface IBoardService {
 	/**
 	 * Finds a board by its ID.
 	 *
-	 * @param ID The ID of the board to be found.
+	 * @param id The ID of the board to be found.
 	 * @return The found board wrapped in an optional.
 	 */
-	Board findById(int ID);
+	Board findById(Long id);
 
 	/**
 	 * Finds a board by its short name.
@@ -68,7 +72,7 @@ public interface IBoardService {
 	/**
 	 * Deletes a board.
 	 *
-	 * @param ID The ID of the board to be deleted.
+	 * @param id The ID of the board to be deleted.
 	 */
-	void delete(int ID);
+	void delete(Long id);
 }

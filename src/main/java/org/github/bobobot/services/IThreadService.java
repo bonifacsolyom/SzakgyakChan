@@ -18,7 +18,7 @@ public interface IThreadService {
 	Thread create(Thread thread);
 
 	/**
-	 * Creates a thread. Consider using this method instead:
+	 * Creates a thread. Consider using the alternative method with only the first reply as the parameter.
 	 *
 	 * @param title   The title of the thread.
 	 * @param board   The board this thread was posted on.
@@ -27,7 +27,9 @@ public interface IThreadService {
 	 * @return The created thread.
 	 * @see IThreadService#create(String, Board, User, Reply)
 	 */
-	Thread create(String title, Board board, User user, List<Reply> replies);
+	default Thread create(String title, Board board, User user, List<Reply> replies) {
+		return create(new Thread(title, board, user, replies));
+	}
 
 	/**
 	 * Creates a thread.
@@ -49,7 +51,9 @@ public interface IThreadService {
 	 * @return The created thread.
 	 * @see IThreadService#create(String, Board, User, Reply)
 	 */
-	Thread create(String title, Board board, User user);
+	default Thread create(String title, Board board, User user) {
+		return create(new Thread(title, board, user));
+	}
 
 	/**
 	 * Updates a thread.
@@ -63,25 +67,29 @@ public interface IThreadService {
 	/**
 	 * Updates a thread.
 	 *
-	 * @param ID    The ID of the thread.
+	 * @param id    The id of the thread.
 	 * @param title The title of the thread.
 	 * @param board The board of the thread.
 	 * @param user  The user that posted the thread.
 	 * @return The updated thread.
 	 */
-	Thread update(int ID, String title, Board board, User user);
+	default Thread update(Long id, String title, Board board, User user) {
+		return update(new Thread(id, title, board, user));
+	}
 
 	/**
 	 * Updates a thread.
 	 *
-	 * @param ID      The ID of the thread.
+	 * @param id      The id of the thread.
 	 * @param title   The title of the thread.
 	 * @param board   The board of the thread.
 	 * @param user    The user that posted the thread.
 	 * @param replies The replies of the thread.
 	 * @return The updated thread.
 	 */
-	Thread update(int ID, String title, Board board, User user, List<Reply> replies);
+	default Thread update(Long id, String title, Board board, User user, List<Reply> replies) {
+		return update(new Thread(id, title, board, user, replies));
+	}
 
 	/**
 	 * Lists all threads.
@@ -93,15 +101,15 @@ public interface IThreadService {
 	/**
 	 * Finds a thread by its ID.
 	 *
-	 * @param ID The ID of the thread to be found
+	 * @param id The ID of the thread to be found
 	 * @return The found thread, wrapped in an optional.
 	 */
-	Thread findById(int ID);
+	Thread findById(Long id);
 
 	/**
 	 * Deletes a thread.
 	 *
-	 * @param ID The ID of the thread to be deleted.
+	 * @param id The ID of the thread to be deleted.
 	 */
-	void delete(int ID);
+	void delete(Long id);
 }

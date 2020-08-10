@@ -1,102 +1,115 @@
 package org.github.bobobot.services.impl;
 
-import org.github.bobobot.dao.INotificationDAO;
-import org.github.bobobot.dao.IUserDAO;
-import org.github.bobobot.entities.CommentNotification;
-import org.github.bobobot.entities.Notification;
-import org.github.bobobot.entities.User;
-import org.github.bobobot.entities.VoteNotification;
+import org.github.bobobot.entities.*;
+import org.github.bobobot.repositories.ICommentNotificationRepository;
+import org.github.bobobot.repositories.IUserRepository;
+import org.github.bobobot.repositories.IVoteNotificationRepository;
 import org.github.bobobot.services.INotificationService;
+import org.github.bobobot.services.IUserService;
+import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.List;
 import java.util.Optional;
 
 public class NotificationService implements INotificationService {
 
-	INotificationDAO<CommentNotification> commentDAO;
-	INotificationDAO<VoteNotification> voteDAO;
-	IUserDAO userDAO;
+	IUserService userService;
+	@Autowired
+	private ICommentNotificationRepository commentRepository;
+	@Autowired
+	private IVoteNotificationRepository voteRepository;
+	@Autowired
+	private IUserRepository userRepository;
 
-	public NotificationService(INotificationDAO<CommentNotification> iCommentNotificationDAO, INotificationDAO<VoteNotification> iVoteNotificationDAO, IUserDAO userDAO) {
-		this.commentDAO = iCommentNotificationDAO;
-		this.voteDAO = iVoteNotificationDAO;
-		this.userDAO = userDAO;
+	public NotificationService(IUserService userService) {
+		this.userService = userService;
 	}
 
-	private Notification getNotificationIfNotPresent(Optional<? extends Notification> notification) {
+	private Notification getNotificationIfPresent(Optional<? extends Notification> notification) {
 		if (!notification.isPresent()) {
 			throw new IllegalArgumentException("Notification was not found!");
 		}
 		return notification.get();
 	}
 
-	@Override
-	public CommentNotification create(CommentNotification notification) {
-		UserService userService = new UserService(userDAO);
-		User user = notification.getUser();
-		userService.addCommentNotification(user.getID(), notification);
-		return commentDAO.create(notification);
+	private void checkIfRepliesInTheSameThread(Reply originalReply, Reply newReply) {
+		if (!originalReply.getThread().getId().equals(newReply.getThread().getId())) {
+			throw new IllegalArgumentException("Replies not in the same thread!");
+		}
 	}
 
 	@Override
-	public CommentNotification create(boolean read, User user, String replyContent) {
-		return create(new CommentNotification(-1, read, user, replyContent));
+	public CommentNotification create(CommentNotification notification) {
+		checkIfRepliesInTheSameThread(notification.getOriginalReply(), notification.getOtherUsersReply());
+		notification = commentRepository.save(notification);
+		User user = notification.getUser();
+		userService.addCommentNotification(user, notification);
+		return notification;
 	}
 
 	@Override
 	public VoteNotification create(VoteNotification notification) {
-		UserService userService = new UserService(userDAO);
 		User user = notification.getUser();
-		userService.addVoteNotification(user.getID(), notification);
-		return voteDAO.create(notification);
-	}
-
-	@Override
-	public VoteNotification create(boolean read, User user, VoteNotification.VoteType voteType) {
-		return create(new VoteNotification(-1, read, user, voteType));
+		userService.addVoteNotification(user, notification);
+		return notification;
 	}
 
 	@Override
 	public CommentNotification update(CommentNotification tempNotification) {
-		Optional<CommentNotification> notification = commentDAO.update(tempNotification);
-		return (CommentNotification) getNotificationIfNotPresent(notification);
-	}
-
-	@Override
-	public CommentNotification update(int ID, boolean read, User user, String replyContent) {
-		return update(new CommentNotification(ID, read, user, replyContent));
+		checkIfRepliesInTheSameThread(tempNotification.getOriginalReply(), tempNotification.getOtherUsersReply());
+		getNotificationIfPresent(commentRepository.findById(tempNotification.getId())); //dobjunk errort ha nem létezik
+		return commentRepository.save(tempNotification);
 	}
 
 	@Override
 	public VoteNotification update(VoteNotification tempNotification) {
-		Optional<VoteNotification> notification = voteDAO.update(tempNotification);
-		return (VoteNotification) getNotificationIfNotPresent(notification);
+		getNotificationIfPresent(voteRepository.findById(tempNotification.getId())); //dobjunk errort ha nem létezik
+		return voteRepository.save(tempNotification);
 	}
 
 	@Override
-	public VoteNotification update(int ID, boolean read, User user, VoteNotification.VoteType voteType) {
-		return update(new VoteNotification(ID, read, user, voteType));
+	public CommentNotification findCommentNotificationByID(Long id) {
+		Optional<CommentNotification> notification = commentRepository.findById(id);
+		return (CommentNotification) getNotificationIfPresent(notification);
 	}
 
 	@Override
-	public CommentNotification findCommentNotificationByID(int ID) {
-		Optional<CommentNotification> notification = commentDAO.selectByID(ID);
-		return (CommentNotification) getNotificationIfNotPresent(notification);
+	public VoteNotification findVoteNotificationByID(Long id) {
+		Optional<VoteNotification> notification = voteRepository.findById(id);
+		return (VoteNotification) getNotificationIfPresent(notification);
 	}
 
 	@Override
-	public VoteNotification findVoteNotificationByID(int ID) {
-		Optional<VoteNotification> notification = voteDAO.selectByID(ID);
-		return (VoteNotification) getNotificationIfNotPresent(notification);
+	public List<CommentNotification> getCommentNotificationsByUserId(Long id) {
+		return commentRepository.getByUserId(id);
+	}
+
+	@Override
+	public List<VoteNotification> getVoteNotificationsByUserId(Long id) {
+		return voteRepository.getByUserId(id);
 	}
 
 	@Override
 	public List<CommentNotification> listCommentNotifications() {
-		return commentDAO.list();
+		//fúj
+		return commentRepository.findAll();
 	}
 
 	@Override
 	public List<VoteNotification> listVoteNotifications() {
-		return voteDAO.list();
+		//fúj 2.0
+		return voteRepository.findAll();
+	}
+
+	@Override
+	public void deleteCommentNotification(Long id) {
+		getNotificationIfPresent(commentRepository.findById(id));
+		commentRepository.deleteById(id);
+	}
+
+	@Override
+	public void deleteVoteNotification(Long id) {
+		getNotificationIfPresent(voteRepository.findById(id));
+		voteRepository.deleteById(id);
 	}
 }

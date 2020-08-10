@@ -1,54 +1,38 @@
 package org.github.bobobot.entities;
 
-import java.util.Objects;
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+import lombok.NonNull;
 
+import javax.persistence.*;
+
+@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
+@Data
+@AllArgsConstructor
+@NoArgsConstructor
+@MappedSuperclass
 public abstract class Notification {
-	int ID;
+
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY, generator = "notif_Sequence")
+	@SequenceGenerator(name = "notif_Sequence", sequenceName = "NOTIF_SEQ", allocationSize = 1)
+	Long id;
+
 	boolean read = false;
-	User user;
 
-	public Notification(int ID, boolean read, User user) {
-		this.ID = ID;
+	@ManyToOne
+	@NonNull
+	Reply originalReply;
+
+	public Notification(boolean read, @NonNull Reply originalReply) {
 		this.read = read;
-		this.user = user;
-	}
-
-	@Override
-	public boolean equals(Object o) {
-		if (this == o) return true;
-		if (o == null || getClass() != o.getClass()) return false;
-		Notification that = (Notification) o;
-		return ID == that.ID &&
-				read == that.read &&
-				user.equals(that.user);
-	}
-
-	@Override
-	public int hashCode() {
-		return Objects.hash(ID, read, user);
-	}
-
-	public int getID() {
-		return ID;
-	}
-
-	public void setID(int ID) {
-		this.ID = ID;
-	}
-
-	public boolean isRead() {
-		return read;
-	}
-
-	public void setRead(boolean read) {
-		this.read = read;
+		this.originalReply = originalReply;
 	}
 
 	public User getUser() {
-		return user;
-	}
-
-	public void setUser(User user) {
-		this.user = user;
+		return originalReply.getUser();
 	}
 }

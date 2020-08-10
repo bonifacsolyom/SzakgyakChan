@@ -1,22 +1,40 @@
 package org.github.bobobot.services.impl;
 
+import org.github.bobobot.config.ApplicationConfig;
 import org.github.bobobot.entities.User;
+import org.github.bobobot.services.IUserService;
 import org.junit.jupiter.api.Test;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
+import org.springframework.boot.test.autoconfigure.orm.jpa.TestEntityManager;
+import org.springframework.context.annotation.ComponentScan;
+import org.springframework.test.annotation.DirtiesContext;
+import org.springframework.test.context.ActiveProfiles;
+import org.springframework.test.context.ContextConfiguration;
 
 import java.util.List;
+import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.*;
 import static org.github.bobobot.services.impl.TestHelperUtils.createDummyUser;
-import static org.github.bobobot.services.impl.TestHelperUtils.createUserService;
 
+@ActiveProfiles("test")
+@DataJpaTest
+@DirtiesContext(classMode = DirtiesContext.ClassMode.BEFORE_EACH_TEST_METHOD)
+@ComponentScan("org.github.bobobot")
 class UserServiceTest {
+
+	@Autowired
+	private TestEntityManager em;
+
+	@Autowired
+	private IUserService service;
 
 	@Test
 	void findCreatedUserByName() {
-		UserService service = createUserService();
-
 		User originalUser = createDummyUser();
 
+		em.persist(originalUser);
 		service.register(originalUser);
 		User user = service.findByUsername("tesztNev");
 
@@ -25,10 +43,9 @@ class UserServiceTest {
 
 	@Test
 	void updateUserEmail() {
-		UserService service = createUserService();
-
 		User user = service.register(createDummyUser());
-		int userID = user.getID();
+		em.persist(user);
+		Long userID = user.getId();
 		service.update(userID, true, "tesztNev", "tesztEmail2@teszt.com", "tesztJelszo");
 		user = service.findById(userID);
 
@@ -37,23 +54,20 @@ class UserServiceTest {
 
 	@Test
 	void testList() {
-		UserService service = createUserService();
-
-		User user1 = new User(0, true, "tesztNev1", "tesztEmail1@teszt.com", "tesztJelszo1");
-		User user2 = new User(1, true, "tesztNev2", "tesztEmail2@teszt.com", "tesztJelszo2");
+		User user1 = new User(true, "tesztNev1", "tesztEmail1@teszt.com", "tesztJelszo1");
+		User user2 = new User(true, "tesztNev2", "tesztEmail2@teszt.com", "tesztJelszo2");
 
 		service.register(true, "tesztNev1", "tesztEmail1@teszt.com", "tesztJelszo1");
 		service.register(true, "tesztNev2", "tesztEmail2@teszt.com", "tesztJelszo2");
 
 		List<User> userList = service.list();
 
-		assertThat(userList.get(0)).isEqualTo(user1);
-		assertThat(userList.get(1)).isEqualTo(user2);
+		assertThat(userList.get(0).getName()).isEqualTo(user1.getName());
+		assertThat(userList.get(1).getName()).isEqualTo(user2.getName());
 	}
 
 	@Test
 	void testValidEmail() {
-		UserService service = createUserService();
 		User user = createDummyUser();
 
 		assertThatCode(() -> service.register(user)).doesNotThrowAnyException();
@@ -61,11 +75,18 @@ class UserServiceTest {
 
 	@Test
 	void testInvalidEmail() {
-		UserService service = createUserService();
-		User user = new User(0, true, "tesztNev", "tesztEmail", "tesztJelszo");
+		User user = new User(true, "tesztNev", "tesztEmail", "tesztJelszo");
 
 		assertThatIllegalArgumentException().isThrownBy(() -> service.register(user));
 	}
 
+	@Test
+	void testPasswordEncoding() {
+		User user = createDummyUser();
+		User newUser = new User(user);
 
+		service.register(user);
+		Optional<User> loggedInUser = service.login(newUser.getName(), newUser.getPasswordHash()); //A passwordHash itt még csak a sima jelszó
+		assertThat(loggedInUser.get().getName()).isEqualTo(newUser.getName());
+	}
 }

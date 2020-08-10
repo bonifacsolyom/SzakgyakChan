@@ -1,24 +1,84 @@
 package org.github.bobobot.entities;
 
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+import lombok.NonNull;
+
+import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
+@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
+@Entity
+@Data
+@AllArgsConstructor
+@NoArgsConstructor
+@Table(name = "RUser")
 public class User {
-	int ID;
+
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY, generator = "user_Sequence")
+	@SequenceGenerator(name = "user_Sequence", sequenceName = "RUSER_SEQ", allocationSize = 1)
+	Long id;
+
 	boolean isAdmin;
+
+	@NonNull
 	String name;
+
+	@NonNull
 	String email;
+
+	@NonNull
 	String passwordHash;
+
+	@OneToMany(cascade = CascadeType.ALL)
 	List<Thread> threads = new ArrayList<>();
+
+	@OneToMany(cascade = CascadeType.ALL)
 	List<Reply> replies = new ArrayList<>();
+
+	@OneToMany(cascade = CascadeType.ALL)
 	List<CommentNotification> commentNotifications = new ArrayList<>();
+
+	@OneToMany(cascade = CascadeType.ALL)
 	List<VoteNotification> voteNotifications = new ArrayList<>();
 
-	public User(int ID, boolean isAdmin, String name, String email, String passwordHash, List<Thread> threads, List<Reply> replies, List<CommentNotification> commentNotifications, List<VoteNotification> voteNotifications) {
-		this.ID = ID;
+
+	public User(Long id, boolean isAdmin, String name, String email, String passwordHash) {
+		this.id = id;
+		this.isAdmin = isAdmin;
+		this.name = name;
+		this.email = email;
+		this.passwordHash = passwordHash;
+	}
+
+	public User(User user) {
+		this.id = user.id;
+		this.isAdmin = user.isAdmin;
+		this.name = user.name;
+		this.email = user.email;
+		this.passwordHash = user.passwordHash;
+		this.threads = user.threads;
+		this.replies = user.replies;
+		this.commentNotifications = user.commentNotifications;
+		this.voteNotifications = user.voteNotifications;
+	}
+
+	public User(boolean isAdmin, @NonNull String name, @NonNull String email, @NonNull String passwordHash) {
+		this.isAdmin = isAdmin;
+		this.name = name;
+		this.email = email;
+		this.passwordHash = passwordHash;
+	}
+
+	public User(boolean isAdmin, @NonNull String name, @NonNull String email, @NonNull String passwordHash, List<Thread> threads, List<Reply> replies, List<CommentNotification> commentNotifications, List<VoteNotification> voteNotifications) {
 		this.isAdmin = isAdmin;
 		this.name = name;
 		this.email = email;
@@ -29,122 +89,26 @@ public class User {
 		this.voteNotifications = voteNotifications;
 	}
 
-	public User(int ID, boolean isAdmin, String name, String email, String passwordHash) {
-		this.ID = ID;
-		this.isAdmin = isAdmin;
-		this.name = name;
-		this.email = email;
-		this.passwordHash = passwordHash;
-	}
-
-	@Override
-	public boolean equals(Object o) {
-		if (this == o) return true;
-		if (o == null || getClass() != o.getClass()) return false;
-		User user = (User) o;
-		return ID == user.ID &&
-				isAdmin == user.isAdmin &&
-				name.equals(user.name) &&
-				email.equals(user.email) &&
-				passwordHash.equals(user.passwordHash);
-	}
-
-	@Override
-	public int hashCode() {
-		return Objects.hash(ID, isAdmin, name, email, passwordHash, threads, replies);
-	}
-
-	public int getID() {
-		return ID;
-	}
-
-	public void setID(int ID) {
-		this.ID = ID;
-	}
-
-	public List<CommentNotification> getCommentNotifications() {
-		return commentNotifications;
-	}
-
-	public void setCommentNotifications(List<CommentNotification> commentNotifications) {
-		this.commentNotifications = commentNotifications;
-	}
-
-	public void addCommentNotification(CommentNotification notification) {
-		this.commentNotifications.add(notification);
-	}
-
-	public List<VoteNotification> getVoteNotifications() {
-		return voteNotifications;
-	}
-
-	public void setVoteNotifications(List<VoteNotification> voteNotifications) {
-		this.voteNotifications = voteNotifications;
-	}
-
-	public void addVoteNotification(VoteNotification notification) {
-		this.voteNotifications.add(notification);
-	}
-
 	public List<Notification> getNotifications() {
 		return Stream.of(commentNotifications, voteNotifications)
-				.flatMap(x -> x.stream())
+				.flatMap(x -> Stream.ofNullable((Notification)x))
 				.collect(Collectors.toList());
-	}
-
-	public boolean isAdmin() {
-		return isAdmin;
-	}
-
-	public void setAdmin(boolean admin) {
-		isAdmin = admin;
-	}
-
-	public List<Thread> getThreads() {
-		return threads;
-	}
-
-	public void setThreads(List<Thread> threads) {
-		this.threads = threads;
 	}
 
 	public void addThread(Thread thread) {
 		this.threads.add(thread);
 	}
 
-	public List<Reply> getReplies() {
-		return replies;
-	}
-
-	public void setReplies(List<Reply> replies) {
-		this.replies = replies;
-	}
 
 	public void addReply(Reply reply) {
 		this.replies.add(reply);
 	}
 
-	public String getName() {
-		return name;
+	public void addCommentNotification(CommentNotification notification) {
+		this.commentNotifications.add(notification);
 	}
 
-	public void setName(String name) {
-		this.name = name;
-	}
-
-	public String getEmail() {
-		return email;
-	}
-
-	public void setEmail(String email) {
-		this.email = email;
-	}
-
-	public String getPasswordHash() {
-		return passwordHash;
-	}
-
-	public void setPasswordHash(String passwordHash) {
-		this.passwordHash = passwordHash;
+	public void addVoteNotification(VoteNotification notification) {
+		this.voteNotifications.add(notification);
 	}
 }

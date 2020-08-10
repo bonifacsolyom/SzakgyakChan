@@ -28,10 +28,10 @@ public interface IThreadDAO {
 	/**
 	 * Selects a thread by its ID.
 	 *
-	 * @param ID The ID of the thread to be selected.
+	 * @param id The ID of the thread to be selected.
 	 * @return The selected thread wrapped in an optional.
 	 */
-	Optional<Thread> select(int ID);
+	Optional<Thread> select(int id);
 
 	/**
 	 * Lists all threads.
@@ -43,8 +43,8 @@ public interface IThreadDAO {
 	/**
 	 * Deletes a thread.
 	 *
-	 * @param ID The ID of the thread to be deleted.
+	 * @param id The ID of the thread to be deleted.
 	 * @return The deleted thread, wrapped in an optional.
 	 */
-	Optional<Thread> delete(int ID);
+	Optional<Thread> delete(int id);
 }

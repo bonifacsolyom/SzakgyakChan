@@ -12,7 +12,7 @@ public class InMemoryThreadDAO implements IThreadDAO {
 
 	@Override
 	public Thread create(Thread thread) {
-		thread.setID(memory.size());
+		thread.setId((long) memory.size());
 		memory.add(thread);
 		return thread;
 	}
@@ -20,7 +20,7 @@ public class InMemoryThreadDAO implements IThreadDAO {
 	@Override
 	public Optional<Thread> update(Thread thread) {
 		Optional<Thread> memoryThread = memory.stream()
-				.filter(t -> t.getID() == thread.getID())
+				.filter(t -> t.getId() == thread.getId())
 				.findFirst();
 
 		if (memoryThread.isPresent()) {
@@ -32,9 +32,9 @@ public class InMemoryThreadDAO implements IThreadDAO {
 	}
 
 	@Override
-	public Optional<Thread> select(int ID) {
+	public Optional<Thread> select(int id) {
 		Optional<Thread> thread = memory.stream()
-				.filter(t -> t.getID() == ID)
+				.filter(t -> t.getId() == id)
 				.findFirst();
 		return thread;
 	}
@@ -45,9 +45,9 @@ public class InMemoryThreadDAO implements IThreadDAO {
 	}
 
 	@Override
-	public Optional<Thread> delete(int ID) {
+	public Optional<Thread> delete(int id) {
 		Optional<Thread> thread = memory.stream()
-				.filter(b -> b.getID() == ID)
+				.filter(b -> b.getId() == id)
 				.findFirst();
 		if (thread.isPresent()) {
 			memory.remove(thread.get());

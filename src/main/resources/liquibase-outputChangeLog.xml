@@ -1,0 +1,291 @@
+<?xml version="1.1" encoding="UTF-8" standalone="no"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog" xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.6.xsd">
+    <changeSet author="gyakornok (generated)" id="1596449557851-0">
+        <createSequence sequenceName="BOARD_SEQ" minValue="1" maxValue="9999999999999999999" incrementBy="1"/>
+        <createSequence sequenceName="THREAD_SEQ" minValue="1" maxValue="9999999999999999999" incrementBy="1"/>
+        <createSequence sequenceName="REPLY_SEQ" minValue="1" maxValue="9999999999999999999" incrementBy="1"/>
+        <createSequence sequenceName="NOTIF_SEQ" minValue="1" maxValue="9999999999999999999" incrementBy="1"/>
+        <createSequence sequenceName="RUSER_SEQ" minValue="1" maxValue="9999999999999999999" incrementBy="1"/>
+        <createSequence sequenceName="META_SEQ" minValue="1" maxValue="9999999999999999999" incrementBy="1"/>
+    </changeSet>
+    <changeSet author="gyakornok (generated)" id="1596449557851-01">
+        <createTable tableName="META_INFO">
+            <column name="ID" type="BIGINT">
+                <constraints primaryKey="true" primaryKeyName="CONSTRAINT_META"/>
+            </column>
+            <column name="NAME" type="VARCHAR(255)"/>
+            <column name="VALUE" type="VARCHAR(255)"/>
+        </createTable>
+    </changeSet>
+    <changeSet author="gyakornok (generated)" id="1596449557851-1">
+        <createTable tableName="BOARD">
+            <column name="ID" type="BIGINT">
+                <constraints primaryKey="true" primaryKeyName="CONSTRAINT_3"/>
+            </column>
+            <column name="LONG_NAME" type="VARCHAR(255)"/>
+            <column name="SHORT_NAME" type="VARCHAR(255)"/>
+        </createTable>
+    </changeSet>
+    <changeSet author="gyakornok (generated)" id="1596449557851-2">
+        <createTable tableName="BOARD_THREADS">
+            <column name="BOARD_ID" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="THREADS_ID" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+    <changeSet author="gyakornok (generated)" id="1596449557851-3">
+        <createTable tableName="COMMENT_NOTIFICATION">
+            <column name="ID" type="BIGINT">
+                <constraints primaryKey="true" primaryKeyName="CONSTRAINT_F"/>
+            </column>
+            <column name="READ" type="BOOLEAN">
+                <constraints nullable="false"/>
+            </column>
+            <column name="ORIGINAL_REPLY_ID" type="BIGINT"/>
+            <column name="OTHER_USERS_REPLY_ID" type="BIGINT"/>
+        </createTable>
+    </changeSet>
+    <changeSet author="gyakornok (generated)" id="1596449557851-4">
+        <createTable tableName="REPLY">
+            <column name="ID" type="BIGINT">
+                <constraints primaryKey="true" primaryKeyName="CONSTRAINT_4"/>
+            </column>
+            <column name="CONTENT" type="VARCHAR(255)"/>
+            <column name="POST_DATE" type="TIMESTAMP"/>
+            <column name="IMAGE" type="VARCHAR(255)"/>
+            <column name="VOTES" type="INT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="THREAD_ID" type="BIGINT"/>
+            <column name="USER_ID" type="BIGINT"/>
+        </createTable>
+    </changeSet>
+    <changeSet author="gyakornok (generated)" id="1596449557851-5">
+        <createTable tableName="THREAD">
+            <column name="ID" type="BIGINT">
+                <constraints primaryKey="true" primaryKeyName="CONSTRAINT_9"/>
+            </column>
+            <column name="TITLE" type="VARCHAR(255)"/>
+            <column name="BOARD_ID" type="BIGINT"/>
+            <column name="USER_ID" type="BIGINT"/>
+        </createTable>
+    </changeSet>
+    <changeSet author="gyakornok (generated)" id="1596449557851-6">
+        <createTable tableName="THREAD_REPLIES">
+            <column name="THREAD_ID" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="REPLIES_ID" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+    <changeSet author="gyakornok (generated)" id="1596449557851-7">
+        <createTable tableName="RUSER">
+            <column name="ID" type="BIGINT">
+                <constraints primaryKey="true" primaryKeyName="CONSTRAINT_2"/>
+            </column>
+            <column name="EMAIL" type="VARCHAR(255)"/>
+            <column name="IS_ADMIN" type="BOOLEAN">
+                <constraints nullable="false"/>
+            </column>
+            <column name="NAME" type="VARCHAR(255)"/>
+            <column name="PASSWORD_HASH" type="VARCHAR(255)"/>
+        </createTable>
+    </changeSet>
+    <changeSet author="gyakornok (generated)" id="1596449557851-8">
+        <createTable tableName="RUSER_COMMENT_NOTIFICATIONS">
+            <column name="USER_ID" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="COMMENT_NOTIFICATIONS_ID" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+    <changeSet author="gyakornok (generated)" id="1596449557851-9">
+        <createTable tableName="RUSER_REPLIES">
+            <column name="USER_ID" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="REPLIES_ID" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+    <changeSet author="gyakornok (generated)" id="1596449557851-10">
+        <createTable tableName="RUSER_THREADS">
+            <column name="USER_ID" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="THREADS_ID" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+    <changeSet author="gyakornok (generated)" id="1596449557851-11">
+        <createTable tableName="RUSER_VOTE_NOTIFICATIONS">
+            <column name="USER_ID" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="VOTE_NOTIFICATIONS_ID" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+    <changeSet author="gyakornok (generated)" id="1596449557851-12">
+        <createTable tableName="VOTE_NOTIFICATION">
+            <column name="ID" type="BIGINT">
+                <constraints primaryKey="true" primaryKeyName="CONSTRAINT_42"/>
+            </column>
+            <column name="READ" type="BOOLEAN">
+                <constraints nullable="false"/>
+            </column>
+            <column name="VOTE_TYPE" type="INT"/>
+            <column name="ORIGINAL_REPLY_ID" type="BIGINT"/>
+        </createTable>
+    </changeSet>
+    <changeSet author="gyakornok (generated)" id="1596449557851-13">
+        <addUniqueConstraint columnNames="REPLIES_ID" constraintName="UK_7W4NP129IP0BJ0X3ESPUWJO2B" tableName="THREAD_REPLIES"/>
+    </changeSet>
+    <changeSet author="gyakornok (generated)" id="1596449557851-14">
+        <addUniqueConstraint columnNames="THREADS_ID" constraintName="UK_C5O765T5W6LGQJAL28BO6JD9U" tableName="RUSER_THREADS"/>
+    </changeSet>
+    <changeSet author="gyakornok (generated)" id="1596449557851-15">
+        <addUniqueConstraint columnNames="THREADS_ID" constraintName="UK_E1QT2OFYF5RBCVYNQL5IFROVF" tableName="BOARD_THREADS"/>
+    </changeSet>
+    <changeSet author="gyakornok (generated)" id="1596449557851-16">
+        <addUniqueConstraint columnNames="REPLIES_ID" constraintName="UK_EQAEOXH5KOJQ4EF7R7QYFM27O" tableName="RUSER_REPLIES"/>
+    </changeSet>
+    <changeSet author="gyakornok (generated)" id="1596449557851-17">
+        <addUniqueConstraint columnNames="COMMENT_NOTIFICATIONS_ID" constraintName="UK_KI5Y3ERQ6ECSKJNKY75DOR7OY" tableName="RUSER_COMMENT_NOTIFICATIONS"/>
+    </changeSet>
+    <changeSet author="gyakornok (generated)" id="1596449557851-18">
+        <addUniqueConstraint columnNames="VOTE_NOTIFICATIONS_ID" constraintName="UK_NHC52C5EO0N5QGQF8RV1JT8D6" tableName="RUSER_VOTE_NOTIFICATIONS"/>
+    </changeSet>
+    <changeSet author="gyakornok (generated)" id="1596449557851-19">
+        <createIndex indexName="FK2RMKR0VLIMYHLY7N8460_INDEX_9" tableName="THREAD">
+            <column name="USER_ID"/>
+        </createIndex>
+    </changeSet>
+    <changeSet author="gyakornok (generated)" id="1596449557851-20">
+        <createIndex indexName="FK2X40PQBVAIHS604BFPK0_INDEX_4" tableName="VOTE_NOTIFICATION">
+            <column name="ORIGINAL_REPLY_ID"/>
+        </createIndex>
+    </changeSet>
+    <changeSet author="gyakornok (generated)" id="1596449557851-21">
+        <createIndex indexName="FK53UN5ADSSCUFCI6L77TY_INDEX_9" tableName="RUSER_THREADS">
+            <column name="USER_ID"/>
+        </createIndex>
+    </changeSet>
+    <changeSet author="gyakornok (generated)" id="1596449557851-22">
+        <createIndex indexName="FKAPYYXLGNTERTU5OKPKR6_INDEX_4" tableName="REPLY">
+            <column name="USER_ID"/>
+        </createIndex>
+    </changeSet>
+    <changeSet author="gyakornok (generated)" id="1596449557851-23">
+        <createIndex indexName="FKBEJDSQ1G5QJJ8UMHR10N_INDEX_2" tableName="THREAD_REPLIES">
+            <column name="THREAD_ID"/>
+        </createIndex>
+    </changeSet>
+    <changeSet author="gyakornok (generated)" id="1596449557851-24">
+        <createIndex indexName="FKDGHPV747ST9DW2W52G2H_INDEX_B" tableName="BOARD_THREADS">
+            <column name="BOARD_ID"/>
+        </createIndex>
+    </changeSet>
+    <changeSet author="gyakornok (generated)" id="1596449557851-25">
+        <createIndex indexName="FKF6PX7P0PS15XFUA6YD7Y_INDEX_F" tableName="COMMENT_NOTIFICATION">
+            <column name="OTHER_USERS_REPLY_ID"/>
+        </createIndex>
+    </changeSet>
+    <changeSet author="gyakornok (generated)" id="1596449557851-26">
+        <createIndex indexName="FKMA462CWFKRLTWXAA8AXF_INDEX_4" tableName="REPLY">
+            <column name="THREAD_ID"/>
+        </createIndex>
+    </changeSet>
+    <changeSet author="gyakornok (generated)" id="1596449557851-27">
+        <createIndex indexName="FKMHCS3JVPY4XQXNQW0F40_INDEX_9" tableName="THREAD">
+            <column name="BOARD_ID"/>
+        </createIndex>
+    </changeSet>
+    <changeSet author="gyakornok (generated)" id="1596449557851-28">
+        <createIndex indexName="FKNF325W3TPKPX3CYY75DL_INDEX_A" tableName="RUSER_COMMENT_NOTIFICATIONS">
+            <column name="USER_ID"/>
+        </createIndex>
+    </changeSet>
+    <changeSet author="gyakornok (generated)" id="1596449557851-29">
+        <createIndex indexName="FKOUOJK3O2UEGKMOQGNRJO_INDEX_F" tableName="COMMENT_NOTIFICATION">
+            <column name="ORIGINAL_REPLY_ID"/>
+        </createIndex>
+    </changeSet>
+    <changeSet author="gyakornok (generated)" id="1596449557851-30">
+        <createIndex indexName="FKQXYOFM1R51JKWPJPY97A_INDEX_2" tableName="RUSER_VOTE_NOTIFICATIONS">
+            <column name="USER_ID"/>
+        </createIndex>
+    </changeSet>
+    <changeSet author="gyakornok (generated)" id="1596449557851-31">
+        <createIndex indexName="FKTECVEG14E70YGSFE2EF7_INDEX_2" tableName="RUSER_REPLIES">
+            <column name="USER_ID"/>
+        </createIndex>
+    </changeSet>
+    <changeSet author="gyakornok (generated)" id="1596449557851-32">
+        <addForeignKeyConstraint baseColumnNames="THREADS_ID" baseTableName="RUSER_THREADS" constraintName="FK1GJB5ODY6UU6XX5UOJ7R" deferrable="false" initiallyDeferred="false" onDelete="RESTRICT" onUpdate="RESTRICT" referencedColumnNames="ID" referencedTableName="THREAD" validate="true"/>
+    </changeSet>
+    <changeSet author="gyakornok (generated)" id="1596449557851-33">
+        <addForeignKeyConstraint baseColumnNames="USER_ID" baseTableName="THREAD" constraintName="FK2RMKR0VLIMYHLY7N8460" deferrable="false" initiallyDeferred="false" onDelete="RESTRICT" onUpdate="RESTRICT" referencedColumnNames="ID" referencedTableName="RUSER" validate="true"/>
+    </changeSet>
+    <changeSet author="gyakornok (generated)" id="1596449557851-34">
+        <addForeignKeyConstraint baseColumnNames="ORIGINAL_REPLY_ID" baseTableName="VOTE_NOTIFICATION" constraintName="FK2X40PQBVAIHS604BFPK0" deferrable="false" initiallyDeferred="false" onDelete="RESTRICT" onUpdate="RESTRICT" referencedColumnNames="ID" referencedTableName="REPLY" validate="true"/>
+    </changeSet>
+    <changeSet author="gyakornok (generated)" id="1596449557851-35">
+        <addForeignKeyConstraint baseColumnNames="USER_ID" baseTableName="RUSER_THREADS" constraintName="FK53UN5ADSSCUFCI6L77TY" deferrable="false" initiallyDeferred="false" onDelete="RESTRICT" onUpdate="RESTRICT" referencedColumnNames="ID" referencedTableName="RUSER" validate="true"/>
+    </changeSet>
+    <changeSet author="gyakornok (generated)" id="1596449557851-36">
+        <addForeignKeyConstraint baseColumnNames="THREADS_ID" baseTableName="BOARD_THREADS" constraintName="FK6NEBM55AF0S32FGQH6DF" deferrable="false" initiallyDeferred="false" onDelete="RESTRICT" onUpdate="RESTRICT" referencedColumnNames="ID" referencedTableName="THREAD" validate="true"/>
+    </changeSet>
+    <changeSet author="gyakornok (generated)" id="1596449557851-37">
+        <addForeignKeyConstraint baseColumnNames="USER_ID" baseTableName="REPLY" constraintName="FKAPYYXLGNTERTU5OKPKR6" deferrable="false" initiallyDeferred="false" onDelete="RESTRICT" onUpdate="RESTRICT" referencedColumnNames="ID" referencedTableName="RUSER" validate="true"/>
+    </changeSet>
+    <changeSet author="gyakornok (generated)" id="1596449557851-38">
+        <addForeignKeyConstraint baseColumnNames="REPLIES_ID" baseTableName="RUSER_REPLIES" constraintName="FKBAP73JYOJG0ODWERTLRU" deferrable="false" initiallyDeferred="false" onDelete="RESTRICT" onUpdate="RESTRICT" referencedColumnNames="ID" referencedTableName="REPLY" validate="true"/>
+    </changeSet>
+    <changeSet author="gyakornok (generated)" id="1596449557851-39">
+        <addForeignKeyConstraint baseColumnNames="THREAD_ID" baseTableName="THREAD_REPLIES" constraintName="FKBEJDSQ1G5QJJ8UMHR10N" deferrable="false" initiallyDeferred="false" onDelete="RESTRICT" onUpdate="RESTRICT" referencedColumnNames="ID" referencedTableName="THREAD" validate="true"/>
+    </changeSet>
+    <changeSet author="gyakornok (generated)" id="1596449557851-40">
+        <addForeignKeyConstraint baseColumnNames="VOTE_NOTIFICATIONS_ID" baseTableName="RUSER_VOTE_NOTIFICATIONS" constraintName="FKCV6UHVT15CPDEAANR6G2" deferrable="false" initiallyDeferred="false" onDelete="RESTRICT" onUpdate="RESTRICT" referencedColumnNames="ID" referencedTableName="VOTE_NOTIFICATION" validate="true"/>
+    </changeSet>
+    <changeSet author="gyakornok (generated)" id="1596449557851-41">
+        <addForeignKeyConstraint baseColumnNames="BOARD_ID" baseTableName="BOARD_THREADS" constraintName="FKDGHPV747ST9DW2W52G2H" deferrable="false" initiallyDeferred="false" onDelete="RESTRICT" onUpdate="RESTRICT" referencedColumnNames="ID" referencedTableName="BOARD" validate="true"/>
+    </changeSet>
+    <changeSet author="gyakornok (generated)" id="1596449557851-42">
+        <addForeignKeyConstraint baseColumnNames="OTHER_USERS_REPLY_ID" baseTableName="COMMENT_NOTIFICATION" constraintName="FKF6PX7P0PS15XFUA6YD7Y" deferrable="false" initiallyDeferred="false" onDelete="RESTRICT" onUpdate="RESTRICT" referencedColumnNames="ID" referencedTableName="REPLY" validate="true"/>
+    </changeSet>
+    <changeSet author="gyakornok (generated)" id="1596449557851-43">
+        <addForeignKeyConstraint baseColumnNames="THREAD_ID" baseTableName="REPLY" constraintName="FKMA462CWFKRLTWXAA8AXF" deferrable="false" initiallyDeferred="false" onDelete="RESTRICT" onUpdate="RESTRICT" referencedColumnNames="ID" referencedTableName="THREAD" validate="true"/>
+    </changeSet>
+    <changeSet author="gyakornok (generated)" id="1596449557851-44">
+        <addForeignKeyConstraint baseColumnNames="BOARD_ID" baseTableName="THREAD" constraintName="FKMHCS3JVPY4XQXNQW0F40" deferrable="false" initiallyDeferred="false" onDelete="RESTRICT" onUpdate="RESTRICT" referencedColumnNames="ID" referencedTableName="BOARD" validate="true"/>
+    </changeSet>
+    <changeSet author="gyakornok (generated)" id="1596449557851-45">
+        <addForeignKeyConstraint baseColumnNames="USER_ID" baseTableName="RUSER_COMMENT_NOTIFICATIONS" constraintName="FKNF325W3TPKPX3CYY75DL" deferrable="false" initiallyDeferred="false" onDelete="RESTRICT" onUpdate="RESTRICT" referencedColumnNames="ID" referencedTableName="RUSER" validate="true"/>
+    </changeSet>
+    <changeSet author="gyakornok (generated)" id="1596449557851-46">
+        <addForeignKeyConstraint baseColumnNames="ORIGINAL_REPLY_ID" baseTableName="COMMENT_NOTIFICATION" constraintName="FKOUOJK3O2UEGKMOQGNRJO" deferrable="false" initiallyDeferred="false" onDelete="RESTRICT" onUpdate="RESTRICT" referencedColumnNames="ID" referencedTableName="REPLY" validate="true"/>
+    </changeSet>
+    <changeSet author="gyakornok (generated)" id="1596449557851-47">
+        <addForeignKeyConstraint baseColumnNames="REPLIES_ID" baseTableName="THREAD_REPLIES" constraintName="FKP25JHN4NFAXJE22CG72S" deferrable="false" initiallyDeferred="false" onDelete="RESTRICT" onUpdate="RESTRICT" referencedColumnNames="ID" referencedTableName="REPLY" validate="true"/>
+    </changeSet>
+    <changeSet author="gyakornok (generated)" id="1596449557851-48">
+        <addForeignKeyConstraint baseColumnNames="COMMENT_NOTIFICATIONS_ID" baseTableName="RUSER_COMMENT_NOTIFICATIONS" constraintName="FKPJUWTQWBME5B4PQLOW38" deferrable="false" initiallyDeferred="false" onDelete="RESTRICT" onUpdate="RESTRICT" referencedColumnNames="ID" referencedTableName="COMMENT_NOTIFICATION" validate="true"/>
+    </changeSet>
+    <changeSet author="gyakornok (generated)" id="1596449557851-49">
+        <addForeignKeyConstraint baseColumnNames="USER_ID" baseTableName="RUSER_VOTE_NOTIFICATIONS" constraintName="FKQXYOFM1R51JKWPJPY97A" deferrable="false" initiallyDeferred="false" onDelete="RESTRICT" onUpdate="RESTRICT" referencedColumnNames="ID" referencedTableName="RUSER" validate="true"/>
+    </changeSet>
+    <changeSet author="gyakornok (generated)" id="1596449557851-50">
+        <addForeignKeyConstraint baseColumnNames="USER_ID" baseTableName="RUSER_REPLIES" constraintName="FKTECVEG14E70YGSFE2EF7" deferrable="false" initiallyDeferred="false" onDelete="RESTRICT" onUpdate="RESTRICT" referencedColumnNames="ID" referencedTableName="RUSER" validate="true"/>
+    </changeSet>
+</databaseChangeLog>
