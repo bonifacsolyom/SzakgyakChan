@@ -17,7 +17,7 @@ public class UserController {
 	@Autowired
 	private IUserService service;
 
-	@ExceptionHandler
+	//@ExceptionHandler
 	ModelAndView handleErrors(Exception e) {
 		log.error("Error in user controller: ", e);
 		ModelAndView modelAndView = new ModelAndView();
@@ -34,8 +34,14 @@ public class UserController {
 
 	@PostMapping("/users")
 	ResponseEntity<User> newUser(@RequestBody User user) {
-		log.info("Creating new user with info: " + user);
-		return ResponseEntity.ok(service.register(user));
+		try {
+			ResponseEntity<User> createdUser = ResponseEntity.ok(service.register(user));
+			log.info("Created new user with info: " + user);
+			return createdUser;
+		} catch (IllegalArgumentException e) {
+			log.error("Could not create new user with info: " + user, e);
+			return ResponseEntity.badRequest().body(user);
+		}
 	}
 
 	@GetMapping("/user/{id}")

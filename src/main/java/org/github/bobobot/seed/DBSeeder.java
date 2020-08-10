@@ -34,13 +34,19 @@ public class DBSeeder implements ApplicationRunner {
 	@Autowired
 	private INotificationService notificationService;
 
+	@Autowired
+	private IMetaService metaService;
+
 	@Override
 	public void run(ApplicationArguments args) throws Exception {
+		MetaInfo seeded = metaService.getOrDefault("seeded", false);
+		if (seeded.getValueAsBoolean()) return;
 		seedUsers();
 		seedBoards();
 		seedThreads();
 		seedReplies();
 		seedNotifications();
+		metaService.update("seeded", true);
 	}
 
 	private void seedUsers() {

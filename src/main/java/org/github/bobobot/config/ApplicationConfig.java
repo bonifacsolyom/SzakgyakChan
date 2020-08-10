@@ -36,6 +36,11 @@ public class ApplicationConfig {
 		return new UserService();
 	}
 
+	@Bean
+	public IMetaService metaService() {
+		return new MetaService();
+	}
+
 
 	//Miscellaneous
 	@Bean

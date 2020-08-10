@@ -1,6 +1,7 @@
 package org.github.bobobot.entities;
 
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -90,7 +91,7 @@ public class User {
 
 	public List<Notification> getNotifications() {
 		return Stream.of(commentNotifications, voteNotifications)
-				.flatMap(x -> x.stream())
+				.flatMap(x -> Stream.ofNullable((Notification)x))
 				.collect(Collectors.toList());
 	}
 
