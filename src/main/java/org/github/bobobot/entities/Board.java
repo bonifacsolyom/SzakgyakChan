@@ -29,7 +29,7 @@ public class Board {
 	@NonNull
 	String longName;
 
-	@OneToMany(cascade = CascadeType.ALL)
+	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
 	List<Thread> threads = new ArrayList<>();
 
 	public Board(@NonNull String shortName, @NonNull String longName) {

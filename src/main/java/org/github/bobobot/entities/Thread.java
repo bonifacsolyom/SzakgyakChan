@@ -33,7 +33,7 @@ public class Thread {
 	@ManyToOne
 	User user;
 
-	@OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
+	@OneToMany(cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.EAGER)
 	List<Reply> replies = new ArrayList<>();
 
 	public Thread(Long id, String title, Board board, User user) {

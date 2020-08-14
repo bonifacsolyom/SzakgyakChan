@@ -64,7 +64,11 @@ public class Reply {
 		return --votes;
 	}
 
-	Optional<String> getImage() {
+	public Optional<String> getImage() {
 		return Optional.ofNullable(image);
+	}
+
+	public boolean hasImage() {
+		return image != null;
 	}
 }
