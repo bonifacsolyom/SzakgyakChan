@@ -78,13 +78,29 @@
 
 	.reply-div {
 		border: #880000 2px;
+		padding: 0;
 	}
 
 	.reply-div__header {
 		background-color: #728a9d;
 	}
 
-	.reply-div {
-		background-color: #FED7B0;
+	.reply-div__content {
+		//background-color: #fed7b0;
+		background-color: #ff8200;
 	}
+
+	//god forgive me for I have sinned
+	.v-slot-card-header {
+		@extend .card-header;
+		border: dashed 10px red;
+	}
+
+	//this is still the same sin btw pls don't punish me twice
+	.v-slot-card-body {
+		@extend .card-body;
+		border: dashed 1px red;
+	}
+
+	//MIÉRT LÉTEZIK A VAADIN REEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEE
 }

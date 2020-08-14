@@ -1,4 +1,4 @@
-package org.github.bobobot.ui.views;
+package org.github.bobobot.ui.views.layouts;
 
 import com.vaadin.navigator.View;
 import com.vaadin.server.ThemeResource;
@@ -8,9 +8,7 @@ import org.github.bobobot.entities.Reply;
 
 import java.time.format.DateTimeFormatter;
 
-@SpringView(name = ReplyLayout.name)
 public class ReplyLayout extends VerticalLayout implements View {
-	public static final String name = "replyLayout";
 
 	Reply reply;
 
@@ -30,6 +28,7 @@ public class ReplyLayout extends VerticalLayout implements View {
 
 		// @formatter:off
 
+		//Don't even try to comprehend any of this
 
 		//The header
 		HorizontalLayout headerLayout = new HorizontalLayout();
@@ -39,10 +38,9 @@ public class ReplyLayout extends VerticalLayout implements View {
 			//TODO: icon instead of text
 			Button deleteButton = new Button("delete");
 		headerLayout.addComponents(usernameLabel, dateLabel, deleteButton);
-		headerLayout.addStyleName("reply-div__header card-header");
+		headerLayout.addStyleName("reply-div__header card-header col-12");
 
 		//The content of the reply
-		//Don't even try to comprehend this
 		HorizontalLayout contentLayout = new HorizontalLayout();
 			VerticalLayout voteLayout = new VerticalLayout();
 				Button upvoteButton = new Button();
@@ -58,9 +56,9 @@ public class ReplyLayout extends VerticalLayout implements View {
 			Label replyContentLabel = new Label(reply.getContent());
 		contentLayout.addComponent(replyContentLabel);
 		addComponents(headerLayout, contentLayout);
-		contentLayout.addStyleName("reply-div__content card-body");
+		contentLayout.addStyleName("reply-div__content card-body col-12");
 
-		addStyleName("card");
+		addStyleName("card col-6");
 
 		// @formatter:on
 	}

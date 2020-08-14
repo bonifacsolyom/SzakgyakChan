@@ -4,19 +4,16 @@ package org.github.bobobot.ui.views;
 import com.vaadin.navigator.View;
 import com.vaadin.spring.annotation.SpringComponent;
 import com.vaadin.spring.annotation.SpringView;
-import com.vaadin.ui.HorizontalLayout;
-import com.vaadin.ui.Label;
 import com.vaadin.ui.VerticalLayout;
 import lombok.extern.slf4j.Slf4j;
 import org.github.bobobot.entities.Board;
 import org.github.bobobot.entities.Reply;
 import org.github.bobobot.entities.Thread;
 import org.github.bobobot.services.IBoardService;
+import org.github.bobobot.ui.views.layouts.ReplyLayout;
 import org.springframework.beans.factory.annotation.Autowired;
 
-import javax.annotation.PostConstruct;
-
-import static com.vaadin.navigator.ViewChangeListener.*;
+import static com.vaadin.navigator.ViewChangeListener.ViewChangeEvent;
 
 @SpringView(name = BoardView.name)
 @SpringComponent
@@ -46,11 +43,13 @@ public class BoardView extends VerticalLayout implements View {
 		log.info("Entered board view");
 		setViewBoard(event);
 
+		//TODO: posztolás
+
 		addStyleName("row");
 
 		VerticalLayout threadLayout = new VerticalLayout();
 
-		for (Thread thread : board.getThreads()){
+		for (Thread thread : board.getThreads()) {
 			//TODO: the thread's name
 			for (Reply reply : thread.getReplies()) {
 
