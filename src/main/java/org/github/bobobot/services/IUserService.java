@@ -46,7 +46,7 @@ public interface IUserService {
 		return register(new User(isAdmin, name, email, password));
 	}
 
-	Optional<User> login(String name, String password);
+	Optional<User> login(String email, String password);
 
 	/**
 	 * Updates a user.

@@ -76,9 +76,16 @@
 		cursor: pointer;
 	}
 
-	.reply-div {
+	.thread-div {
 		border: #880000 2px;
 		padding: 0;
+		background-color: #ff901e;
+	}
+
+	.reply-div {
+		border: #880000 2px;
+		padding: 2px;
+		background-color: #ff8200;
 	}
 
 	.reply-div__header {
@@ -87,7 +94,6 @@
 
 	.reply-div__content {
 		//background-color: #fed7b0;
-		background-color: #ff8200;
 	}
 
 	//god forgive me for I have sinned
@@ -100,6 +106,10 @@
 	.v-slot-card-body {
 		@extend .card-body;
 		border: dashed 1px red;
+	}
+
+	.logo {
+		cursor: pointer;
 	}
 
 	//MIÉRT LÉTEZIK A VAADIN REEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEE

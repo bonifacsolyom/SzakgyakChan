@@ -4,6 +4,7 @@ import org.github.bobobot.entities.Board;
 import org.github.bobobot.repositories.IBoardRepository;
 import org.github.bobobot.services.IBoardService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Optional;

@@ -1,5 +1,6 @@
 package org.github.bobobot.seed;
 
+import lombok.extern.slf4j.Slf4j;
 import org.github.bobobot.entities.Thread;
 import org.github.bobobot.entities.*;
 import org.github.bobobot.services.*;
@@ -17,6 +18,7 @@ import java.util.List;
 @Component
 @ComponentScan("org.github.bobobot")
 @Transactional
+@Slf4j
 public class DBSeeder implements ApplicationRunner {
 
 	@Autowired
@@ -41,6 +43,7 @@ public class DBSeeder implements ApplicationRunner {
 	public void run(ApplicationArguments args) throws Exception {
 		MetaInfo seeded = metaService.getOrDefault("seeded", false);
 		if (seeded.getValueAsBoolean()) return;
+		log.info("Database seed not found. Seeding...");
 		seedUsers();
 		seedBoards();
 		seedThreads();

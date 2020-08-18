@@ -1,6 +1,7 @@
 package org.github.bobobot.services.impl;
 
 import org.apache.commons.validator.routines.EmailValidator;
+import org.github.bobobot.access.PermissionHandler;
 import org.github.bobobot.entities.CommentNotification;
 import org.github.bobobot.entities.Notification;
 import org.github.bobobot.entities.User;
@@ -41,9 +42,12 @@ public class UserService implements IUserService {
 	}
 
 	@Override
-	public Optional<User> login(String name, String password) {
-		User user = findByUsername(name);
-		if (passwordEncoder.matches(password, user.getPasswordHash())) return Optional.of(user);
+	public Optional<User> login(String email, String password) {
+		User user = findByEmail(email);
+		if (passwordEncoder.matches(password, user.getPasswordHash())) {
+			PermissionHandler.setCurrentUser(user);
+			return Optional.of(user);
+		}
 		return Optional.empty();
 	}
 
@@ -51,7 +55,6 @@ public class UserService implements IUserService {
 	public User update(User tempUser) {
 		getUserIfPresent(repository.findById(tempUser.getId())); //dobjunk errort ha nem létezik
 		validateEmail(tempUser.getEmail());
-		tempUser.setPasswordHash(passwordEncoder.encode(tempUser.getPasswordHash()));
 		return repository.save(tempUser);
 	}
 

@@ -1,5 +1,6 @@
 package org.github.bobobot.ui.views.layouts;
 
+import com.google.common.collect.Iterables;
 import com.vaadin.navigator.View;
 import com.vaadin.spring.annotation.SpringView;
 import com.vaadin.ui.Button;
@@ -10,6 +11,7 @@ import org.github.bobobot.entities.Thread;
 import org.github.bobobot.entities.Reply;
 
 import java.time.format.DateTimeFormatter;
+import java.util.stream.Collectors;
 
 public class ThreadLayout extends VerticalLayout implements View {
 
@@ -21,19 +23,22 @@ public class ThreadLayout extends VerticalLayout implements View {
 
 		//imagine using vaadin unironically
 
-		add
+		//since the thread is always started by the user who the first reply belongs to, we use that reply's data
+		//for the thread's header and content
+		//TODO: display thread name in header
+		ReplyHeaderLayout headerLayout = new ReplyHeaderLayout(getFirstReply());
+		ReplyContentLayout contentLayout = new ReplyContentLayout(getFirstReply());
+		addComponents(headerLayout, contentLayout);
 
-		//mivel a threadet mindig az indítja, aki az első reply-t küldte bele, így annak az adatait írjuk ki a headerbe
-		HorizontalLayout headerLayout = new HorizontalLayout();
-		Label usernameLabel = new Label(getFirstReply().getUser().getName());
-		Label dateLabel = new Label(getFirstReply().getDate().format(DateTimeFormatter.ofPattern("MM/dd/yy hh:mm:ss")));
-		//TODO: only delete if logged in or admin
-		//TODO: icon instead of text
-		Button deleteButton = new Button("delete");
-		headerLayout.addComponents(usernameLabel, dateLabel, deleteButton);
-		headerLayout.addStyleName("reply-div__header card-header col-12");
+		//we skip the first reply since that's the content of the thread itself
+		for (Reply reply : Iterables.skip(thread.getReplies(), 1)) {
 
-		addStyleName("card col-6");
+			ReplyLayout replyLayout = new ReplyLayout(reply);
+			replyLayout.addStyleName("reply-div");
+			addComponent(replyLayout);
+		}
+
+		addStyleName("thread-div card col-6");
 	}
 
 	private Reply getFirstReply() {

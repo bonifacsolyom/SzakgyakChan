@@ -98,11 +98,10 @@
             <version>19.3.0.0</version>
         </dependency>
 
-        <!-- https://mvnrepository.com/artifact/org.ilay/ilay -->
         <dependency>
-            <groupId>org.ilay</groupId>
-            <artifactId>ilay</artifactId>
-            <version>1.0.2</version>
+            <groupId>com.google.guava</groupId>
+            <artifactId>guava</artifactId>
+            <version>29.0-jre</version>
         </dependency>
     </dependencies>
 

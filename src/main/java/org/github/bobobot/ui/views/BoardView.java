@@ -11,7 +11,9 @@ import org.github.bobobot.entities.Reply;
 import org.github.bobobot.entities.Thread;
 import org.github.bobobot.services.IBoardService;
 import org.github.bobobot.ui.views.layouts.ReplyLayout;
+import org.github.bobobot.ui.views.layouts.ThreadLayout;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.transaction.annotation.Transactional;
 
 import static com.vaadin.navigator.ViewChangeListener.ViewChangeEvent;
 
@@ -21,6 +23,7 @@ import static com.vaadin.navigator.ViewChangeListener.ViewChangeEvent;
 public class BoardView extends VerticalLayout implements View {
 	public static final String name = "boardView";
 
+	//TODO: ezt nem így kéne
 	@Autowired
 	IBoardService boardService;
 
@@ -39,6 +42,7 @@ public class BoardView extends VerticalLayout implements View {
 	}
 
 	@Override
+	@Transactional
 	public void enter(ViewChangeEvent event) {
 		log.info("Entered board view");
 		setViewBoard(event);
@@ -47,16 +51,9 @@ public class BoardView extends VerticalLayout implements View {
 
 		addStyleName("row");
 
-		VerticalLayout threadLayout = new VerticalLayout();
-
 		for (Thread thread : board.getThreads()) {
-			//TODO: the thread's name
-			for (Reply reply : thread.getReplies()) {
-
-				ReplyLayout replyLayout = new ReplyLayout(reply);
-				replyLayout.addStyleName("reply-div");
-				addComponent(replyLayout);
-			}
+			ThreadLayout threadLayout = new ThreadLayout(thread);
+			addComponent(threadLayout);
 		}
 	}
 }
