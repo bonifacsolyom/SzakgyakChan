@@ -50,6 +50,7 @@ public class DBSeeder implements ApplicationRunner {
 		seedReplies();
 		seedNotifications();
 		metaService.update("seeded", true);
+		log.info("Seeding successfully finished.");
 	}
 
 	private void seedUsers() {

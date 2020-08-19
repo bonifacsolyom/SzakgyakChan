@@ -7,6 +7,7 @@ import org.github.bobobot.entities.VoteNotification.VoteType;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Set;
 
 public interface IReplyService {
 
@@ -22,13 +23,24 @@ public interface IReplyService {
 	 * Creates a reply.
 	 *
 	 * @param content The content of the reply.
-	 * @param votes   The summarized score of the reply.
+	 * @param thread  The thread the reply belongs to.
+	 * @param user    The user the reply belongs to.
+	 * @return The created reply.
+	 */
+	default Reply post(String content, Thread thread, User user) {
+		return post(new Reply(content, LocalDateTime.now(), thread, user, null));
+	}
+
+	/**
+	 * Creates a reply.
+	 *
+	 * @param content The content of the reply.
 	 * @param thread  The thread the reply belongs to.
 	 * @param user    The user the reply belongs to.
 	 * @return The created reply.
 	 */
 	default Reply post(String content, int votes, Thread thread, User user) {
-		return post(new Reply(content, LocalDateTime.now(), votes, thread, user, null));
+		return post(new Reply(content, LocalDateTime.now(), thread, user, null).setDebugVoteCount(votes));
 	}
 
 	/**
@@ -41,7 +53,7 @@ public interface IReplyService {
 	 * @return The created reply.
 	 */
 	default Reply post(String content, int votes, String image, Thread thread, User user) {
-		return post(new Reply(content, LocalDateTime.now(), votes, thread, user, image));
+		return post(new Reply(content, LocalDateTime.now(), thread, user, image));
 	}
 
 	/**
@@ -57,13 +69,12 @@ public interface IReplyService {
 	 *
 	 * @param id      The ID of the reply.
 	 * @param content The content of the reply.
-	 * @param votes   The summarized score of the reply.
 	 * @param thread  The thread the reply belongs to.
 	 * @param user    The user the reply belongs to.
 	 * @return The updated reply.
 	 */
-	default Reply update(Long id, String content, int votes, Thread thread, User user) {
-		return update(new Reply(id, content, LocalDateTime.now(), votes, thread, user, null));
+	default Reply update(Long id, String content, Set<Long> usersUpvoted, Set<Long> usersDownvoted, Thread thread, User user) {
+		return update(new Reply(id, content, LocalDateTime.now(), usersUpvoted, usersDownvoted, thread, user, null));
 	}
 
 	/**
@@ -71,13 +82,12 @@ public interface IReplyService {
 	 *
 	 * @param id      The ID of the reply.
 	 * @param content The content of the reply.
-	 * @param votes   The summarized score of the reply.
 	 * @param thread  The thread the reply belongs to.
 	 * @param user    The user the reply belongs to.
 	 * @return The updated reply.
 	 */
-	default Reply update(Long id, String content, int votes, String image, Thread thread, User user) {
-		return update(new Reply(id, content, LocalDateTime.now(), votes, thread, user, image));
+	default Reply update(Long id, String content, Set<Long> usersUpvoted, Set<Long> usersDownvoted, String image, Thread thread, User user) {
+		return update(new Reply(id, content, LocalDateTime.now(), usersUpvoted, usersDownvoted, thread, user, image));
 	}
 
 	/**
@@ -106,11 +116,13 @@ public interface IReplyService {
 	/**
 	 * Votes on a reply.
 	 *
+	 *
+	 * @param userId
 	 * @param id       The ID of the reply.
 	 * @param voteType The type of the vote
 	 * @return
 	 */
-	Reply vote(Long id, VoteType voteType);
+	Reply vote(Long userId, Long id, VoteType voteType);
 
 	/**
 	 * Deletes a reply.

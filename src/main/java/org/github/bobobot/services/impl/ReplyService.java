@@ -73,19 +73,19 @@ public class ReplyService implements IReplyService {
 	}
 
 	@Override
-	public Reply vote(Long id, VoteType voteType) {
+	public Reply vote(Long userId, Long id, VoteType voteType) {
 		Reply reply = findById(id);
-		reply = changeVote(reply, voteType);
+		reply = changeVote(userId, reply, voteType);
 		return update(reply);
 	}
 
-	private Reply changeVote(Reply reply, VoteType voteType) {
+	private Reply changeVote(Long userId, Reply reply, VoteType voteType) {
 		switch (voteType) {
 			case UPVOTE:
-				reply.upvote();
+				reply.upvote(userId);
 				break;
 			case DOWNVOTE:
-				reply.downvote();
+				reply.downvote(userId);
 				break;
 		}
 

@@ -4,13 +4,10 @@ import com.vaadin.navigator.View;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.Label;
-import com.vaadin.ui.VerticalLayout;
 import lombok.extern.slf4j.Slf4j;
 import org.github.bobobot.access.PermissionHandler;
-import org.github.bobobot.access.UserRole;
 import org.github.bobobot.entities.Reply;
 
-import javax.annotation.PostConstruct;
 import java.time.format.DateTimeFormatter;
 
 /**
@@ -30,7 +27,7 @@ public class ReplyHeaderLayout extends HorizontalLayout implements View {
 		//TODO: only delete if logged in or admin
 		//TODO: icon instead of text
 		Button deleteButton = new Button("delete");
-		PermissionHandler.restrictComponentToLoggedInUsers(deleteButton, reply.getUser().getId(), true);
+		PermissionHandler.restrictComponentToLoggedInUser(deleteButton, reply.getUser().getId(), true);
 		addComponents(usernameLabel, dateLabel, deleteButton);
 		addStyleName("reply-div__header card-header col-12");
 	}
