@@ -11,6 +11,8 @@ import lombok.extern.slf4j.Slf4j;
 import org.github.bobobot.entities.Board;
 import org.github.bobobot.services.IBoardService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.config.ConfigurableBeanFactory;
+import org.springframework.context.annotation.Scope;
 
 import javax.annotation.PostConstruct;
 import java.util.ArrayList;
@@ -20,11 +22,11 @@ import static com.vaadin.navigator.ViewChangeListener.ViewChangeEvent;
 
 @SpringView(name = MainView.name)
 @SpringComponent
+@Scope(value = ConfigurableBeanFactory.SCOPE_PROTOTYPE)
 @Slf4j
 public class MainView extends HorizontalLayout implements View {
 	public static final String name = "";
 
-	//TODO: probs not the way to do it
 	@Autowired
 	IBoardService boardService;
 

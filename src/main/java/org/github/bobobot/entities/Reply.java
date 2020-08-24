@@ -64,14 +64,24 @@ public class Reply {
 	}
 
 	public int upvote(Long userId) {
-		if (usersUpvoted.contains(userId)) log.warn("User already voted!");
-		usersUpvoted.add(userId);
+		usersDownvoted.remove(userId);
+		if (usersUpvoted.contains(userId)) {
+			log.warn("User already voted! Removing upvote...");
+			usersUpvoted.remove(userId);
+		} else {
+			usersUpvoted.add(userId);
+		}
 		return getVoteCount();
 	}
 
 	public int downvote(Long userId) {
-		if (usersDownvoted.contains(userId)) log.warn("User already voted!");
-		usersDownvoted.add(userId);
+		usersUpvoted.remove(userId);
+		if (usersDownvoted.contains(userId)) {
+			log.warn("User already voted! Removing Downvote...");
+			usersDownvoted.remove(userId);
+		} else {
+			usersDownvoted.add(userId);
+		}
 		return getVoteCount();
 	}
 

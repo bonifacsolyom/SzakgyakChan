@@ -7,6 +7,7 @@ import org.github.bobobot.entities.VoteNotification.VoteType;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Optional;
 import java.util.Set;
 
 public interface IReplyService {
@@ -123,6 +124,8 @@ public interface IReplyService {
 	 * @return
 	 */
 	Reply vote(Long userId, Long id, VoteType voteType);
+
+	public Optional<VoteType> getUserVote(Long userId, Long replyId);
 
 	/**
 	 * Deletes a reply.

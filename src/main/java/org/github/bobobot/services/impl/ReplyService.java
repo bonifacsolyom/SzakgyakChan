@@ -92,6 +92,13 @@ public class ReplyService implements IReplyService {
 		return reply;
 	}
 
+	public Optional<VoteType> getUserVote(Long userId, Long replyId) {
+		Reply reply = findById(replyId);
+		if (reply.checkIfUserDownvoted(userId)) return Optional.of(VoteType.DOWNVOTE);
+		if (reply.checkIfUserUpvoted(userId)) return Optional.of(VoteType.UPVOTE);
+		return Optional.empty();
+	}
+
 	@Override
 	public void delete(Long id) {
 		getReplyIfPresent(replyRepository.findById(id)); //dobjunk errort ha nem létezik

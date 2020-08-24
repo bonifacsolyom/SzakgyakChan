@@ -1,10 +1,19 @@
 package org.github.bobobot.config;
 
 import org.apache.commons.validator.routines.EmailValidator;
+import org.github.bobobot.entities.Reply;
+import org.github.bobobot.entities.Thread;
 import org.github.bobobot.services.*;
 import org.github.bobobot.services.impl.*;
+import org.github.bobobot.ui.views.BoardView;
+import org.github.bobobot.ui.views.layouts.ReplyContentLayout;
+import org.github.bobobot.ui.views.layouts.ReplyHeaderLayout;
+import org.github.bobobot.ui.views.layouts.ReplyLayout;
+import org.github.bobobot.ui.views.layouts.ThreadLayout;
+import org.springframework.beans.factory.config.ConfigurableBeanFactory;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Scope;
 import org.springframework.security.crypto.factory.PasswordEncoderFactories;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
@@ -52,4 +61,35 @@ public class ApplicationConfig {
 	public EmailValidator emailValidator() {
 		return EmailValidator.getInstance();
 	}
+
+	//Views
+//	@Bean
+//	@Scope(value = ConfigurableBeanFactory.SCOPE_PROTOTYPE)
+//	public BoardView boardView() {
+//		return new BoardView();
+//	}
+
+//	@Bean
+//	@Scope(value = ConfigurableBeanFactory.SCOPE_PROTOTYPE)
+//	public ThreadLayout threadLayout() {
+//		return new ThreadLayout();
+//	}
+
+//	@Bean
+//	@Scope(value = ConfigurableBeanFactory.SCOPE_PROTOTYPE)
+//	ReplyLayout replyLayout() {
+//		return new ReplyLayout();
+//	}
+
+//	@Bean
+//	@Scope(value = ConfigurableBeanFactory.SCOPE_PROTOTYPE)
+//	ReplyContentLayout replyContentLayout() {
+//		return new ReplyContentLayout();
+//	}
+
+//	@Bean
+//	@Scope(value = ConfigurableBeanFactory.SCOPE_PROTOTYPE)
+//	ReplyHeaderLayout replyHeaderLayout() {
+//		return new ReplyHeaderLayout();
+//	}
 }

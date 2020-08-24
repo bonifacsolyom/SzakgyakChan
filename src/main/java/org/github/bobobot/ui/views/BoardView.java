@@ -10,20 +10,27 @@ import org.github.bobobot.entities.Board;
 import org.github.bobobot.entities.Reply;
 import org.github.bobobot.entities.Thread;
 import org.github.bobobot.services.IBoardService;
+import org.github.bobobot.services.IReplyService;
 import org.github.bobobot.ui.views.layouts.ReplyLayout;
 import org.github.bobobot.ui.views.layouts.ThreadLayout;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.config.ConfigurableBeanFactory;
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.annotation.Scope;
 import org.springframework.transaction.annotation.Transactional;
 
 import static com.vaadin.navigator.ViewChangeListener.ViewChangeEvent;
 
 @SpringView(name = BoardView.name)
 @SpringComponent
+@Scope(value = ConfigurableBeanFactory.SCOPE_PROTOTYPE)
 @Slf4j
 public class BoardView extends VerticalLayout implements View {
 	public static final String name = "boardView";
 
-	//TODO: ezt nem így kéne
+	@Autowired
+	private ApplicationContext appContext;
+
 	@Autowired
 	IBoardService boardService;
 
@@ -52,8 +59,12 @@ public class BoardView extends VerticalLayout implements View {
 		addStyleName("row");
 
 		for (Thread thread : board.getThreads()) {
-			ThreadLayout threadLayout = new ThreadLayout(thread);
+			ThreadLayout threadLayout = appContext.getBean(ThreadLayout.class, this).init(thread);
 			addComponent(threadLayout);
 		}
+	}
+
+	public void reRenderThreadLayout(ThreadLayout threadLayout) {
+
 	}
 }

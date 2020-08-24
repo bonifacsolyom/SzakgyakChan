@@ -91,4 +91,8 @@ public class PermissionHandler {
 	public static Component restrictComponentToAdmins(Component component, Consumer<Boolean> func) {
 		return restrictComponentToRoles(component, func, UserRole.ADMIN);
 	}
+
+	public static Component restrictComponentToLoggedOutUsers(Component component, Consumer<Boolean> func) {
+		return  restrictComponentToRoles(component, func, UserRole.NOT_LOGGED_IN);
+	}
 }

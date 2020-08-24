@@ -79,13 +79,13 @@
 	.thread-div {
 		border: #880000 2px;
 		padding: 0;
-		background-color: #ff901e;
+		background-color: #eeb672;
 	}
 
 	.reply-div {
 		border: #880000 2px;
 		padding: 2px;
-		background-color: #ff8200;
+		background-color: #f1bd81;
 	}
 
 	.reply-div__header {
@@ -110,6 +110,21 @@
 
 	.logo {
 		cursor: pointer;
+	}
+
+	.upvoted {
+		color: #FF8b60;
+		font-weight: bold;
+	}
+
+	.downvoted {
+		color: #9494FF;
+		font-weight: bold;
+	}
+
+	.incorrect-input {
+		border: #880000 solid medium;
+		background-color: #885050;
 	}
 
 	//MIÉRT LÉTEZIK A VAADIN REEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEE

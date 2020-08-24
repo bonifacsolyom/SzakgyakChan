@@ -9,6 +9,7 @@ import com.vaadin.ui.LoginForm;
 import lombok.extern.slf4j.Slf4j;
 import org.github.bobobot.entities.User;
 import org.github.bobobot.services.IUserService;
+import org.github.bobobot.ui.MainUI;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import javax.annotation.PostConstruct;
@@ -37,6 +38,7 @@ public class LoginView extends HorizontalLayout implements View {
 			Optional<User> loggedInUser = userService.login(email, password);
 			if (loggedInUser.isPresent()) {
 				log.info("Successful login!");
+				((MainUI)getUI()).initNavbar();
 				getUI().getNavigator().navigateTo(MainView.name);
 			} else {
 				log.info("Login failed.");
@@ -44,6 +46,5 @@ public class LoginView extends HorizontalLayout implements View {
 		});
 
 		addComponent(loginForm);
-		addComponent(new Label("Test label"));
 	}
 }

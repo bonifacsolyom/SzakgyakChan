@@ -6,6 +6,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
+import org.springframework.core.annotation.Order;
 
 import javax.persistence.*;
 import java.util.ArrayList;
@@ -34,6 +35,7 @@ public class Thread {
 	User user;
 
 	@OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
+	@OrderBy("id")
 	List<Reply> replies = new ArrayList<>();
 
 	public Thread(Long id, String title, Board board, User user) {
