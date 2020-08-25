@@ -38,6 +38,19 @@ public interface IReplyService {
 	 * @param content The content of the reply.
 	 * @param thread  The thread the reply belongs to.
 	 * @param user    The user the reply belongs to.
+	 * @param imagePath The image path of the post
+	 * @return The created reply.
+	 */
+	default Reply post(String content, Thread thread, User user, String imagePath) {
+		return post(new Reply(content, LocalDateTime.now(), thread, user, imagePath));
+	}
+
+	/**
+	 * Creates a reply.
+	 *
+	 * @param content The content of the reply.
+	 * @param thread  The thread the reply belongs to.
+	 * @param user    The user the reply belongs to.
 	 * @return The created reply.
 	 */
 	default Reply post(String content, int votes, Thread thread, User user) {

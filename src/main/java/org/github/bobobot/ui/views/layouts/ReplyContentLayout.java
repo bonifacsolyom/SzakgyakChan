@@ -1,6 +1,7 @@
 package org.github.bobobot.ui.views.layouts;
 
 import com.vaadin.navigator.View;
+import com.vaadin.server.FileResource;
 import com.vaadin.server.ThemeResource;
 import com.vaadin.spring.annotation.SpringComponent;
 import com.vaadin.ui.*;
@@ -16,6 +17,7 @@ import org.springframework.transaction.TransactionStatus;
 import org.springframework.transaction.support.TransactionCallbackWithoutResult;
 import org.springframework.transaction.support.TransactionTemplate;
 
+import java.io.File;
 import java.util.Optional;
 
 import static org.github.bobobot.entities.VoteNotification.VoteType;
@@ -83,7 +85,7 @@ public class ReplyContentLayout extends HorizontalLayout implements View {
 		addComponent(voteLayout);
 		if (reply.hasImage()) {
 			//TODO: maybe not ThemeResource?
-			Image replyImage = new Image("", new ThemeResource(reply.getImage().get()));
+			Image replyImage = new Image("", new FileResource(new File(reply.getImage().get())));
 			addComponent(replyImage);
 		}
 		Label replyContentLabel = new Label(reply.getContent());

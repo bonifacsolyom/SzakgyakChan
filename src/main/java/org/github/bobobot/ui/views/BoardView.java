@@ -5,13 +5,13 @@ import com.vaadin.navigator.View;
 import com.vaadin.spring.annotation.SpringComponent;
 import com.vaadin.spring.annotation.SpringView;
 import com.vaadin.ui.VerticalLayout;
+import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
+import org.github.bobobot.access.PermissionHandler;
 import org.github.bobobot.entities.Board;
-import org.github.bobobot.entities.Reply;
 import org.github.bobobot.entities.Thread;
 import org.github.bobobot.services.IBoardService;
-import org.github.bobobot.services.IReplyService;
-import org.github.bobobot.ui.views.layouts.ReplyLayout;
+import org.github.bobobot.ui.views.layouts.NewThreadFormLayout;
 import org.github.bobobot.ui.views.layouts.ThreadLayout;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.config.ConfigurableBeanFactory;
@@ -34,6 +34,7 @@ public class BoardView extends VerticalLayout implements View {
 	@Autowired
 	IBoardService boardService;
 
+	@Getter
 	Board board;
 
 	private void setViewBoard(ViewChangeEvent event) {
@@ -55,6 +56,9 @@ public class BoardView extends VerticalLayout implements View {
 		setViewBoard(event);
 
 		//TODO: posztolás
+		NewThreadFormLayout newThreadFormLayout = appContext.getBean(NewThreadFormLayout.class);
+		addComponent(newThreadFormLayout);
+		PermissionHandler.restrictComponentToLoggedInUsers(newThreadFormLayout, newThreadFormLayout::setVisible);
 
 		addStyleName("row");
 

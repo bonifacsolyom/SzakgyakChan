@@ -9,6 +9,9 @@ import lombok.extern.slf4j.Slf4j;
 import org.github.bobobot.access.PermissionHandler;
 import org.github.bobobot.entities.Reply;
 import org.github.bobobot.entities.Thread;
+import org.github.bobobot.services.IReplyService;
+import org.github.bobobot.services.IThreadService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.config.ConfigurableBeanFactory;
 import org.springframework.context.annotation.Scope;
 
@@ -26,6 +29,9 @@ public class ReplyHeaderLayout extends HorizontalLayout implements View {
 
 	Optional<Thread> thread;
 	Reply reply;
+
+	@Autowired
+	private IReplyService replyService;
 
 	public ReplyHeaderLayout init(Reply reply) {
 		return init(Optional.empty(), reply);
@@ -46,6 +52,11 @@ public class ReplyHeaderLayout extends HorizontalLayout implements View {
 		//TODO: icon instead of text
 		Button deleteButton = new Button("delete");
 		PermissionHandler.restrictComponentToLoggedInUser(deleteButton, reply.getUser().getId(), true);
+
+//		deleteButton.addClickListener(event -> {
+//			replyService.delete(reply.getId());
+//		});
+
 		addComponents(usernameLabel, dateLabel, deleteButton);
 		addStyleName("reply-div__header card-header col-12");
 

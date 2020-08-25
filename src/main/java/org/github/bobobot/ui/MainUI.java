@@ -1,6 +1,7 @@
 package org.github.bobobot.ui;
 
 import com.vaadin.annotations.JavaScript;
+import com.vaadin.annotations.PreserveOnRefresh;
 import com.vaadin.annotations.StyleSheet;
 import com.vaadin.annotations.Theme;
 import com.vaadin.navigator.View;
@@ -34,6 +35,10 @@ public class MainUI extends UI implements ViewDisplay {
 
 	@Autowired
 	private SpringNavigator navigator;
+
+	//TODO: debug shit, töröld
+	@Autowired
+	private IUserService userService;
 
 	Panel springViewDisplay; //Ebben jelenítjük meg a view-ot
 
@@ -87,6 +92,15 @@ public class MainUI extends UI implements ViewDisplay {
 		navigationBar.addComponent(loginButton);
 		navigationBar.addComponent(registerButton);
 		navigationBar.addComponent(logoutButton);
+
+		//TODO: debug shit, töröld
+		Button adminLogin = new Button("Login as admin", event -> {
+			userService.login("admin@chan.com", "admin");
+			initNavbar();
+		});
+		navigationBar.addComponent(adminLogin);
+		PermissionHandler.restrictComponentToLoggedOutUsers(adminLogin, adminLogin::setVisible);
+		//TODO: end of TODO
 
 		PermissionHandler.restrictComponentToLoggedOutUsers(loginButton, loginButton::setVisible);
 		PermissionHandler.restrictComponentToLoggedOutUsers(registerButton, registerButton::setVisible);

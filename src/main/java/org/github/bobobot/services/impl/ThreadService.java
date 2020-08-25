@@ -5,6 +5,7 @@ import org.github.bobobot.entities.Reply;
 import org.github.bobobot.entities.Thread;
 import org.github.bobobot.entities.User;
 import org.github.bobobot.repositories.IThreadRepository;
+import org.github.bobobot.services.IBoardService;
 import org.github.bobobot.services.IThreadService;
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -18,6 +19,9 @@ public class ThreadService implements IThreadService {
 	@Autowired
 	private IThreadRepository repository;
 
+	@Autowired
+	private IBoardService boardService;
+
 	private Thread getThreadIfPresent(Optional<Thread> thread) {
 		if (!thread.isPresent()) {
 			throw new IllegalArgumentException("Thread was not found!");
@@ -28,7 +32,7 @@ public class ThreadService implements IThreadService {
 	@Override
 	public Thread create(Thread tempThread) {
 		tempThread.getUser().addThread(tempThread);
-		tempThread.getBoard().addThread(tempThread);
+		boardService.findById(tempThread.getBoard().getId()).addThread(tempThread);
 		return repository.save(tempThread);
 	}
 
