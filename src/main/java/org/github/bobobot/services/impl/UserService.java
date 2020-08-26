@@ -8,8 +8,10 @@ import org.github.bobobot.entities.User;
 import org.github.bobobot.entities.VoteNotification;
 import org.github.bobobot.repositories.IUserRepository;
 import org.github.bobobot.services.IUserService;
+import org.hibernate.Hibernate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Optional;
@@ -59,10 +61,13 @@ public class UserService implements IUserService {
 	}
 
 	@Override
-	public User addCommentNotification(User user, CommentNotification notification) {
+	@Transactional
+	public User addCommentNotification(User tempUser, CommentNotification notification) {
+		User user = findById(tempUser.getId());
 		user.addCommentNotification(notification);
 		//TODO: ez lehet hogy így rossz hajjaj remélem hogy nem
-		//return update(user);
+		//TODO: igen, régi todo, ez valóban rossz, most fixelhetem hogy rohadnál meg
+//		return update(user);
 		return user;
 	}
 

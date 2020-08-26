@@ -27,6 +27,7 @@ public class ImageReceiver implements Upload.Receiver {
 	}
 
 	public String getLastFileName() {
+		if (fileName == null) return null;
 		return folderPath + File.separator + fileName;
 	}
 

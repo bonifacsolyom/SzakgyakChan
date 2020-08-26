@@ -6,10 +6,7 @@ import org.github.bobobot.entities.Thread;
 import org.github.bobobot.services.*;
 import org.github.bobobot.services.impl.*;
 import org.github.bobobot.ui.views.BoardView;
-import org.github.bobobot.ui.views.layouts.ReplyContentLayout;
-import org.github.bobobot.ui.views.layouts.ReplyHeaderLayout;
-import org.github.bobobot.ui.views.layouts.ReplyLayout;
-import org.github.bobobot.ui.views.layouts.ThreadLayout;
+import org.github.bobobot.ui.views.layouts.*;
 import org.springframework.beans.factory.config.ConfigurableBeanFactory;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -92,4 +89,11 @@ public class ApplicationConfig {
 //	ReplyHeaderLayout replyHeaderLayout() {
 //		return new ReplyHeaderLayout();
 //	}
+
+	@Bean(name = "NewCommentFormLayout")
+	@Scope(value = ConfigurableBeanFactory.SCOPE_PROTOTYPE)
+	NewCommentFormLayout newCommentFormLayout() {
+		return new NewCommentFormLayout();
+	}
+
 }

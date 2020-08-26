@@ -27,7 +27,7 @@ public class Thread {
 	String title;
 
 	@ToString.Exclude
-	@ManyToOne(cascade = CascadeType.MERGE)
+	@ManyToOne
 	Board board;
 
 	@ToString.Exclude

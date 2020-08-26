@@ -7,6 +7,8 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
 import lombok.extern.slf4j.Slf4j;
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
@@ -33,9 +35,13 @@ public class Reply {
 	LocalDateTime date;
 
 	@ElementCollection
+	@OnDelete(action= OnDeleteAction.CASCADE)
+	@JoinColumn(name = "reply_id")
 	private Set<Long> usersUpvoted = new HashSet<>();
 
 	@ElementCollection
+	@OnDelete(action= OnDeleteAction.CASCADE)
+	@JoinColumn(name = "reply_id")
 	private Set<Long> usersDownvoted = new HashSet<>();
 
 	@ToString.Exclude

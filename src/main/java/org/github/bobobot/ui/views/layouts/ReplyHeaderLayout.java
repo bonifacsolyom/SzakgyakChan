@@ -14,6 +14,10 @@ import org.github.bobobot.services.IThreadService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.config.ConfigurableBeanFactory;
 import org.springframework.context.annotation.Scope;
+import org.springframework.lang.NonNull;
+import org.springframework.transaction.TransactionStatus;
+import org.springframework.transaction.support.TransactionCallbackWithoutResult;
+import org.springframework.transaction.support.TransactionTemplate;
 
 import java.time.format.DateTimeFormatter;
 import java.util.Optional;
@@ -32,6 +36,9 @@ public class ReplyHeaderLayout extends HorizontalLayout implements View {
 
 	@Autowired
 	private IReplyService replyService;
+
+	@Autowired
+	private TransactionTemplate transactionTemplate;
 
 	public ReplyHeaderLayout init(Reply reply) {
 		return init(Optional.empty(), reply);
@@ -53,9 +60,15 @@ public class ReplyHeaderLayout extends HorizontalLayout implements View {
 		Button deleteButton = new Button("delete");
 		PermissionHandler.restrictComponentToLoggedInUser(deleteButton, reply.getUser().getId(), true);
 
-//		deleteButton.addClickListener(event -> {
-//			replyService.delete(reply.getId());
-//		});
+		deleteButton.addClickListener(event -> {
+//			transactionTemplate.execute(new TransactionCallbackWithoutResult() {
+//				@Override
+//				protected void doInTransactionWithoutResult(@NonNull TransactionStatus transactionStatus) {
+					replyService.delete(reply.getId());
+					//TODO: dynamic delete
+//				}
+//			});
+		});
 
 		addComponents(usernameLabel, dateLabel, deleteButton);
 		addStyleName("reply-div__header card-header col-12");

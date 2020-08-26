@@ -7,9 +7,12 @@ import org.github.bobobot.entities.VoteNotification.VoteType;
 import org.github.bobobot.repositories.IReplyRepository;
 import org.github.bobobot.services.INotificationService;
 import org.github.bobobot.services.IReplyService;
+import org.github.bobobot.services.IThreadService;
 import org.github.bobobot.services.IUserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.transaction.annotation.Transactional;
 
+import javax.persistence.EntityManager;
 import java.util.List;
 import java.util.Optional;
 
@@ -22,7 +25,13 @@ public class ReplyService implements IReplyService {
 	private INotificationService notificationService;
 
 	@Autowired
+	private IThreadService threadService;
+
+	@Autowired
 	private IUserService userService;
+
+	@Autowired
+	private EntityManager entityManager;
 
 
 	private Reply getReplyIfPresent(Optional<Reply> reply) {
@@ -32,21 +41,20 @@ public class ReplyService implements IReplyService {
 		return reply.get();
 	}
 
-	private void notifyUsersAboutReplies(Reply newReply) {
+	@Transactional
+	void notifyUsersAboutReplies(Reply newReply) {
 		for (Reply threadReply : newReply.getThread().getReplies()) {
-			//A NotificationService#create hasonló dolgot csinál, csak előtte van valamiyen validáció, itt ez nincs meg, nem tudom lehet-e ez probléma. Ezért
-			// célszerű, hogy a service-ek egymást hivogassák ne közvetlenül a db réteget, mert üzleti logika kimaradhat.
-
 			CommentNotification notification = notificationService.create(false, threadReply, newReply);
 		}
 	}
 
 	@Override
+	@Transactional
 	public Reply post(Reply tempReply) {
 		//Értesítjük minden reply userét, hogy egy új reply érkezett a threadbe
 		Reply reply = replyRepository.save(tempReply);
 		notifyUsersAboutReplies(reply);
-		reply.getThread().addReply(reply);
+		threadService.findById(reply.getThread().getId()).addReply(reply);
 		return reply;
 	}
 
@@ -100,8 +108,13 @@ public class ReplyService implements IReplyService {
 	}
 
 	@Override
+	@Transactional
 	public void delete(Long id) {
-		getReplyIfPresent(replyRepository.findById(id)); //dobjunk errort ha nem létezik
-		replyRepository.deleteById(id);
+		Reply reply = getReplyIfPresent(replyRepository.findById(id)); //dobjunk errort ha nem létezik
+		Thread replyThread = threadService.findById(reply.getThread().getId()); //fúj bazdmeg
+//		If the reply we're deleting happens to be the first reply of a thread, delete the entire thread
+		if (replyThread.getReplies().get(0).getId().equals(reply.getId())) threadService.delete(replyThread.getId());
+		else replyRepository.deleteById(id);
+//		entityManager.remove(reply);
 	}
 }

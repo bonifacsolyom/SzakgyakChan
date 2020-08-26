@@ -56,6 +56,10 @@ public class ThreadLayout extends VerticalLayout implements View {
 			addComponent(replyLayout);
 		}
 
+		NewCommentFormLayout newCommentFormLayout = appContext.getBean("NewCommentFormLayout", NewCommentFormLayout.class);
+		newCommentFormLayout.setCurrentThread(thread);
+		addComponent(newCommentFormLayout);
+
 		addStyleName("thread-div card col-6");
 
 		return this;

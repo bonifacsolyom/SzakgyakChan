@@ -7,6 +7,7 @@ import org.github.bobobot.repositories.IVoteNotificationRepository;
 import org.github.bobobot.services.INotificationService;
 import org.github.bobobot.services.IUserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Optional;
@@ -39,6 +40,7 @@ public class NotificationService implements INotificationService {
 	}
 
 	@Override
+	@Transactional
 	public CommentNotification create(CommentNotification notification) {
 		checkIfRepliesInTheSameThread(notification.getOriginalReply(), notification.getOtherUsersReply());
 		notification = commentRepository.save(notification);
