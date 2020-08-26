@@ -114,7 +114,9 @@ public class ReplyService implements IReplyService {
 		Thread replyThread = threadService.findById(reply.getThread().getId()); //fúj bazdmeg
 //		If the reply we're deleting happens to be the first reply of a thread, delete the entire thread
 		if (replyThread.getReplies().get(0).getId().equals(reply.getId())) threadService.delete(replyThread.getId());
-		else replyRepository.deleteById(id);
+		else {
+			replyRepository.deleteById(id);
+		}
 //		entityManager.remove(reply);
 	}
 }

@@ -3,6 +3,7 @@ package org.github.bobobot.repositories;
 import org.github.bobobot.entities.Reply;
 import org.github.bobobot.entities.Thread;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -17,5 +18,8 @@ public interface IReplyRepository extends JpaRepository<Reply, Long> {
 	 * @return A list of all replies that belong to a specific thread.
 	 */
 	List<Reply> findAllByThread(Thread thread);
+
+//	@Query(value = "DELETE FROM Reply r WHERE r.id=:id")
+//	void deleteById(Long id);
 
 }

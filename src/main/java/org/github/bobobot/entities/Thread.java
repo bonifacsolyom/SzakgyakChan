@@ -6,6 +6,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.core.annotation.Order;
 
 import javax.persistence.*;
@@ -17,6 +18,7 @@ import java.util.List;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
+@Slf4j
 public class Thread {
 
 	@Id
@@ -60,5 +62,16 @@ public class Thread {
 
 	public void addReply(Reply reply) {
 		this.replies.add(reply);
+	}
+
+	@PreRemove
+	private void removeThreadFromBoard() {
+		log.info("trying to remove thread from board");
+		getBoard().getThreads().remove(this);
+		log.info("successfully removed thread from board");
+
+		log.info("trying to remove thread from user");
+		user.getThreads().remove(this);
+		log.info("successfully removed thread from user");
 	}
 }

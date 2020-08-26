@@ -34,12 +34,12 @@ public class Reply {
 	@Column(name = "postDate")
 	LocalDateTime date;
 
-	@ElementCollection
+	@ElementCollection(fetch = FetchType.EAGER)
 	@OnDelete(action= OnDeleteAction.CASCADE)
 	@JoinColumn(name = "reply_id")
 	private Set<Long> usersUpvoted = new HashSet<>();
 
-	@ElementCollection
+	@ElementCollection(fetch = FetchType.EAGER)
 	@OnDelete(action= OnDeleteAction.CASCADE)
 	@JoinColumn(name = "reply_id")
 	private Set<Long> usersDownvoted = new HashSet<>();
@@ -121,5 +121,15 @@ public class Reply {
 			Stream.iterate(0, i -> i + 1).limit(Math.abs(voteDiff)).forEach(number -> usersDownvoted.add(Long.valueOf(number)));
 		}
 		return this;
+	}
+
+	@PreRemove
+	private void removeReplyFromThread() {
+		log.info("trying to remove reply from thread");
+		getThread().getReplies().remove(this);
+		log.info("successfully removed reply from thread");
+		log.info("trying to remove reply from user");
+		user.getReplies().remove(this);
+		log.info("successfully removed reply from user");
 	}
 }

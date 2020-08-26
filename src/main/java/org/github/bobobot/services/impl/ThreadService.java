@@ -74,8 +74,7 @@ public class ThreadService implements IThreadService {
 	@Override
 	public void delete(Long id) {
 		Thread thread = getThreadIfPresent(repository.findById(id)); //dobjunk errort ha nem létezik
-		List<Reply> replies = replyService.listByThread(thread);
-		for (Reply reply : replies) replyRepository.deleteById(reply.getId());
+		thread.getReplies().clear();
 		repository.deleteById(id); //Finally we delete the thread
 	}
 }
