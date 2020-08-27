@@ -93,7 +93,7 @@ public class NewCommentFormLayout extends FormLayout implements View {
 			});
 		});
 
-		uploadButton.addContextClickListener(event -> {
+		uploadButton.addChangeListener(event -> {
 			log.info("image upload button clicked");
 			imageUploaded.set(true);
 		});
