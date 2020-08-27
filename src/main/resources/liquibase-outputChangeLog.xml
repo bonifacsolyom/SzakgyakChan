@@ -1,22 +1,22 @@
 <?xml version="1.1" encoding="UTF-8" standalone="no"?>
 <databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog" xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.6.xsd">
     <changeSet author="gyakornok (generated)" id="1597825673435-1">
-        <createSequence sequenceName="BOARD_SEQ" minValue="1" maxValue="9999999999999999999" incrementBy="1"/>
+        <createSequence sequenceName="BOARD_SEQ" minValue="1" incrementBy="1"/>
     </changeSet>
     <changeSet author="gyakornok (generated)" id="1597825673435-2">
-        <createSequence sequenceName="META_SEQ" minValue="1" maxValue="9999999999999999999" incrementBy="1"/>
+        <createSequence sequenceName="META_SEQ" minValue="1" incrementBy="1"/>
     </changeSet>
     <changeSet author="gyakornok (generated)" id="1597825673435-3">
-        <createSequence sequenceName="NOTIF_SEQ" minValue="1" maxValue="9999999999999999999" incrementBy="1"/>
+        <createSequence sequenceName="NOTIF_SEQ" minValue="1" incrementBy="1"/>
     </changeSet>
     <changeSet author="gyakornok (generated)" id="1597825673435-4">
-        <createSequence sequenceName="REPLY_SEQ" minValue="1" maxValue="9999999999999999999" incrementBy="1"/>
+        <createSequence sequenceName="REPLY_SEQ" minValue="1" incrementBy="1"/>
     </changeSet>
     <changeSet author="gyakornok (generated)" id="1597825673435-5">
-        <createSequence sequenceName="RUSER_SEQ" minValue="1" maxValue="9999999999999999999" incrementBy="1"/>
+        <createSequence sequenceName="RUSER_SEQ" minValue="1" incrementBy="1"/>
     </changeSet>
     <changeSet author="gyakornok (generated)" id="1597825673435-6">
-        <createSequence sequenceName="THREAD_SEQ" minValue="1" maxValue="9999999999999999999" incrementBy="1"/>
+        <createSequence sequenceName="THREAD_SEQ" minValue="1" incrementBy="1"/>
     </changeSet>
     <changeSet author="gyakornok (generated)" id="1597825673435-7">
         <createTable tableName="BOARD">
