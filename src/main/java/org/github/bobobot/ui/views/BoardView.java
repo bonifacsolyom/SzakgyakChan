@@ -2,8 +2,10 @@ package org.github.bobobot.ui.views;
 
 
 import com.vaadin.navigator.View;
+import com.vaadin.shared.ui.ContentMode;
 import com.vaadin.spring.annotation.SpringComponent;
 import com.vaadin.spring.annotation.SpringView;
+import com.vaadin.ui.Label;
 import com.vaadin.ui.VerticalLayout;
 import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
@@ -55,10 +57,19 @@ public class BoardView extends VerticalLayout implements View {
 		log.info("Entered board view");
 		setViewBoard(event);
 
-		//TODO: posztolás
+		//vaadin te csak megnehezíted az életemet
+		Label newThreadButton = new Label("<a class=\"btn btn-primary\" data-toggle=\"collapse\" href=\"#collapseNewThread\" role=\"button\" aria-expanded=\"false\" aria-controls=\"collapseExample\">" +
+				"Create new thread" +
+				"</a>");
+		newThreadButton.setContentMode(ContentMode.HTML);
+		addComponent(newThreadButton);
+
 		NewThreadFormLayout newThreadFormLayout = appContext.getBean(NewThreadFormLayout.class);
 		addComponent(newThreadFormLayout);
+		newThreadFormLayout.setId("collapseNewThread");
+		newThreadFormLayout.addStyleName("collapse");
 		PermissionHandler.restrictComponentToLoggedInUsers(newThreadFormLayout, newThreadFormLayout::setVisible);
+		PermissionHandler.restrictComponentToLoggedInUsers(newThreadButton, newThreadFormLayout::setVisible);
 
 		addStyleName("row");
 

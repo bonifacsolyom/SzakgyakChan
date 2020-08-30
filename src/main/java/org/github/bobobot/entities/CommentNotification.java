@@ -30,4 +30,9 @@ public class CommentNotification extends Notification {
 		super(read, originalReply);
 		this.otherUsersReply = otherUsersReply;
 	}
+
+	@Override
+	public String getAsText() {
+		return otherUsersReply.getUser().getName() + " replied to your comment.";
+	}
 }

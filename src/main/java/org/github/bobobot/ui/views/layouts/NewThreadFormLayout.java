@@ -40,7 +40,7 @@ public class NewThreadFormLayout extends NewCommentFormLayout {
 	@PostConstruct
 	protected void init() {
 		binder.setBean(new ThreadFormContent());
-		threadTitleField = new TextField();
+		threadTitleField = new TextField("Title");
 		binder.bind(threadTitleField, ThreadFormContent::getTitle, ThreadFormContent::setTitle);
 
 		threadTitleField.addValueChangeListener(event -> {
@@ -81,5 +81,10 @@ public class NewThreadFormLayout extends NewCommentFormLayout {
 
 				Thread thread = threadService.create(threadContentBean.getTitle(), board, currentUser);
 				replyService.post(threadContentBean.getContent(), thread, currentUser, threadContentBean.getImagePath());
+	}
+
+	@Override
+	protected void addStyleNameToForm() {
+		addStyleName("create-thread-form");
 	}
 }

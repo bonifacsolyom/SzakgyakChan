@@ -20,11 +20,14 @@ import org.github.bobobot.ui.views.ErrorView;
 import org.github.bobobot.ui.views.LoginView;
 import org.github.bobobot.ui.views.MainView;
 import org.github.bobobot.ui.views.RegisterView;
+import org.github.bobobot.ui.views.layouts.NavbarLayout;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.ApplicationContext;
 
 @SpringUI
 @SpringViewDisplay
 @Theme("mytheme")
+@StyleSheet("https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css")
 @StyleSheet("https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css")
 @JavaScript("https://code.jquery.com/jquery-3.5.1.slim.min.js")
 @JavaScript("https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js")
@@ -32,6 +35,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 @Slf4j
 public class MainUI extends UI implements ViewDisplay {
 
+	@Autowired
+	private ApplicationContext appContext;
 
 	@Autowired
 	private SpringNavigator navigator;
@@ -40,11 +45,11 @@ public class MainUI extends UI implements ViewDisplay {
 	@Autowired
 	private IUserService userService;
 
-	Panel springViewDisplay; //Ebben jelenítjük meg a view-ot
+	private Panel springViewDisplay; //Ebben jelenítjük meg a view-ot
 
-	VerticalLayout layout; //Ez az egész oldal layoutja
+	private VerticalLayout layout; //Ez az egész oldal layoutja
 
-	CssLayout navigationBar;
+	private NavbarLayout navigationBar;
 
 	@Override
 	protected void init(VaadinRequest vaadinRequest) {
@@ -57,13 +62,12 @@ public class MainUI extends UI implements ViewDisplay {
 		setNavigator(navigator);
 		getNavigator().setErrorView(ErrorView.class);
 
-		navigationBar = new CssLayout();
-		initNavbar();
+		navigationBar = appContext.getBean(NavbarLayout.class);
 		layout.addComponent(navigationBar);
 
 		springViewDisplay = new Panel();
 		springViewDisplay.setSizeFull();
-		springViewDisplay.setStyleName("backgroundGradient");
+		springViewDisplay.setStyleName("background-gradient");
 		layout.addComponent(springViewDisplay);
 		layout.setExpandRatio(springViewDisplay, 1.0f);
 
@@ -75,36 +79,7 @@ public class MainUI extends UI implements ViewDisplay {
 		springViewDisplay.setContent((Component) view);
 	}
 
-	public void initNavbar() {
-		log.info("rendered navbar");
-		navigationBar.removeAllComponents();
-
-		Image logo = new Image("", new ThemeResource("images/logo.png"));
-		logo.setStyleName("logo");
-		logo.addClickListener(clickEvent -> getUI().getNavigator().navigateTo(MainView.name));
-		navigationBar.addComponent(logo);
-		Button loginButton = new Button("Login", event -> getUI().getNavigator().navigateTo(LoginView.name));
-		Button registerButton = new Button("Register", event -> getUI().getNavigator().navigateTo(RegisterView.name));
-		Button logoutButton = new Button("Log out", event -> {
-			PermissionHandler.setCurrentUserToNotLoggedIn();
-			Page.getCurrent().reload();
-		});
-		navigationBar.addComponent(loginButton);
-		navigationBar.addComponent(registerButton);
-		navigationBar.addComponent(logoutButton);
-
-		//TODO: debug shit, töröld
-		Button adminLogin = new Button("Login as admin", event -> {
-			userService.login("admin@chan.com", "admin");
-			initNavbar();
-		});
-		navigationBar.addComponent(adminLogin);
-		PermissionHandler.restrictComponentToLoggedOutUsers(adminLogin, adminLogin::setVisible);
-		//TODO: end of TODO
-
-		PermissionHandler.restrictComponentToLoggedOutUsers(loginButton, loginButton::setVisible);
-		PermissionHandler.restrictComponentToLoggedOutUsers(registerButton, registerButton::setVisible);
-		PermissionHandler.restrictComponentToLoggedInUsers(logoutButton, logoutButton::setVisible);
-
+ 	public void reRenderNavbar() {
+		navigationBar.render();
 	}
 }

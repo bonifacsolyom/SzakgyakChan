@@ -38,7 +38,7 @@ public class LoginView extends HorizontalLayout implements View {
 			Optional<User> loggedInUser = userService.login(email, password);
 			if (loggedInUser.isPresent()) {
 				log.info("Successful login!");
-				((MainUI)getUI()).initNavbar();
+				((MainUI)getUI()).reRenderNavbar();
 				getUI().getNavigator().navigateTo(MainView.name);
 			} else {
 				log.info("Login failed.");

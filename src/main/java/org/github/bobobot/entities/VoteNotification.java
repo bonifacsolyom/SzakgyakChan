@@ -29,6 +29,22 @@ public class VoteNotification extends Notification {
 		this.voteType = voteType;
 	}
 
+	@Override
+	public String getAsText() {
+		int textLimit = 30;
+
+		String originalReplyContent = originalReply.getContent();
+		String shortenedReply;
+		if (originalReplyContent.length() < textLimit) shortenedReply = originalReplyContent;
+		else shortenedReply = originalReplyContent.substring(0, textLimit) + "...";
+
+		String voteTypeString;
+		if (voteType == VoteType.UPVOTE) voteTypeString = "an upvote";
+		else if (voteType == VoteType.DOWNVOTE) voteTypeString = "a downvote";
+		else voteTypeString = "ERROR";
+		return "Your reply \"" + shortenedReply + "\" received " + voteTypeString + "!";
+	}
+
 	public enum VoteType {
 		UPVOTE, DOWNVOTE
 	}

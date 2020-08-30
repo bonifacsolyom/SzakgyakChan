@@ -5,6 +5,7 @@ import com.vaadin.server.FileResource;
 import com.vaadin.server.ThemeResource;
 import com.vaadin.spring.annotation.SpringComponent;
 import com.vaadin.ui.*;
+import com.vaadin.ui.themes.ValoTheme;
 import lombok.extern.slf4j.Slf4j;
 import org.github.bobobot.access.PermissionHandler;
 import org.github.bobobot.entities.Reply;
@@ -47,15 +48,29 @@ public class ReplyContentLayout extends HorizontalLayout implements View {
 		userId = PermissionHandler.getCurrentUser().getId();
 
 		VerticalLayout voteLayout = new VerticalLayout();
-		Button upvoteButton = new Button();
+		Image upvoteButton = new Image(null, new ThemeResource("images/upvote.png"));
+		upvoteButton.addStyleName("upvote-button");
 		Label voteNumberLabel = new Label(String.valueOf(reply.getVoteCount()));
-		Button downvoteButton = new Button();
+		Image downvoteButton = new Image(null, new ThemeResource("images/downvote.png"));
+		downvoteButton.addStyleName("downvote-button");
 		voteLayout.addComponents(upvoteButton, voteNumberLabel, downvoteButton);
+
+		voteLayout.setComponentAlignment(upvoteButton, Alignment.MIDDLE_CENTER);
+		voteLayout.setComponentAlignment(voteNumberLabel, Alignment.MIDDLE_CENTER);
+		voteLayout.setComponentAlignment(downvoteButton, Alignment.MIDDLE_CENTER);
 
 		setVoteColor(voteNumberLabel);
 
-		PermissionHandler.restrictComponentToLoggedInUsers(upvoteButton, upvoteButton::setEnabled);
-		PermissionHandler.restrictComponentToLoggedInUsers(downvoteButton, downvoteButton::setEnabled);
+		PermissionHandler.restrictComponentToLoggedInUsers(upvoteButton, allow -> {
+			if (!allow) upvoteButton.addStyleName("disabled-image-button");
+			else upvoteButton.removeStyleName("disabled-image-button");
+			upvoteButton.setEnabled(allow);
+		});
+		PermissionHandler.restrictComponentToLoggedInUsers(downvoteButton, allow -> {
+			if (!allow) downvoteButton.addStyleName("disabled-image-button");
+			else downvoteButton.removeStyleName("disabled-image-button");
+			downvoteButton.setEnabled(allow);
+		});
 
 		//disgusting but needed for the lambda method to be Transactional
 		upvoteButton.addClickListener(clickEvent -> {
@@ -84,9 +99,9 @@ public class ReplyContentLayout extends HorizontalLayout implements View {
 
 		addComponent(voteLayout);
 		if (reply.hasImage()) {
-			//TODO: maybe not ThemeResource?
-			Image replyImage = new Image("", new FileResource(new File(reply.getImage().get())));
+			Image replyImage = new Image(null, new FileResource(new File(reply.getImage().get())));
 			addComponent(replyImage);
+			replyImage.addStyleName("reply-image");
 		}
 		Label replyContentLabel = new Label(reply.getContent());
 		addComponent(replyContentLabel);

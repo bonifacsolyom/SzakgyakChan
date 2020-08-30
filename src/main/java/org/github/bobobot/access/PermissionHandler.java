@@ -22,6 +22,10 @@ public class PermissionHandler {
 		return (VaadinUser) VaadinService.getCurrentRequest().getWrappedSession().getAttribute("currentUser");
 	}
 
+	public static boolean isLoggedIn() {
+		return getCurrentUser().getRole() != UserRole.NOT_LOGGED_IN;
+	}
+
 	/**
 	 * Restricts the component so that it only gets shown to a user with a specific ID
 	 *

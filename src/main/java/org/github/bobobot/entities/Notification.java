@@ -35,4 +35,6 @@ public abstract class Notification {
 	public User getUser() {
 		return originalReply.getUser();
 	}
+
+	public abstract String getAsText();
 }

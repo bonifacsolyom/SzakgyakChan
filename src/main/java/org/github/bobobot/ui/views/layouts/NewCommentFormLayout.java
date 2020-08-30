@@ -64,7 +64,7 @@ public class NewCommentFormLayout extends FormLayout implements View {
 	@PostConstruct
 	protected void init() {
 		binder.setBean(new ThreadFormContent());
-		TextArea threadContentField = new TextArea();
+		TextArea threadContentField = new TextArea("Comment");
 		binder.bind(threadContentField, ThreadFormContent::getContent, ThreadFormContent::setContent);
 
 		imageReceiver = new ImageReceiver();
@@ -76,6 +76,7 @@ public class NewCommentFormLayout extends FormLayout implements View {
 		uploadButton.setAcceptMimeTypes("image/png"); //TODO: test this, lehet csak az egyik jó
 
 		Button postButton = new Button("Post");
+		postButton.addStyleName("btn btn-primary");
 
 
 		threadContentField.addValueChangeListener(event -> {
@@ -103,6 +104,8 @@ public class NewCommentFormLayout extends FormLayout implements View {
 		});
 
 		addComponents(threadContentField, uploadButton, postButton);
+
+		addStyleNameToForm();
 	}
 
 	protected boolean buttonRequirements() {
@@ -143,5 +146,9 @@ public class NewCommentFormLayout extends FormLayout implements View {
 				replyService.post(threadContentBean.getContent(), currentThread, currentUser, threadContentBean.getImagePath());
 			}
 		});
+	}
+
+	protected void addStyleNameToForm() {
+		addStyleName("create-comment-form");
 	}
 }

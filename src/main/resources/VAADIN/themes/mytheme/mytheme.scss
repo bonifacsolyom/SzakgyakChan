@@ -41,7 +41,7 @@
 		//padding: 10px;
 	}
 
-	.backgroundGradient {
+	.background-gradient {
 		@include linear-gradient(#FED7B0, #FFFFEE);
 	}
 
@@ -108,6 +108,11 @@
 		border: dashed 1px red;
 	}
 
+	.v-button {
+		@extend .btn;
+		@extend .btn-primary;
+	}
+
 	.logo {
 		cursor: pointer;
 	}
@@ -127,5 +132,29 @@
 		background-color: #885050;
 	}
 
-	//MIÉRT LÉTEZIK A VAADIN REEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEE
+	.reply-image {
+		width: 50%;
+	}
+
+	.create-comment-form {
+
+	}
+
+	.create-thread-form {
+
+	}
+
+	.upvote-button {
+		width: 70%;
+		cursor: pointer;
+	}
+
+	.downvote-button {
+		width: 70%;
+		cursor: pointer;
+	}
+
+	.disabled-image-button {
+		filter: grayscale(100);
+	}
 }

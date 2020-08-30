@@ -2,6 +2,7 @@ package org.github.bobobot.ui.views.layouts;
 
 import com.vaadin.navigator.View;
 import com.vaadin.spring.annotation.SpringComponent;
+import com.vaadin.ui.NativeSelect;
 import com.vaadin.ui.VerticalLayout;
 import org.github.bobobot.entities.Reply;
 import org.github.bobobot.entities.Thread;
@@ -12,9 +13,7 @@ import org.springframework.beans.factory.config.ConfigurableBeanFactory;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.Scope;
 
-import java.util.Comparator;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @SpringComponent
@@ -49,6 +48,18 @@ public class ThreadLayout extends VerticalLayout implements View {
 		ReplyContentLayout contentLayout = appContext.getBean(ReplyContentLayout.class).init(getFirstReply());
 		addComponents(headerLayout, contentLayout);
 
+		//Order selection
+		List<String> stringOrders = new ArrayList<>(Arrays.asList("Date", "Vote"));
+		NativeSelect<String> orderSelector = new NativeSelect<>("Order by:", stringOrders);
+		orderSelector.setEmptySelectionAllowed(false);
+		orderSelector.setSelectedItem(orderBy == OrderBy.DATE ? "Date" : "Vote");
+		orderSelector.addValueChangeListener(valueChangeEvent -> {
+			removeAllComponents();
+			OrderBy order = valueChangeEvent.getValue().equals("Date") ? OrderBy.DATE : OrderBy.VOTE;
+			init(thread, order);
+		});
+		headerLayout.addComponent(orderSelector);
+
 		for (Reply reply : getOrderedListOfReplies()) {
 
 			ReplyLayout replyLayout = appContext.getBean(ReplyLayout.class).init(reply);
@@ -76,7 +87,7 @@ public class ThreadLayout extends VerticalLayout implements View {
 				return thread.getReplies().stream().skip(1).sorted(Comparator.comparing(Reply::getDate)).collect(Collectors.toList());
 			case VOTE:
 				//we skip the first reply since that's the content of the thread itself
-				return thread.getReplies().stream().skip(1).sorted(Comparator.comparing(Reply::getVoteCount)).collect(Collectors.toList());
+				return thread.getReplies().stream().skip(1).sorted(Comparator.comparing(Reply::getVoteCount).reversed()).collect(Collectors.toList());
 			default:
 				throw new EnumConstantNotPresentException(OrderBy.class, "Can't order by " + orderBy + "!");
 		}
