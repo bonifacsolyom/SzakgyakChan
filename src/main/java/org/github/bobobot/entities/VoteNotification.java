@@ -29,20 +29,20 @@ public class VoteNotification extends Notification {
 		this.voteType = voteType;
 	}
 
+	public VoteNotification(@NonNull Reply originalReply, @NonNull VoteType voteType) {
+		super(originalReply);
+		this.voteType = voteType;
+	}
+
 	@Override
 	public String getAsText() {
 		int textLimit = 30;
-
-		String originalReplyContent = originalReply.getContent();
-		String shortenedReply;
-		if (originalReplyContent.length() < textLimit) shortenedReply = originalReplyContent;
-		else shortenedReply = originalReplyContent.substring(0, textLimit) + "...";
 
 		String voteTypeString;
 		if (voteType == VoteType.UPVOTE) voteTypeString = "an upvote";
 		else if (voteType == VoteType.DOWNVOTE) voteTypeString = "a downvote";
 		else voteTypeString = "ERROR";
-		return "Your reply \"" + shortenedReply + "\" received " + voteTypeString + "!";
+		return "Your reply \"" + shortenText(originalReply.getContent(), textLimit) + "\" received " + voteTypeString + "!";
 	}
 
 	public enum VoteType {

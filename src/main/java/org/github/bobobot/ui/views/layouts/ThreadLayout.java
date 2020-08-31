@@ -1,17 +1,26 @@
 package org.github.bobobot.ui.views.layouts;
 
 import com.vaadin.navigator.View;
+import com.vaadin.shared.ui.ContentMode;
 import com.vaadin.spring.annotation.SpringComponent;
+import com.vaadin.ui.Alignment;
+import com.vaadin.ui.Label;
 import com.vaadin.ui.NativeSelect;
 import com.vaadin.ui.VerticalLayout;
+import org.github.bobobot.access.PermissionHandler;
 import org.github.bobobot.entities.Reply;
 import org.github.bobobot.entities.Thread;
+import org.github.bobobot.services.impl.ThreadService;
 import org.github.bobobot.ui.views.BoardView;
 import org.github.bobobot.ui.views.misc.OrderBy;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.config.ConfigurableBeanFactory;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.Scope;
+import org.springframework.lang.NonNull;
+import org.springframework.transaction.TransactionStatus;
+import org.springframework.transaction.support.TransactionCallbackWithoutResult;
+import org.springframework.transaction.support.TransactionTemplate;
 
 import java.util.*;
 import java.util.stream.Collectors;
@@ -22,6 +31,12 @@ public class ThreadLayout extends VerticalLayout implements View {
 
 	@Autowired
 	private ApplicationContext appContext;
+
+	@Autowired
+	private ThreadService threadService;
+
+	@Autowired
+	protected TransactionTemplate transactionTemplate;
 
 	BoardView parentBoardView;
 	Thread thread;
@@ -54,11 +69,17 @@ public class ThreadLayout extends VerticalLayout implements View {
 		orderSelector.setEmptySelectionAllowed(false);
 		orderSelector.setSelectedItem(orderBy == OrderBy.DATE ? "Date" : "Vote");
 		orderSelector.addValueChangeListener(valueChangeEvent -> {
-			removeAllComponents();
-			OrderBy order = valueChangeEvent.getValue().equals("Date") ? OrderBy.DATE : OrderBy.VOTE;
-			init(thread, order);
+			transactionTemplate.execute(new TransactionCallbackWithoutResult() {
+				@Override
+				protected void doInTransactionWithoutResult(@NonNull TransactionStatus transactionStatus) {
+					removeAllComponents();
+					OrderBy order = valueChangeEvent.getValue().equals("Date") ? OrderBy.DATE : OrderBy.VOTE;
+					init(threadService.findById(thread.getId()), order);
+				}
+			});
 		});
-		headerLayout.addComponent(orderSelector);
+		headerLayout.addOrderSelector(orderSelector);
+		orderSelector.addStyleName("order-selector");
 
 		for (Reply reply : getOrderedListOfReplies()) {
 
@@ -67,9 +88,19 @@ public class ThreadLayout extends VerticalLayout implements View {
 			addComponent(replyLayout);
 		}
 
+		Label newReplyButton = new Label("<a class=\"btn btn-primary create-new-button\" data-toggle=\"collapse\" href=\"#collapseNewThread" + thread.getId() +" \" role=\"button\" aria-expanded=\"false\" aria-controls=\"collapseExample\">" +
+				"Create reply</a>");
+		newReplyButton.setContentMode(ContentMode.HTML);
+		addComponent(newReplyButton);
+
 		NewCommentFormLayout newCommentFormLayout = appContext.getBean("NewCommentFormLayout", NewCommentFormLayout.class);
 		newCommentFormLayout.setCurrentThread(thread);
 		addComponent(newCommentFormLayout);
+		newCommentFormLayout.setId("collapseNewThread" + thread.getId());
+		newCommentFormLayout.addStyleName("collapse");
+
+		PermissionHandler.restrictComponentToLoggedInUsers(newReplyButton, newReplyButton::setVisible);
+		PermissionHandler.restrictComponentToLoggedInUsers(newCommentFormLayout, newCommentFormLayout::setVisible);
 
 		addStyleName("thread-div card col-6");
 
@@ -81,12 +112,11 @@ public class ThreadLayout extends VerticalLayout implements View {
 	}
 
 	private List<Reply> getOrderedListOfReplies() {
+		//we always skip the first reply since that's the content of the thread itself
 		switch (orderBy) {
 			case DATE:
-				//we skip the first reply since that's the content of the thread itself
 				return thread.getReplies().stream().skip(1).sorted(Comparator.comparing(Reply::getDate)).collect(Collectors.toList());
 			case VOTE:
-				//we skip the first reply since that's the content of the thread itself
 				return thread.getReplies().stream().skip(1).sorted(Comparator.comparing(Reply::getVoteCount).reversed()).collect(Collectors.toList());
 			default:
 				throw new EnumConstantNotPresentException(OrderBy.class, "Can't order by " + orderBy + "!");

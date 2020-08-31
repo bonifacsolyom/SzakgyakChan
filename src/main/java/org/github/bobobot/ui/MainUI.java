@@ -13,6 +13,7 @@ import com.vaadin.spring.annotation.SpringUI;
 import com.vaadin.spring.annotation.SpringViewDisplay;
 import com.vaadin.spring.navigator.SpringNavigator;
 import com.vaadin.ui.*;
+import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
 import org.github.bobobot.access.PermissionHandler;
 import org.github.bobobot.services.IUserService;
@@ -45,6 +46,7 @@ public class MainUI extends UI implements ViewDisplay {
 	@Autowired
 	private IUserService userService;
 
+	@Getter
 	private Panel springViewDisplay; //Ebben jelenítjük meg a view-ot
 
 	private VerticalLayout layout; //Ez az egész oldal layoutja

@@ -33,6 +33,7 @@ public class CommentNotification extends Notification {
 
 	@Override
 	public String getAsText() {
-		return otherUsersReply.getUser().getName() + " replied to your comment.";
+		int textLimit = 30;
+		return otherUsersReply.getUser().getName() + " replied to your comment: " + "\"" + shortenText(otherUsersReply.getContent(), textLimit) + "\"";
 	}
 }

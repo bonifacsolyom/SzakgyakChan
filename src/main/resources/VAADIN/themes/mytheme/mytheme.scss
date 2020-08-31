@@ -29,11 +29,24 @@
 // For more information, see: https://vaadin.com/book/-/page/themes.valo.html
 // Example variants can be copy/pasted from https://vaadin.com/docs/v8/framework/articles/ValoExamples.html
 
+$v-app-loading-text: "Loading SzakgyakChan...";
+
 //noinspection CssUnknownTarget
 @import "../valo/valo.scss";
 
 @mixin mytheme {
 	@include valo;
+
+	//Font color
+	div {
+		background-color: unset;
+		color: #800;
+	}
+
+	.unified-border {
+		border: solid 2px #e2af70;
+		border-radius: 3px;
+	}
 
 	.debug-object {
 		border: solid #de0000;
@@ -77,14 +90,17 @@
 	}
 
 	.thread-div {
-		border: #880000 2px;
-		padding: 0;
+		@extend .unified-border;
+		padding: 2px;
+		margin: 10px;
 		background-color: #eeb672;
 	}
 
 	.reply-div {
-		border: #880000 2px;
+		@extend .unified-border;
+		border-top: 0;
 		padding: 2px;
+		margin: 10px;
 		background-color: #f1bd81;
 	}
 
@@ -99,13 +115,13 @@
 	//god forgive me for I have sinned
 	.v-slot-card-header {
 		@extend .card-header;
-		border: dashed 10px red;
+		border: 2px #800 dashed;
+		border-radius: 3px;
 	}
 
 	//this is still the same sin btw pls don't punish me twice
 	.v-slot-card-body {
 		@extend .card-body;
-		border: dashed 1px red;
 	}
 
 	.v-button {
@@ -133,28 +149,82 @@
 	}
 
 	.reply-image {
+		width: 100%;
+		border: solid 2px rgba(136, 0, 0, 0.4);
+		border-radius: 3px;
+
+	}
+	//i have no idea why this works but it does and that's all i need to know
+	.v-slot-reply-image {
 		width: 50%;
 	}
 
 	.create-comment-form {
-
+		@extend .unified-border;
+		padding: 2%;
 	}
 
 	.create-thread-form {
+		@extend .unified-border;
+		padding: 20px;
+		margin: 10px;
+		width: min-content !important;
+	}
 
+	.v-slot-create-new-button + .v-spacing {
+		height: 0;
+	}
+
+	.create-new-button {
+		margin: 10px;
+	}
+
+	//ha a vaadin nem lenne rák akkor nem kéne ilyen rák elnevezéseket használni
+	//de a vaadin rák
+	.v-slot-align-right {
+		float: right;
 	}
 
 	.upvote-button {
 		width: 70%;
 		cursor: pointer;
+		filter:opacity(0.7);
 	}
 
 	.downvote-button {
 		width: 70%;
 		cursor: pointer;
+		filter: opacity(0.7);
+	}
+
+	.not-voted {
+		font-weight: normal;
+		color: slategray;
 	}
 
 	.disabled-image-button {
 		filter: grayscale(100);
+	}
+
+	.voted-image-button {
+		filter: saturate(2) brightness(0.9) opacity(1);
+	}
+
+	.delete-button .v-icon {
+		max-width: 40px;
+		height: auto;
+	}
+
+	//just another anti-vaadin intézkedés
+	.v-formlayout-contentcell,.v-formlayout-captioncell,.v-formlayout-errorcell {
+		padding: 0 !important;
+	}
+
+	.reply-div__content .v-slot .v-verticallayout {
+		padding: 0;
+	}
+
+	.navbar-button-layout {
+		margin: 15px;
 	}
 }

@@ -3,6 +3,7 @@ package org.github.bobobot.services.impl;
 import org.github.bobobot.entities.CommentNotification;
 import org.github.bobobot.entities.Reply;
 import org.github.bobobot.entities.Thread;
+import org.github.bobobot.entities.VoteNotification;
 import org.github.bobobot.entities.VoteNotification.VoteType;
 import org.github.bobobot.repositories.IReplyRepository;
 import org.github.bobobot.services.INotificationService;
@@ -13,6 +14,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.EntityManager;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -43,8 +45,14 @@ public class ReplyService implements IReplyService {
 
 	@Transactional
 	void notifyUsersAboutReplies(Reply newReply) {
+		List<Long> notifiedUserIds = new ArrayList<>();
+		Long currentUserId = newReply.getUser().getId();
 		for (Reply threadReply : newReply.getThread().getReplies()) {
-			CommentNotification notification = notificationService.create(false, threadReply, newReply);
+			Long threadReplyUserId = threadReply.getUser().getId();
+			if (!threadReplyUserId.equals(currentUserId) && !notifiedUserIds.contains(threadReplyUserId)) {
+				CommentNotification notification = notificationService.create(false, threadReply, newReply);
+				notifiedUserIds.add(threadReplyUserId);
+			}
 		}
 	}
 
@@ -84,6 +92,7 @@ public class ReplyService implements IReplyService {
 	public Reply vote(Long userId, Long id, VoteType voteType) {
 		Reply reply = findById(id);
 		reply = changeVote(userId, reply, voteType);
+		userService.addVoteNotification(reply.getUser(), new VoteNotification(reply, voteType));
 		return update(reply);
 	}
 

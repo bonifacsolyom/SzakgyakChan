@@ -51,6 +51,7 @@ public class ReplyContentLayout extends HorizontalLayout implements View {
 		Image upvoteButton = new Image(null, new ThemeResource("images/upvote.png"));
 		upvoteButton.addStyleName("upvote-button");
 		Label voteNumberLabel = new Label(String.valueOf(reply.getVoteCount()));
+		voteNumberLabel.addStyleName("not-voted");
 		Image downvoteButton = new Image(null, new ThemeResource("images/downvote.png"));
 		downvoteButton.addStyleName("downvote-button");
 		voteLayout.addComponents(upvoteButton, voteNumberLabel, downvoteButton);
@@ -59,7 +60,7 @@ public class ReplyContentLayout extends HorizontalLayout implements View {
 		voteLayout.setComponentAlignment(voteNumberLabel, Alignment.MIDDLE_CENTER);
 		voteLayout.setComponentAlignment(downvoteButton, Alignment.MIDDLE_CENTER);
 
-		setVoteColor(voteNumberLabel);
+		setVoteColor(voteLayout);
 
 		PermissionHandler.restrictComponentToLoggedInUsers(upvoteButton, allow -> {
 			if (!allow) upvoteButton.addStyleName("disabled-image-button");
@@ -80,7 +81,7 @@ public class ReplyContentLayout extends HorizontalLayout implements View {
 					log.info("Trying to upvote");
 					replyService.vote(userId, reply.getId(), VoteType.UPVOTE);
 					voteNumberLabel.setValue(String.valueOf(replyService.findById(reply.getId()).getVoteCount()));
-					setVoteColor(voteNumberLabel);
+					setVoteColor(voteLayout);
 				}
 			});
 		});
@@ -92,7 +93,7 @@ public class ReplyContentLayout extends HorizontalLayout implements View {
 					log.info("Trying to downvote");
 					replyService.vote(userId, reply.getId(), VoteType.DOWNVOTE);
 					voteNumberLabel.setValue(String.valueOf(replyService.findById(reply.getId()).getVoteCount()));
-					setVoteColor(voteNumberLabel);
+					setVoteColor(voteLayout);
 				}
 			});
 		});
@@ -110,22 +111,35 @@ public class ReplyContentLayout extends HorizontalLayout implements View {
 		return this;
 	}
 
-	private void setVoteColor(Label voteNumberLabel) {
+	private void setVoteColor(VerticalLayout voteLayout) {
 		Optional<VoteType> userVoteType = replyService.getUserVote(userId, reply.getId());
-		setVoteColor(voteNumberLabel, userVoteType);
+		setVoteColor(voteLayout, userVoteType);
 	}
 
-	private void setVoteColor(Label voteNumberLabel, Optional<VoteType> voteType) {
+	//kicsit hosszú, kicsit csúnya, de az enyém
+	private void setVoteColor(VerticalLayout voteLayout, Optional<VoteType> voteType) {
+		Image upvote = (Image) voteLayout.getComponent(0);
+		Label voteNumberLabel = (Label)voteLayout.getComponent(1);
+		Image downvote = (Image) voteLayout.getComponent(2);
 		if (!voteType.isPresent()) {
+			voteNumberLabel.addStyleName("not-voted");
 			voteNumberLabel.removeStyleName("upvoted");
 			voteNumberLabel.removeStyleName("downvoted");
+			upvote.removeStyleNames("voted-image-button");
+			downvote.removeStyleNames("voted-image-button");
 		} else {
 			if (voteType.get() == VoteType.UPVOTE) {
+				upvote.addStyleName("voted-image-button");
+				downvote.removeStyleName("voted-image-button");
 				voteNumberLabel.addStyleName("upvoted");
 				voteNumberLabel.removeStyleName("downvoted");
+				voteNumberLabel.removeStyleName("not-voted");
 			} else if (voteType.get() == VoteType.DOWNVOTE) {
+				downvote.addStyleName("voted-image-button");
+				upvote.removeStyleName("voted-image-button");
 				voteNumberLabel.addStyleName("downvoted");
 				voteNumberLabel.removeStyleName("upvoted");
+				voteNumberLabel.removeStyleName("not-voted");
 			}
 		}
 	}

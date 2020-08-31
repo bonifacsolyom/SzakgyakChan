@@ -4,13 +4,11 @@ import com.vaadin.navigator.View;
 import com.vaadin.server.Page;
 import com.vaadin.server.ThemeResource;
 import com.vaadin.spring.annotation.SpringComponent;
-import com.vaadin.ui.Button;
-import com.vaadin.ui.CssLayout;
-import com.vaadin.ui.Image;
-import com.vaadin.ui.PopupView;
+import com.vaadin.ui.*;
 import lombok.extern.slf4j.Slf4j;
 import org.github.bobobot.access.PermissionHandler;
 import org.github.bobobot.services.IUserService;
+import org.github.bobobot.ui.MainUI;
 import org.github.bobobot.ui.views.LoginView;
 import org.github.bobobot.ui.views.MainView;
 import org.github.bobobot.ui.views.RegisterView;
@@ -25,7 +23,7 @@ import javax.annotation.PostConstruct;
 @Slf4j
 @SpringComponent
 @Scope(value = ConfigurableBeanFactory.SCOPE_PROTOTYPE)
-public class NavbarLayout extends CssLayout implements View {
+public class NavbarLayout extends HorizontalLayout implements View {
 
     @Autowired
     private ApplicationContext appContext;
@@ -41,6 +39,10 @@ public class NavbarLayout extends CssLayout implements View {
 
     public void render() {
         removeAllComponents();
+        setWidthFull();
+
+        HorizontalLayout buttonLayout = new HorizontalLayout();
+        buttonLayout.addStyleName("navbar-button-layout");
 
         Image logo = new Image(null, new ThemeResource("images/logo.png"));
         logo.setStyleName("logo");
@@ -56,16 +58,18 @@ public class NavbarLayout extends CssLayout implements View {
             Page.getCurrent().reload();
         });
         logoutButton.addStyleName("btn btn-primary");
-        addComponent(loginButton);
-        addComponent(registerButton);
-        addComponent(logoutButton);
+        buttonLayout.addComponent(loginButton);
+        buttonLayout.addComponent(registerButton);
+
+        addComponent(buttonLayout);
+        setComponentAlignment(buttonLayout, Alignment.TOP_RIGHT);
 
         //TODO: debug shit, töröld
         Button adminLogin = new Button("Login as admin", event -> {
             userService.login("admin@chan.com", "admin");
             init();
         });
-        addComponent(adminLogin);
+        buttonLayout.addComponent(adminLogin);
         PermissionHandler.restrictComponentToLoggedOutUsers(adminLogin, adminLogin::setVisible);
         //TODO: end of TODO
 
@@ -73,9 +77,11 @@ public class NavbarLayout extends CssLayout implements View {
         if (PermissionHandler.isLoggedIn()) {
             NotificationLayout notifLayout = appContext.getBean(NotificationLayout.class);
             PopupView notificationPopUp = new PopupView("Notifications", notifLayout);
-            addComponent(notificationPopUp);
+            buttonLayout.addComponent(notificationPopUp);
             PermissionHandler.restrictComponentToLoggedInUsers(notificationPopUp, notificationPopUp::setVisible);
         }
+
+        buttonLayout.addComponent(logoutButton);
 
         PermissionHandler.restrictComponentToLoggedOutUsers(loginButton, loginButton::setVisible);
         PermissionHandler.restrictComponentToLoggedOutUsers(registerButton, registerButton::setVisible);

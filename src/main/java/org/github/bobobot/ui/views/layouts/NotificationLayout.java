@@ -18,6 +18,7 @@ import org.springframework.context.annotation.Scope;
 
 import javax.annotation.PostConstruct;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Slf4j
 @SpringComponent
@@ -34,7 +35,9 @@ public class NotificationLayout extends VerticalLayout implements View {
 
         User currentUser = userService.findById(PermissionHandler.getCurrentUser().getId());
         //TODO: ha nem sorban vannak a notificationök akkor tedd sorba
-        List<Notification> notifications = currentUser.getNotifications();
+        List<Notification> notifications = currentUser.getNotifications().stream()
+                .sorted((n1, n2) -> n2.getId().compareTo(n1.getId()))
+                .collect(Collectors.toList());
 
         for (int i = 0; i < NOTIFICATIONS_TO_SHOW; i++) {
             if (notifications.size() <= i) break;

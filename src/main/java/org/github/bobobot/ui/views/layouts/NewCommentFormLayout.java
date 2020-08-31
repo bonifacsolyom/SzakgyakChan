@@ -14,6 +14,7 @@ import org.github.bobobot.entities.Thread;
 import org.github.bobobot.entities.User;
 import org.github.bobobot.services.IReplyService;
 import org.github.bobobot.services.IUserService;
+import org.github.bobobot.ui.views.BoardView;
 import org.github.bobobot.ui.views.misc.ImageReceiver;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.config.ConfigurableBeanFactory;
@@ -144,6 +145,9 @@ public class NewCommentFormLayout extends FormLayout implements View {
 				User currentUser = userService.findById(PermissionHandler.getCurrentUser().getId());
 
 				replyService.post(threadContentBean.getContent(), currentThread, currentUser, threadContentBean.getImagePath());
+
+				//We refresh the page for the new comment to appear
+				getUI().getNavigator().navigateTo(BoardView.name + "/" + currentThread.getBoard().getId());
 			}
 		});
 	}

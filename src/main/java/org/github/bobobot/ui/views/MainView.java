@@ -34,7 +34,8 @@ public class MainView extends HorizontalLayout implements View {
 	void init() {
 		for (Board board : boardService.list()) {
 			VerticalLayout div = new VerticalLayout();
-			Label shortName = new Label(board.getShortName());
+			Label shortName = new Label("/" + board.getShortName() + "/");
+			shortName.addStyleName("font-weight-bold");
 			Label longName = new Label(board.getLongName());
 			div.addComponents(shortName, longName);
 			div.addLayoutClickListener(layoutClickEvent -> {

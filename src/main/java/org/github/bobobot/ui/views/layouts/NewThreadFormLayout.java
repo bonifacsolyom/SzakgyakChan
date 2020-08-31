@@ -81,6 +81,9 @@ public class NewThreadFormLayout extends NewCommentFormLayout {
 
 				Thread thread = threadService.create(threadContentBean.getTitle(), board, currentUser);
 				replyService.post(threadContentBean.getContent(), thread, currentUser, threadContentBean.getImagePath());
+
+				//We refresh the page for the new thread to appear
+				getUI().getNavigator().navigateTo(BoardView.name + "/" + board.getId());
 	}
 
 	@Override

@@ -62,6 +62,7 @@ public class BoardView extends VerticalLayout implements View {
 				"Create new thread" +
 				"</a>");
 		newThreadButton.setContentMode(ContentMode.HTML);
+		newThreadButton.addStyleName("create-new-button");
 		addComponent(newThreadButton);
 
 		NewThreadFormLayout newThreadFormLayout = appContext.getBean(NewThreadFormLayout.class);
@@ -69,7 +70,7 @@ public class BoardView extends VerticalLayout implements View {
 		newThreadFormLayout.setId("collapseNewThread");
 		newThreadFormLayout.addStyleName("collapse");
 		PermissionHandler.restrictComponentToLoggedInUsers(newThreadFormLayout, newThreadFormLayout::setVisible);
-		PermissionHandler.restrictComponentToLoggedInUsers(newThreadButton, newThreadFormLayout::setVisible);
+		PermissionHandler.restrictComponentToLoggedInUsers(newThreadButton, newThreadButton::setVisible);
 
 		addStyleName("row");
 
@@ -77,9 +78,5 @@ public class BoardView extends VerticalLayout implements View {
 			ThreadLayout threadLayout = appContext.getBean(ThreadLayout.class, this).init(thread);
 			addComponent(threadLayout);
 		}
-	}
-
-	public void reRenderThreadLayout(ThreadLayout threadLayout) {
-
 	}
 }
