@@ -74,7 +74,7 @@ public class NewCommentFormLayout extends FormLayout implements View {
 		uploadButton.setImmediateMode(false);
 		uploadButton.setButtonCaption(null);
 		uploadButton.setAcceptMimeTypes("image/jpeg");
-		uploadButton.setAcceptMimeTypes("image/png"); //TODO: test this, lehet csak az egyik jó
+		uploadButton.setAcceptMimeTypes("image/png");
 
 		Button postButton = new Button("Post");
 		postButton.addStyleName("btn btn-primary");

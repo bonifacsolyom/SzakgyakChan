@@ -40,7 +40,6 @@ public class NotificationLayout extends VerticalLayout implements View {
 	void init() {
 
 		User currentUser = userService.findById(PermissionHandler.getCurrentUser().getId());
-		//TODO: ha nem sorban vannak a notificationök akkor tedd sorba
 		List<Notification> notifications = currentUser.getNotifications().stream()
 				.sorted((n1, n2) -> n2.getId().compareTo(n1.getId()))
 				.collect(Collectors.toList());
@@ -49,7 +48,6 @@ public class NotificationLayout extends VerticalLayout implements View {
 			if (notifications.size() <= i) break;
 			Notification notification = notifications.get(i);
 			HorizontalLayout notifLayout = new HorizontalLayout();
-			//TODO: reply és vote icon
 			Image icon = new Image();
 
 

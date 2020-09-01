@@ -75,7 +75,7 @@ public class NavbarLayout extends HorizontalLayout implements View {
         PermissionHandler.restrictComponentToLoggedOutUsers(adminLogin, adminLogin::setVisible);
         //TODO: end of TODO
 
-        //TODO: actual szép gomb a notificationökre
+        //TODO: ikon szépítése
         if (PermissionHandler.isLoggedIn()) {
             NotificationLayout notifLayout = appContext.getBean(NotificationLayout.class);
             PopupView notificationPopUp = new PopupView(null, notifLayout);

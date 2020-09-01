@@ -104,12 +104,10 @@ public class Reply {
 	}
 
 	public boolean checkIfUserUpvoted(Long userId) {
-		//TODO: ez lehet szar
 		return usersUpvoted.contains(userId);
 	}
 
 	public boolean checkIfUserDownvoted(Long userId) {
-		//TODO: ez lehet szar
 		return usersDownvoted.contains(userId);
 	}
 

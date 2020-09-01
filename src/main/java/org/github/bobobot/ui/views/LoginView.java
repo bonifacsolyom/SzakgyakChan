@@ -21,7 +21,6 @@ import java.util.Optional;
 public class LoginView extends HorizontalLayout implements View {
 	public static final String name = "loginView";
 
-	//TODO: ezt nem így kéne
 	@Autowired
 	private IUserService userService;
 

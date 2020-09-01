@@ -65,9 +65,6 @@ public class UserService implements IUserService {
 	public User addCommentNotification(User tempUser, CommentNotification notification) {
 		User user = findById(tempUser.getId());
 		user.addCommentNotification(notification);
-		//TODO: ez lehet hogy így rossz hajjaj remélem hogy nem
-		//TODO: igen, régi todo, ez valóban rossz, most fixelhetem hogy rohadnál meg
-//		return update(user);
 		return user;
 	}
 
