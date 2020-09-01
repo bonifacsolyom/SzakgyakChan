@@ -102,7 +102,7 @@ public class ThreadLayout extends VerticalLayout implements View {
 		PermissionHandler.restrictComponentToLoggedInUsers(newReplyButton, newReplyButton::setVisible);
 		PermissionHandler.restrictComponentToLoggedInUsers(newCommentFormLayout, newCommentFormLayout::setVisible);
 
-		addStyleName("thread-div card col-6");
+		addStyleName("thread-div card col-8");
 
 		return this;
 	}

@@ -16,7 +16,7 @@ public class ErrorView extends HorizontalLayout implements View {
 
 	@PostConstruct
 	void init() {
-		setStyleName("siteColor");
+		addStyleName("siteColor");
 		Label errorLabel = new Label("oh frick error");
 		addComponent(errorLabel);
 	}

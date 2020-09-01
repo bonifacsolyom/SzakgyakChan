@@ -41,11 +41,13 @@ public class NavbarLayout extends HorizontalLayout implements View {
         removeAllComponents();
         setWidthFull();
 
+        addStyleName("navbar");
+
         HorizontalLayout buttonLayout = new HorizontalLayout();
         buttonLayout.addStyleName("navbar-button-layout");
 
         Image logo = new Image(null, new ThemeResource("images/logo.png"));
-        logo.setStyleName("logo");
+        logo.addStyleName("logo");
         logo.addClickListener(clickEvent -> getUI().getNavigator().navigateTo(MainView.name));
         addComponent(logo);
         Button loginButton = new Button("Login", event -> getUI().getNavigator().navigateTo(LoginView.name));
@@ -76,8 +78,17 @@ public class NavbarLayout extends HorizontalLayout implements View {
         //TODO: actual szép gomb a notificationökre
         if (PermissionHandler.isLoggedIn()) {
             NotificationLayout notifLayout = appContext.getBean(NotificationLayout.class);
-            PopupView notificationPopUp = new PopupView("Notifications", notifLayout);
-            buttonLayout.addComponent(notificationPopUp);
+            PopupView notificationPopUp = new PopupView(null, notifLayout);
+
+            Button notificationButton = new Button();
+            notificationButton.addStyleNames("notification-button", "p-0");
+            notificationButton.setIcon(new ThemeResource("images/notification.png"));
+            notificationButton.setWidth(37, Unit.PIXELS);
+            notificationButton.setHeight(37, Unit.PIXELS);
+
+            notificationButton.addClickListener(event -> notificationPopUp.setPopupVisible(true));
+
+            buttonLayout.addComponents(notificationPopUp, notificationButton);
             PermissionHandler.restrictComponentToLoggedInUsers(notificationPopUp, notificationPopUp::setVisible);
         }
 

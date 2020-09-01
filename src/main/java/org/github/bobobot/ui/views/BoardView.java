@@ -39,12 +39,16 @@ public class BoardView extends VerticalLayout implements View {
 	@Getter
 	Board board;
 
-	private void setViewBoard(ViewChangeEvent event) {
+	/**
+	 * Sets which board this view should display, given to us by the URL parameters.
+	 * @param eventParameters The parameters of the enter event
+	 */
+	private void setViewBoard(String eventParameters) {
 		Long boardId = -1L;
 		try {
-			boardId = Long.parseLong(event.getParameters());
+			boardId = Long.parseLong(eventParameters);
 		} catch (NumberFormatException e) {
-			log.error("Incorrect board parameter: " + event.getParameters());
+			log.error("Incorrect board parameter: " + eventParameters);
 			e.printStackTrace();
 		}
 
@@ -55,7 +59,7 @@ public class BoardView extends VerticalLayout implements View {
 	@Transactional
 	public void enter(ViewChangeEvent event) {
 		log.info("Entered board view");
-		setViewBoard(event);
+		setViewBoard(event.getParameters());
 
 		//vaadin te csak megnehezíted az életemet
 		Label newThreadButton = new Label("<a class=\"btn btn-primary\" data-toggle=\"collapse\" href=\"#collapseNewThread\" role=\"button\" aria-expanded=\"false\" aria-controls=\"collapseExample\">" +

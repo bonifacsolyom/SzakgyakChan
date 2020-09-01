@@ -60,7 +60,6 @@ $v-app-loading-text: "Loading SzakgyakChan...";
 
 	html, body {
 		background-color: unset;
-		//color: #800;
 	}
 
 	.layout-padding {
@@ -68,9 +67,9 @@ $v-app-loading-text: "Loading SzakgyakChan...";
 	}
 
 	.text-button {
-		background: none!important;
+		background: none !important;
 		border: none;
-		padding: 0!important;
+		padding: 0 !important;
 		color: #069;
 		text-decoration: underline;
 		cursor: pointer;
@@ -90,7 +89,8 @@ $v-app-loading-text: "Loading SzakgyakChan...";
 	}
 
 	.thread-div {
-		@extend .unified-border;
+		//@extend .unified-border;
+		border: rgba(136, 0, 0, 0.6) 1px solid;
 		padding: 2px;
 		margin: 10px;
 		background-color: #eeb672;
@@ -105,7 +105,7 @@ $v-app-loading-text: "Loading SzakgyakChan...";
 	}
 
 	.reply-div__header {
-		background-color: #728a9d;
+		background-color: #8894a0;
 	}
 
 	.reply-div__content {
@@ -115,8 +115,6 @@ $v-app-loading-text: "Loading SzakgyakChan...";
 	//god forgive me for I have sinned
 	.v-slot-card-header {
 		@extend .card-header;
-		border: 2px #800 dashed;
-		border-radius: 3px;
 	}
 
 	//this is still the same sin btw pls don't punish me twice
@@ -148,20 +146,12 @@ $v-app-loading-text: "Loading SzakgyakChan...";
 		background-color: #885050;
 	}
 
-	.reply-image {
-		width: 100%;
-		border: solid 2px rgba(136, 0, 0, 0.4);
-		border-radius: 3px;
-
-	}
-	//i have no idea why this works but it does and that's all i need to know
-	.v-slot-reply-image {
-		width: 50%;
-	}
 
 	.create-comment-form {
 		@extend .unified-border;
-		padding: 2%;
+		padding: 20px;
+		margin: 10px;
+		width: min-content !important;
 	}
 
 	.create-thread-form {
@@ -188,7 +178,7 @@ $v-app-loading-text: "Loading SzakgyakChan...";
 	.upvote-button {
 		width: 70%;
 		cursor: pointer;
-		filter:opacity(0.7);
+		filter: opacity(0.7);
 	}
 
 	.downvote-button {
@@ -215,8 +205,13 @@ $v-app-loading-text: "Loading SzakgyakChan...";
 		height: auto;
 	}
 
+	.notification-button .v-icon {
+		max-width: 33px;
+		height: auto;
+	}
+
 	//just another anti-vaadin intézkedés
-	.v-formlayout-contentcell,.v-formlayout-captioncell,.v-formlayout-errorcell {
+	.v-formlayout-contentcell, .v-formlayout-captioncell, .v-formlayout-errorcell {
 		padding: 0 !important;
 	}
 
@@ -226,5 +221,75 @@ $v-app-loading-text: "Loading SzakgyakChan...";
 
 	.navbar-button-layout {
 		margin: 15px;
+	}
+
+	.reply-image {
+		width: 30%;
+		border: solid 2px rgba(136, 0, 0, 0.4);
+		border-radius: 3px;
+		float: left;
+		margin: 5px;
+		display: block;
+	}
+
+	//white-space normal because vaadin sets it to nowrap for some godforsaken reason
+	.reply-text {
+		display: block;
+		word-break: break-word;
+		white-space: normal;
+		padding-top: 2px;
+		padding-left: 5px;
+	}
+
+	.vote-layout {
+		padding: 0;
+		float: left;
+	}
+
+	//if we don't set this to a custom amount, part of the popup goes off from the screen
+	//just vaadin things
+	.v-popupview-popup {
+		left: 1430px !important;
+	}
+
+	.unread-notification {
+		width: 100%;
+		background-color: rgba(136, 0, 0, 0.5);
+		border: rgba(136, 0, 0, 0.7);
+		border-radius: 5px;
+		cursor: pointer;
+	}
+
+	.notification-label {
+		padding-right: 10px;
+	}
+
+	.logo {
+		height: 100px;
+	}
+
+	.board-list {
+		display: flex;
+		justify-content: space-between;
+		margin: 0 auto;
+		margin-top: 25px;
+	}
+
+	.board-list__short-name {
+		font-size: 25px;
+		padding: 10px;
+	}
+
+	.board-list__long-name {
+		padding: 10px;
+	}
+
+	.board-div > .v-spacing {
+		height: 0;
+	}
+
+	//nem vaadin, nem kérek oda extra helyet köszi
+	.v-slot-navbar + .v-spacing {
+		height: 0;
 	}
 }

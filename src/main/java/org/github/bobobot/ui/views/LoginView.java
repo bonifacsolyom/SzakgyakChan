@@ -28,7 +28,6 @@ public class LoginView extends HorizontalLayout implements View {
 	@PostConstruct
 	void init() {
 
-		setStyleName("siteColor");
 		LoginForm loginForm = new LoginForm();
 		loginForm.setUsernameCaption("Email");
 		loginForm.addLoginListener(loginEvent -> {

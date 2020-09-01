@@ -58,14 +58,14 @@ public class ReplyHeaderLayout extends HorizontalLayout implements View {
 
 		Label usernameLabel = new Label(reply.getUser().getName());
 		Label dateLabel = new Label(reply.getDate().format(DateTimeFormatter.ofPattern("MM/dd/yy hh:mm:ss")));
+		dateLabel.addStyleName("text-muted");
 		//TODO: icon instead of text
 		Button deleteButton = new Button();
-		deleteButton.addStyleName("delete-button");
+		deleteButton.addStyleNames("delete-button", "p-0");
 		deleteButton.addStyleName(ValoTheme.BUTTON_LINK);
 		deleteButton.setIcon(new ThemeResource("images/delete.png"));
 		deleteButton.setWidth(40, Unit.PIXELS);
 		deleteButton.setHeight(40, Unit.PIXELS);
-		deleteButton.addStyleName("p-0");
 		alignRightDiv.addComponent(deleteButton);
 		PermissionHandler.restrictComponentToLoggedInUser(deleteButton, reply.getUser().getId(), true);
 

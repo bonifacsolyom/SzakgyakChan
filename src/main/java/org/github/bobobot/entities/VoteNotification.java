@@ -34,15 +34,22 @@ public class VoteNotification extends Notification {
 		this.voteType = voteType;
 	}
 
+	/**
+	 * This method returns the notification in a string format.
+	 * It also makes sure that the text doesn't exceed 60 characters. (Vaadin is inflexible)
+	 */
 	@Override
 	public String getAsText() {
-		int textLimit = 30;
+		int textLimit = 50;
 
 		String voteTypeString;
 		if (voteType == VoteType.UPVOTE) voteTypeString = "an upvote";
 		else if (voteType == VoteType.DOWNVOTE) voteTypeString = "a downvote";
 		else voteTypeString = "ERROR";
-		return "Your reply \"" + shortenText(originalReply.getContent(), textLimit) + "\" received " + voteTypeString + "!";
+
+		String beginningOfText = "Your reply \"";
+		String endOfText = "\" received " + voteTypeString + "!";
+		return beginningOfText + shortenText(originalReply.getContent(), textLimit - beginningOfText.length() - endOfText.length()) + endOfText;
 	}
 
 	public enum VoteType {

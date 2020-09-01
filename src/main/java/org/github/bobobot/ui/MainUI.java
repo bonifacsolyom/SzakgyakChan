@@ -59,7 +59,7 @@ public class MainUI extends UI implements ViewDisplay {
 
 		layout = new VerticalLayout();
 		layout.setSizeFull();
-		layout.setStyleName("layout-padding");
+		layout.addStyleName("layout-padding");
 
 		setNavigator(navigator);
 		getNavigator().setErrorView(ErrorView.class);
@@ -69,7 +69,7 @@ public class MainUI extends UI implements ViewDisplay {
 
 		springViewDisplay = new Panel();
 		springViewDisplay.setSizeFull();
-		springViewDisplay.setStyleName("background-gradient");
+		springViewDisplay.addStyleName("background-gradient");
 		layout.addComponent(springViewDisplay);
 		layout.setExpandRatio(springViewDisplay, 1.0f);
 

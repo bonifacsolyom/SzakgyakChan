@@ -29,7 +29,6 @@ public class RegisterView extends HorizontalLayout implements View {
 
 	@PostConstruct
 	void init() {
-		setStyleName("siteColor");
 		FormLayout registerForm = new FormLayout();
 		Binder<User> binder = new Binder<>(User.class);
 

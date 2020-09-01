@@ -16,7 +16,7 @@ import java.time.format.DateTimeFormatter;
 
 @SpringComponent
 @Scope(value = ConfigurableBeanFactory.SCOPE_PROTOTYPE)
-public class ReplyLayout extends VerticalLayout implements View {
+public class ReplyLayout extends CssLayout implements View {
 
 	@Autowired
 	private ApplicationContext appContext;
@@ -25,14 +25,13 @@ public class ReplyLayout extends VerticalLayout implements View {
 
 	public ReplyLayout init(Reply reply) {
 		this.reply = reply;
-		setSpacing(false);
 
 		ReplyHeaderLayout headerLayout = appContext.getBean(ReplyHeaderLayout.class).init(reply);
 		ReplyContentLayout contentLayout = appContext.getBean(ReplyContentLayout.class).init(reply);
 
 		addComponents(headerLayout, contentLayout);
 
-		addStyleName("reply-div card col-6");
+		addStyleName("reply-div card col-9");
 
 		return this;
 	}

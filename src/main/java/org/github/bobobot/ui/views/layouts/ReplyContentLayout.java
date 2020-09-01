@@ -30,7 +30,7 @@ import static org.github.bobobot.entities.VoteNotification.VoteType;
 @Slf4j
 @SpringComponent
 @Scope(value = ConfigurableBeanFactory.SCOPE_PROTOTYPE)
-public class ReplyContentLayout extends HorizontalLayout implements View {
+public class ReplyContentLayout extends CssLayout implements View {
 
 	Reply reply;
 
@@ -48,6 +48,7 @@ public class ReplyContentLayout extends HorizontalLayout implements View {
 		userId = PermissionHandler.getCurrentUser().getId();
 
 		VerticalLayout voteLayout = new VerticalLayout();
+		voteLayout.addStyleName("vote-layout");
 		Image upvoteButton = new Image(null, new ThemeResource("images/upvote.png"));
 		upvoteButton.addStyleName("upvote-button");
 		Label voteNumberLabel = new Label(String.valueOf(reply.getVoteCount()));
@@ -59,6 +60,8 @@ public class ReplyContentLayout extends HorizontalLayout implements View {
 		voteLayout.setComponentAlignment(upvoteButton, Alignment.MIDDLE_CENTER);
 		voteLayout.setComponentAlignment(voteNumberLabel, Alignment.MIDDLE_CENTER);
 		voteLayout.setComponentAlignment(downvoteButton, Alignment.MIDDLE_CENTER);
+
+		voteLayout.setWidthUndefined();
 
 		setVoteColor(voteLayout);
 
@@ -105,6 +108,7 @@ public class ReplyContentLayout extends HorizontalLayout implements View {
 			replyImage.addStyleName("reply-image");
 		}
 		Label replyContentLabel = new Label(reply.getContent());
+		replyContentLabel.addStyleName("reply-text");
 		addComponent(replyContentLabel);
 		addStyleName("reply-div__content card-body col-12");
 
