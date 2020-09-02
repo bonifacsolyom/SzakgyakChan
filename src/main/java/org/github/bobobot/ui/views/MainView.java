@@ -1,5 +1,7 @@
 package org.github.bobobot.ui.views;
 
+import com.vaadin.event.ShortcutAction;
+import com.vaadin.event.ShortcutListener;
 import com.vaadin.navigator.View;
 import com.vaadin.shared.MouseEventDetails;
 import com.vaadin.shared.ui.ContentMode;
@@ -16,6 +18,10 @@ import org.springframework.beans.factory.config.ConfigurableBeanFactory;
 import org.springframework.context.annotation.Scope;
 
 import javax.annotation.PostConstruct;
+
+import java.security.Key;
+import java.util.ArrayList;
+import java.util.List;
 
 import static com.vaadin.navigator.ViewChangeListener.ViewChangeEvent;
 
@@ -41,6 +47,8 @@ public class MainView extends CssLayout implements View {
 		setWidthFull();
 		boardLayout.addStyleNames("board-list", "col-6");
 
+		List<VerticalLayout> boardDivs = new ArrayList<>();
+
 		for (Board board : boardService.list()) {
 			VerticalLayout div = new VerticalLayout();
 			Label shortName = new Label("/" + board.getShortName() + "/");
@@ -52,9 +60,27 @@ public class MainView extends CssLayout implements View {
 				if (layoutClickEvent.getButton().equals(MouseEventDetails.MouseButton.LEFT)) //We make sure that the user only navigates to another board if they pressed left click
 					getUI().getNavigator().navigateTo(BoardView.name + "/" + board.getId());
 			});
-			div.addStyleNames("board-div", "col-3");
+			div.addStyleNames("board-div", "col-3", "invisible");
 			boardLayout.addComponent(div);
+			boardDivs.add(div);
 		}
+
+		//Presentation mode
+
+		addShortcutListener(new ShortcutListener("presentation-shortcut-listener", ShortcutAction.KeyCode.SPACEBAR, null) {
+			int divShown = 0;
+
+			@Override
+			public void handleAction(Object sender, Object target) {
+				if (divShown < boardDivs.size()) {
+					VerticalLayout boardLayout = boardDivs.get(divShown++);
+					boardLayout.removeStyleName("invisible");
+					boardLayout.addStyleNames("animate__animated", "animate__fadeInDown");
+
+
+				}
+			}
+		});
 
 		addComponent(boardLayout);
 	}

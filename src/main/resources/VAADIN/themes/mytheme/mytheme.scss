@@ -81,11 +81,15 @@ $v-app-loading-text: "Loading SzakgyakChan...";
 		border-radius: 7px;
 		margin: 5px;
 		padding: 7px;
+		transition: transform .2s;
 	}
 
 	.board-div:hover {
 		box-shadow: rgb(150, 150, 150) 2px 2px 3px;
 		cursor: pointer;
+		-ms-transform: scale(1.5); /* IE 9 */
+		-webkit-transform: scale(1.5); /* Safari 3-8 */
+		transform: scale(1.5);
 	}
 
 	.thread-div {
@@ -314,8 +318,9 @@ $v-app-loading-text: "Loading SzakgyakChan...";
 			display: inline-block;
 			font-weight: bold;
 			font-size: 50px;
+			margin: 0
 		}
-		margin: 5px auto 25px;
+		margin: 50px auto 80px;
 		width: fit-content;
 		display: block;
 	}
