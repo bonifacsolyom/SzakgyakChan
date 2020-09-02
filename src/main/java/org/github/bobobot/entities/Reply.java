@@ -34,16 +34,6 @@ public class Reply {
 	@Column(name = "postDate")
 	LocalDateTime date;
 
-	@ElementCollection(fetch = FetchType.EAGER)
-	@OnDelete(action= OnDeleteAction.CASCADE)
-	@JoinColumn(name = "reply_id")
-	private Set<Long> usersUpvoted = new HashSet<>();
-
-	@ElementCollection(fetch = FetchType.EAGER)
-	@OnDelete(action= OnDeleteAction.CASCADE)
-	@JoinColumn(name = "reply_id")
-	private Set<Long> usersDownvoted = new HashSet<>();
-
 	@ToString.Exclude
 	@ManyToOne
 	Thread thread;
@@ -53,6 +43,16 @@ public class Reply {
 	User user;
 
 	String image;
+
+	@ElementCollection(fetch = FetchType.EAGER)
+	@OnDelete(action = OnDeleteAction.CASCADE)
+	@JoinColumn(name = "reply_id")
+	private Set<Long> usersUpvoted = new HashSet<>();
+
+	@ElementCollection(fetch = FetchType.EAGER)
+	@OnDelete(action = OnDeleteAction.CASCADE)
+	@JoinColumn(name = "reply_id")
+	private Set<Long> usersDownvoted = new HashSet<>();
 
 	public Reply(String content, LocalDateTime date, Thread thread, User user, String image) {
 		this.content = content;

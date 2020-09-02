@@ -10,7 +10,6 @@ import org.apache.commons.validator.routines.EmailValidator;
 import org.github.bobobot.entities.User;
 import org.github.bobobot.services.IUserService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.core.annotation.AliasFor;
 
 import javax.annotation.PostConstruct;
 

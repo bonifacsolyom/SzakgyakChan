@@ -28,13 +28,11 @@ import java.util.stream.Collectors;
 @Transactional
 public class NotificationLayout extends VerticalLayout implements View {
 
+	private final int NOTIFICATIONS_TO_SHOW = 6;
 	@Autowired
 	private IUserService userService;
-
 	@Autowired
 	private INotificationService notificationService;
-
-	private final int NOTIFICATIONS_TO_SHOW = 6;
 
 	@PostConstruct
 	void init() {

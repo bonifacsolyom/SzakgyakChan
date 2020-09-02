@@ -59,7 +59,7 @@ public class ReplyService implements IReplyService {
 	@Override
 	@Transactional
 	public Reply post(Reply tempReply) {
-		//Értesítjük minden reply userét, hogy egy új reply érkezett a threadbe
+		//We notify every single reply's user that there's a new comment in the thread
 		Reply reply = replyRepository.save(tempReply);
 		notifyUsersAboutReplies(reply);
 		threadService.findById(reply.getThread().getId()).addReply(reply);
@@ -68,7 +68,7 @@ public class ReplyService implements IReplyService {
 
 	@Override
 	public Reply update(Reply tempReply) {
-		getReplyIfPresent(replyRepository.findById(tempReply.getId())); //dobjunk errort ha nem létezik
+		getReplyIfPresent(replyRepository.findById(tempReply.getId())); //throw an error if it doesn't exist
 		return replyRepository.save(tempReply);
 	}
 
@@ -119,13 +119,12 @@ public class ReplyService implements IReplyService {
 	@Override
 	@Transactional
 	public void delete(Long id) {
-		Reply reply = getReplyIfPresent(replyRepository.findById(id)); //dobjunk errort ha nem létezik
-		Thread replyThread = threadService.findById(reply.getThread().getId()); //fúj bazdmeg
-//		If the reply we're deleting happens to be the first reply of a thread, delete the entire thread
+		Reply reply = getReplyIfPresent(replyRepository.findById(id)); //throw an error if it doesn't exist
+		Thread replyThread = threadService.findById(reply.getThread().getId());
+		//If the reply we're deleting happens to be the first reply of a thread, delete the entire thread
 		if (replyThread.getReplies().get(0).getId().equals(reply.getId())) threadService.delete(replyThread.getId());
 		else {
 			replyRepository.deleteById(id);
 		}
-//		entityManager.remove(reply);
 	}
 }

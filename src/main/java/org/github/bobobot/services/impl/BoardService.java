@@ -4,7 +4,6 @@ import org.github.bobobot.entities.Board;
 import org.github.bobobot.repositories.IBoardRepository;
 import org.github.bobobot.services.IBoardService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Optional;
@@ -28,7 +27,7 @@ public class BoardService implements IBoardService {
 
 	@Override
 	public Board update(Board tempBoard) {
-		getBoardIfPresent(repository.findById(tempBoard.getId())); //dobjunk errort ha nem létezik
+		getBoardIfPresent(repository.findById(tempBoard.getId())); //throw an error if it doesn't exist
 		return repository.save(tempBoard);
 	}
 
@@ -51,7 +50,7 @@ public class BoardService implements IBoardService {
 
 	@Override
 	public void delete(Long id) {
-		getBoardIfPresent(repository.findById(id)); //dobjunk errort ha nem létezik
+		getBoardIfPresent(repository.findById(id)); //throw an error if it doesn't exist
 		repository.deleteById(id);
 	}
 }

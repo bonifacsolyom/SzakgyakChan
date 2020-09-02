@@ -8,7 +8,6 @@ import org.github.bobobot.entities.User;
 import org.github.bobobot.entities.VoteNotification;
 import org.github.bobobot.repositories.IUserRepository;
 import org.github.bobobot.services.IUserService;
-import org.hibernate.Hibernate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.transaction.annotation.Transactional;
@@ -55,7 +54,7 @@ public class UserService implements IUserService {
 
 	@Override
 	public User update(User tempUser) {
-		getUserIfPresent(repository.findById(tempUser.getId())); //dobjunk errort ha nem létezik
+		getUserIfPresent(repository.findById(tempUser.getId())); //throw an error if it doesn't exist
 		validateEmail(tempUser.getEmail());
 		return repository.save(tempUser);
 	}
@@ -99,7 +98,7 @@ public class UserService implements IUserService {
 
 	@Override
 	public void delete(Long id) {
-		getUserIfPresent(repository.findById(id)); //dobjunk errort ha nem létezik
+		getUserIfPresent(repository.findById(id)); //throw an error if it doesn't exist
 		repository.deleteById(id);
 	}
 

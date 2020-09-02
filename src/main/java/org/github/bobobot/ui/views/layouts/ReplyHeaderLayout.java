@@ -14,7 +14,6 @@ import org.github.bobobot.ui.views.BoardView;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.config.ConfigurableBeanFactory;
 import org.springframework.context.annotation.Scope;
-import org.springframework.transaction.support.TransactionTemplate;
 
 import java.time.format.DateTimeFormatter;
 import java.util.Optional;
@@ -34,11 +33,7 @@ public class ReplyHeaderLayout extends HorizontalLayout implements View {
 	@Autowired
 	private IReplyService replyService;
 
-	@Autowired
-	private TransactionTemplate transactionTemplate;
-
-	private HorizontalLayout alignRightDiv = new HorizontalLayout();
-
+	private final HorizontalLayout alignRightDiv = new HorizontalLayout();
 
 	public ReplyHeaderLayout init(Reply reply) {
 		return init(Optional.empty(), reply);

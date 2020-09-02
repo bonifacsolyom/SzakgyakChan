@@ -1,5 +1,7 @@
 <?xml version="1.1" encoding="UTF-8" standalone="no"?>
-<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog" xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.6.xsd">
+<databaseChangeLog xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+                   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.6.xsd">
     <changeSet author="gyakornok (generated)" id="1597825673435-1">
         <createSequence sequenceName="BOARD_SEQ" minValue="1" incrementBy="1"/>
     </changeSet>
@@ -172,22 +174,28 @@
         </createTable>
     </changeSet>
     <changeSet author="gyakornok (generated)" id="1597825673435-27">
-        <addUniqueConstraint columnNames="REPLIES_ID" constraintName="UK_7W4NP129IP0BJ0X3ESPUWJO2B" tableName="THREAD_REPLIES"/>
+        <addUniqueConstraint columnNames="REPLIES_ID" constraintName="UK_7W4NP129IP0BJ0X3ESPUWJO2B"
+                             tableName="THREAD_REPLIES"/>
     </changeSet>
     <changeSet author="gyakornok (generated)" id="1597825673435-28">
-        <addUniqueConstraint columnNames="REPLIES_ID" constraintName="UK_9XAXJBJ0J2J5LXGV0K26YG029" tableName="RUSER_REPLIES"/>
+        <addUniqueConstraint columnNames="REPLIES_ID" constraintName="UK_9XAXJBJ0J2J5LXGV0K26YG029"
+                             tableName="RUSER_REPLIES"/>
     </changeSet>
     <changeSet author="gyakornok (generated)" id="1597825673435-29">
-        <addUniqueConstraint columnNames="COMMENT_NOTIFICATIONS_ID" constraintName="UK_BBOVSEOKI2QTYOJWA85KTXTQ6" tableName="RUSER_COMMENT_NOTIFICATIONS"/>
+        <addUniqueConstraint columnNames="COMMENT_NOTIFICATIONS_ID" constraintName="UK_BBOVSEOKI2QTYOJWA85KTXTQ6"
+                             tableName="RUSER_COMMENT_NOTIFICATIONS"/>
     </changeSet>
     <changeSet author="gyakornok (generated)" id="1597825673435-30">
-        <addUniqueConstraint columnNames="THREADS_ID" constraintName="UK_C5O765T5W6LGQJAL28BO6JD9U" tableName="RUSER_THREADS"/>
+        <addUniqueConstraint columnNames="THREADS_ID" constraintName="UK_C5O765T5W6LGQJAL28BO6JD9U"
+                             tableName="RUSER_THREADS"/>
     </changeSet>
     <changeSet author="gyakornok (generated)" id="1597825673435-31">
-        <addUniqueConstraint columnNames="THREADS_ID" constraintName="UK_E1QT2OFYF5RBCVYNQL5IFROVF" tableName="BOARD_THREADS"/>
+        <addUniqueConstraint columnNames="THREADS_ID" constraintName="UK_E1QT2OFYF5RBCVYNQL5IFROVF"
+                             tableName="BOARD_THREADS"/>
     </changeSet>
     <changeSet author="gyakornok (generated)" id="1597825673435-35">
-        <addUniqueConstraint columnNames="VOTE_NOTIFICATIONS_ID" constraintName="UK_NHC52C5EO0N5QGQF8RV1JT8D6" tableName="RUSER_VOTE_NOTIFICATIONS"/>
+        <addUniqueConstraint columnNames="VOTE_NOTIFICATIONS_ID" constraintName="UK_NHC52C5EO0N5QGQF8RV1JT8D6"
+                             tableName="RUSER_VOTE_NOTIFICATIONS"/>
     </changeSet>
     <changeSet author="gyakornok (generated)" id="1597825673435-37">
         <createIndex indexName="FK1EM39NBGUJCQ166L2OMI_INDEX_F" tableName="RUSER_COMMENT_NOTIFICATIONS">
@@ -265,66 +273,128 @@
         </createIndex>
     </changeSet>
     <changeSet author="gyakornok (generated)" id="1597825673435-56">
-        <addForeignKeyConstraint baseColumnNames="USER_ID" baseTableName="RUSER_COMMENT_NOTIFICATIONS" constraintName="FK1EM39NBGUJCQ166L2OMI" deferrable="false" initiallyDeferred="false" onDelete="RESTRICT" onUpdate="RESTRICT" referencedColumnNames="ID" referencedTableName="RUSER" validate="true"/>
+        <addForeignKeyConstraint baseColumnNames="USER_ID" baseTableName="RUSER_COMMENT_NOTIFICATIONS"
+                                 constraintName="FK1EM39NBGUJCQ166L2OMI" deferrable="false" initiallyDeferred="false"
+                                 onDelete="RESTRICT" onUpdate="RESTRICT" referencedColumnNames="ID"
+                                 referencedTableName="RUSER" validate="true"/>
     </changeSet>
     <changeSet author="gyakornok (generated)" id="1597825673435-57">
-        <addForeignKeyConstraint baseColumnNames="ORIGINAL_REPLY_ID" baseTableName="VOTE_NOTIFICATION" constraintName="FK2X40PQBVAIHS604BFPK0" deferrable="false" initiallyDeferred="false" onDelete="CASCADE" onUpdate="RESTRICT" referencedColumnNames="ID" referencedTableName="REPLY" validate="true"/>
+        <addForeignKeyConstraint baseColumnNames="ORIGINAL_REPLY_ID" baseTableName="VOTE_NOTIFICATION"
+                                 constraintName="FK2X40PQBVAIHS604BFPK0" deferrable="false" initiallyDeferred="false"
+                                 onDelete="CASCADE" onUpdate="RESTRICT" referencedColumnNames="ID"
+                                 referencedTableName="REPLY" validate="true"/>
     </changeSet>
     <changeSet author="gyakornok (generated)" id="1597825673435-58">
-        <addForeignKeyConstraint baseColumnNames="USER_ID" baseTableName="RUSER_VOTE_NOTIFICATIONS" constraintName="FK4CR8DAD2XL4XYRIIU6CP" deferrable="false" initiallyDeferred="false" onDelete="RESTRICT" onUpdate="RESTRICT" referencedColumnNames="ID" referencedTableName="RUSER" validate="true"/>
+        <addForeignKeyConstraint baseColumnNames="USER_ID" baseTableName="RUSER_VOTE_NOTIFICATIONS"
+                                 constraintName="FK4CR8DAD2XL4XYRIIU6CP" deferrable="false" initiallyDeferred="false"
+                                 onDelete="RESTRICT" onUpdate="RESTRICT" referencedColumnNames="ID"
+                                 referencedTableName="RUSER" validate="true"/>
     </changeSet>
     <changeSet author="gyakornok (generated)" id="1597825673435-59">
-        <addForeignKeyConstraint baseColumnNames="USER_ID" baseTableName="RUSER_THREADS" constraintName="FK53UN5ADSSCUFCI6L77TY" deferrable="false" initiallyDeferred="false" onDelete="RESTRICT" onUpdate="RESTRICT" referencedColumnNames="ID" referencedTableName="RUSER" validate="true"/>
+        <addForeignKeyConstraint baseColumnNames="USER_ID" baseTableName="RUSER_THREADS"
+                                 constraintName="FK53UN5ADSSCUFCI6L77TY" deferrable="false" initiallyDeferred="false"
+                                 onDelete="RESTRICT" onUpdate="RESTRICT" referencedColumnNames="ID"
+                                 referencedTableName="RUSER" validate="true"/>
     </changeSet>
     <changeSet author="gyakornok (generated)" id="1597825673435-60">
-        <addForeignKeyConstraint baseColumnNames="USER_ID" baseTableName="RUSER_REPLIES" constraintName="FK5O86AK88E92ERJ3AO5MH" deferrable="false" initiallyDeferred="false" onDelete="RESTRICT" onUpdate="RESTRICT" referencedColumnNames="ID" referencedTableName="RUSER" validate="true"/>
+        <addForeignKeyConstraint baseColumnNames="USER_ID" baseTableName="RUSER_REPLIES"
+                                 constraintName="FK5O86AK88E92ERJ3AO5MH" deferrable="false" initiallyDeferred="false"
+                                 onDelete="RESTRICT" onUpdate="RESTRICT" referencedColumnNames="ID"
+                                 referencedTableName="RUSER" validate="true"/>
     </changeSet>
     <changeSet author="gyakornok (generated)" id="1597825673435-61">
-        <addForeignKeyConstraint baseColumnNames="THREADS_ID" baseTableName="BOARD_THREADS" constraintName="FK6NEBM55AF0S32FGQH6DF" deferrable="false" initiallyDeferred="false" onDelete="CASCADE" onUpdate="RESTRICT" referencedColumnNames="ID" referencedTableName="THREAD" validate="true"/>
+        <addForeignKeyConstraint baseColumnNames="THREADS_ID" baseTableName="BOARD_THREADS"
+                                 constraintName="FK6NEBM55AF0S32FGQH6DF" deferrable="false" initiallyDeferred="false"
+                                 onDelete="CASCADE" onUpdate="RESTRICT" referencedColumnNames="ID"
+                                 referencedTableName="THREAD" validate="true"/>
     </changeSet>
     <changeSet author="gyakornok (generated)" id="1597825673435-62">
-        <addForeignKeyConstraint baseColumnNames="REPLY_ID" baseTableName="REPLY_USERS_DOWNVOTED" constraintName="FK6Y186PV4AH0S4XEMD9HY" deferrable="false" initiallyDeferred="false" onDelete="RESTRICT" onUpdate="RESTRICT" referencedColumnNames="ID" referencedTableName="REPLY" validate="true"/>
+        <addForeignKeyConstraint baseColumnNames="REPLY_ID" baseTableName="REPLY_USERS_DOWNVOTED"
+                                 constraintName="FK6Y186PV4AH0S4XEMD9HY" deferrable="false" initiallyDeferred="false"
+                                 onDelete="RESTRICT" onUpdate="RESTRICT" referencedColumnNames="ID"
+                                 referencedTableName="REPLY" validate="true"/>
     </changeSet>
     <changeSet author="gyakornok (generated)" id="1597825673435-63">
-        <addForeignKeyConstraint baseColumnNames="THREAD_ID" baseTableName="THREAD_REPLIES" constraintName="FKBEJDSQ1G5QJJ8UMHR10N" deferrable="false" initiallyDeferred="false" onDelete="RESTRICT" onUpdate="RESTRICT" referencedColumnNames="ID" referencedTableName="THREAD" validate="true"/>
+        <addForeignKeyConstraint baseColumnNames="THREAD_ID" baseTableName="THREAD_REPLIES"
+                                 constraintName="FKBEJDSQ1G5QJJ8UMHR10N" deferrable="false" initiallyDeferred="false"
+                                 onDelete="RESTRICT" onUpdate="RESTRICT" referencedColumnNames="ID"
+                                 referencedTableName="THREAD" validate="true"/>
     </changeSet>
     <changeSet author="gyakornok (generated)" id="1597825673435-64">
-        <addForeignKeyConstraint baseColumnNames="REPLY_ID" baseTableName="REPLY_USERS_UPVOTED" constraintName="FKBSUEMILPQFSM5IEH1WSQ" deferrable="false" initiallyDeferred="false" onDelete="RESTRICT" onUpdate="RESTRICT" referencedColumnNames="ID" referencedTableName="REPLY" validate="true"/>
+        <addForeignKeyConstraint baseColumnNames="REPLY_ID" baseTableName="REPLY_USERS_UPVOTED"
+                                 constraintName="FKBSUEMILPQFSM5IEH1WSQ" deferrable="false" initiallyDeferred="false"
+                                 onDelete="RESTRICT" onUpdate="RESTRICT" referencedColumnNames="ID"
+                                 referencedTableName="REPLY" validate="true"/>
     </changeSet>
     <changeSet author="gyakornok (generated)" id="1597825673435-65">
-        <addForeignKeyConstraint baseColumnNames="BOARD_ID" baseTableName="BOARD_THREADS" constraintName="FKDGHPV747ST9DW2W52G2H" deferrable="false" initiallyDeferred="false" onDelete="RESTRICT" onUpdate="RESTRICT" referencedColumnNames="ID" referencedTableName="BOARD" validate="true"/>
+        <addForeignKeyConstraint baseColumnNames="BOARD_ID" baseTableName="BOARD_THREADS"
+                                 constraintName="FKDGHPV747ST9DW2W52G2H" deferrable="false" initiallyDeferred="false"
+                                 onDelete="RESTRICT" onUpdate="RESTRICT" referencedColumnNames="ID"
+                                 referencedTableName="BOARD" validate="true"/>
     </changeSet>
     <changeSet author="gyakornok (generated)" id="1597825673435-66">
-        <addForeignKeyConstraint baseColumnNames="OTHER_USERS_REPLY_ID" baseTableName="COMMENT_NOTIFICATION" constraintName="FKF6PX7P0PS15XFUA6YD7Y" deferrable="false" initiallyDeferred="false" onDelete="CASCADE" onUpdate="RESTRICT" referencedColumnNames="ID" referencedTableName="REPLY" validate="true"/>
+        <addForeignKeyConstraint baseColumnNames="OTHER_USERS_REPLY_ID" baseTableName="COMMENT_NOTIFICATION"
+                                 constraintName="FKF6PX7P0PS15XFUA6YD7Y" deferrable="false" initiallyDeferred="false"
+                                 onDelete="CASCADE" onUpdate="RESTRICT" referencedColumnNames="ID"
+                                 referencedTableName="REPLY" validate="true"/>
     </changeSet>
     <changeSet author="gyakornok (generated)" id="1597825673435-67">
-        <addForeignKeyConstraint baseColumnNames="THREADS_ID" baseTableName="RUSER_THREADS" constraintName="FKFIDQL15X99KBF08QAPBV" deferrable="false" initiallyDeferred="false" onDelete="CASCADE" onUpdate="RESTRICT" referencedColumnNames="ID" referencedTableName="THREAD" validate="true"/>
+        <addForeignKeyConstraint baseColumnNames="THREADS_ID" baseTableName="RUSER_THREADS"
+                                 constraintName="FKFIDQL15X99KBF08QAPBV" deferrable="false" initiallyDeferred="false"
+                                 onDelete="CASCADE" onUpdate="RESTRICT" referencedColumnNames="ID"
+                                 referencedTableName="THREAD" validate="true"/>
     </changeSet>
     <changeSet author="gyakornok (generated)" id="1597825673435-68">
-        <addForeignKeyConstraint baseColumnNames="USER_ID" baseTableName="THREAD" constraintName="FKI7CYUE1SHO86C7788I0X" deferrable="false" initiallyDeferred="false" onDelete="RESTRICT" onUpdate="RESTRICT" referencedColumnNames="ID" referencedTableName="RUSER" validate="true"/>
+        <addForeignKeyConstraint baseColumnNames="USER_ID" baseTableName="THREAD"
+                                 constraintName="FKI7CYUE1SHO86C7788I0X" deferrable="false" initiallyDeferred="false"
+                                 onDelete="RESTRICT" onUpdate="RESTRICT" referencedColumnNames="ID"
+                                 referencedTableName="RUSER" validate="true"/>
     </changeSet>
     <changeSet author="gyakornok (generated)" id="1597825673435-69">
-        <addForeignKeyConstraint baseColumnNames="COMMENT_NOTIFICATIONS_ID" baseTableName="RUSER_COMMENT_NOTIFICATIONS" constraintName="FKK2993E12PLDOV2H6AG7H" deferrable="false" initiallyDeferred="false" onDelete="CASCADE" onUpdate="RESTRICT" referencedColumnNames="ID" referencedTableName="COMMENT_NOTIFICATION" validate="true"/>
+        <addForeignKeyConstraint baseColumnNames="COMMENT_NOTIFICATIONS_ID" baseTableName="RUSER_COMMENT_NOTIFICATIONS"
+                                 constraintName="FKK2993E12PLDOV2H6AG7H" deferrable="false" initiallyDeferred="false"
+                                 onDelete="CASCADE" onUpdate="RESTRICT" referencedColumnNames="ID"
+                                 referencedTableName="COMMENT_NOTIFICATION" validate="true"/>
     </changeSet>
     <changeSet author="gyakornok (generated)" id="1597825673435-70">
-        <addForeignKeyConstraint baseColumnNames="VOTE_NOTIFICATIONS_ID" baseTableName="RUSER_VOTE_NOTIFICATIONS" constraintName="FKKQ01AY60YTJI1M051E00" deferrable="false" initiallyDeferred="false" onDelete="CASCADE" onUpdate="RESTRICT" referencedColumnNames="ID" referencedTableName="VOTE_NOTIFICATION" validate="true"/>
+        <addForeignKeyConstraint baseColumnNames="VOTE_NOTIFICATIONS_ID" baseTableName="RUSER_VOTE_NOTIFICATIONS"
+                                 constraintName="FKKQ01AY60YTJI1M051E00" deferrable="false" initiallyDeferred="false"
+                                 onDelete="CASCADE" onUpdate="RESTRICT" referencedColumnNames="ID"
+                                 referencedTableName="VOTE_NOTIFICATION" validate="true"/>
     </changeSet>
     <changeSet author="gyakornok (generated)" id="1597825673435-71">
-        <addForeignKeyConstraint baseColumnNames="USER_ID" baseTableName="REPLY" constraintName="FKM1GOLXAHHTSU3LIC789Y" deferrable="false" initiallyDeferred="false" onDelete="RESTRICT" onUpdate="RESTRICT" referencedColumnNames="ID" referencedTableName="RUSER" validate="true"/>
+        <addForeignKeyConstraint baseColumnNames="USER_ID" baseTableName="REPLY" constraintName="FKM1GOLXAHHTSU3LIC789Y"
+                                 deferrable="false" initiallyDeferred="false" onDelete="RESTRICT" onUpdate="RESTRICT"
+                                 referencedColumnNames="ID" referencedTableName="RUSER" validate="true"/>
     </changeSet>
     <changeSet author="gyakornok (generated)" id="1597825673435-72">
-        <addForeignKeyConstraint baseColumnNames="THREAD_ID" baseTableName="REPLY" constraintName="FKMA462CWFKRLTWXAA8AXF" deferrable="false" initiallyDeferred="false" onDelete="RESTRICT" onUpdate="RESTRICT" referencedColumnNames="ID" referencedTableName="THREAD" validate="true"/>
+        <addForeignKeyConstraint baseColumnNames="THREAD_ID" baseTableName="REPLY"
+                                 constraintName="FKMA462CWFKRLTWXAA8AXF" deferrable="false" initiallyDeferred="false"
+                                 onDelete="RESTRICT" onUpdate="RESTRICT" referencedColumnNames="ID"
+                                 referencedTableName="THREAD" validate="true"/>
     </changeSet>
     <changeSet author="gyakornok (generated)" id="1597825673435-73">
-        <addForeignKeyConstraint baseColumnNames="BOARD_ID" baseTableName="THREAD" constraintName="FKMHCS3JVPY4XQXNQW0F40" deferrable="false" initiallyDeferred="false" onDelete="RESTRICT" onUpdate="RESTRICT" referencedColumnNames="ID" referencedTableName="BOARD" validate="true"/>
+        <addForeignKeyConstraint baseColumnNames="BOARD_ID" baseTableName="THREAD"
+                                 constraintName="FKMHCS3JVPY4XQXNQW0F40" deferrable="false" initiallyDeferred="false"
+                                 onDelete="RESTRICT" onUpdate="RESTRICT" referencedColumnNames="ID"
+                                 referencedTableName="BOARD" validate="true"/>
     </changeSet>
     <changeSet author="gyakornok (generated)" id="1597825673435-76">
-        <addForeignKeyConstraint baseColumnNames="REPLIES_ID" baseTableName="RUSER_REPLIES" constraintName="FKONKW25OUELDHL5O6DTP9" deferrable="false" initiallyDeferred="false" onDelete="RESTRICT" onUpdate="RESTRICT" referencedColumnNames="ID" referencedTableName="REPLY" validate="true"/>
+        <addForeignKeyConstraint baseColumnNames="REPLIES_ID" baseTableName="RUSER_REPLIES"
+                                 constraintName="FKONKW25OUELDHL5O6DTP9" deferrable="false" initiallyDeferred="false"
+                                 onDelete="RESTRICT" onUpdate="RESTRICT" referencedColumnNames="ID"
+                                 referencedTableName="REPLY" validate="true"/>
     </changeSet>
     <changeSet author="gyakornok (generated)" id="1597825673435-77">
-        <addForeignKeyConstraint baseColumnNames="ORIGINAL_REPLY_ID" baseTableName="COMMENT_NOTIFICATION" constraintName="FKOUOJK3O2UEGKMOQGNRJO" deferrable="false" initiallyDeferred="false" onDelete="CASCADE" onUpdate="RESTRICT" referencedColumnNames="ID" referencedTableName="REPLY" validate="true"/>
+        <addForeignKeyConstraint baseColumnNames="ORIGINAL_REPLY_ID" baseTableName="COMMENT_NOTIFICATION"
+                                 constraintName="FKOUOJK3O2UEGKMOQGNRJO" deferrable="false" initiallyDeferred="false"
+                                 onDelete="CASCADE" onUpdate="RESTRICT" referencedColumnNames="ID"
+                                 referencedTableName="REPLY" validate="true"/>
     </changeSet>
     <changeSet author="gyakornok (generated)" id="1597825673435-78">
-        <addForeignKeyConstraint baseColumnNames="REPLIES_ID" baseTableName="THREAD_REPLIES" constraintName="FKP25JHN4NFAXJE22CG72S" deferrable="false" initiallyDeferred="false" onDelete="CASCADE" onUpdate="RESTRICT" referencedColumnNames="ID" referencedTableName="REPLY" validate="true"/>
+        <addForeignKeyConstraint baseColumnNames="REPLIES_ID" baseTableName="THREAD_REPLIES"
+                                 constraintName="FKP25JHN4NFAXJE22CG72S" deferrable="false" initiallyDeferred="false"
+                                 onDelete="CASCADE" onUpdate="RESTRICT" referencedColumnNames="ID"
+                                 referencedTableName="REPLY" validate="true"/>
     </changeSet>
 </databaseChangeLog>

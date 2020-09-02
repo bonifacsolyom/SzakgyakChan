@@ -5,7 +5,6 @@ import com.vaadin.server.FileResource;
 import com.vaadin.server.ThemeResource;
 import com.vaadin.spring.annotation.SpringComponent;
 import com.vaadin.ui.*;
-import com.vaadin.ui.themes.ValoTheme;
 import lombok.extern.slf4j.Slf4j;
 import org.github.bobobot.access.PermissionHandler;
 import org.github.bobobot.entities.Reply;
@@ -36,11 +35,9 @@ public class ReplyContentLayout extends CssLayout implements View {
 
 	@Autowired
 	IReplyService replyService;
-
+	Long userId;
 	@Autowired
 	private TransactionTemplate transactionTemplate;
-
-	Long userId;
 
 	//Not elegant but spring do be like that sometimes
 	ReplyContentLayout init(Reply reply) {
@@ -123,7 +120,7 @@ public class ReplyContentLayout extends CssLayout implements View {
 	//kicsit hosszú, kicsit csúnya, de az enyém
 	private void setVoteColor(VerticalLayout voteLayout, Optional<VoteType> voteType) {
 		Image upvote = (Image) voteLayout.getComponent(0);
-		Label voteNumberLabel = (Label)voteLayout.getComponent(1);
+		Label voteNumberLabel = (Label) voteLayout.getComponent(1);
 		Image downvote = (Image) voteLayout.getComponent(2);
 		if (!voteType.isPresent()) {
 			voteNumberLabel.addStyleName("not-voted");

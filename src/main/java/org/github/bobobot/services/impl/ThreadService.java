@@ -12,7 +12,6 @@ import org.github.bobobot.services.IThreadService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
 
-import javax.persistence.EntityManager;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -55,7 +54,7 @@ public class ThreadService implements IThreadService {
 
 	@Override
 	public Thread update(Thread tempThread) {
-		getThreadIfPresent(repository.findById(tempThread.getId())); //dobjunk errort ha nem létezik
+		getThreadIfPresent(repository.findById(tempThread.getId())); //throw an error if it doesn't exist
 		return repository.save(tempThread);
 	}
 
@@ -73,7 +72,7 @@ public class ThreadService implements IThreadService {
 
 	@Override
 	public void delete(Long id) {
-		Thread thread = getThreadIfPresent(repository.findById(id)); //dobjunk errort ha nem létezik
+		Thread thread = getThreadIfPresent(repository.findById(id)); //throw an error if it doesn't exist
 		thread.getReplies().clear();
 		repository.deleteById(id); //Finally we delete the thread
 	}

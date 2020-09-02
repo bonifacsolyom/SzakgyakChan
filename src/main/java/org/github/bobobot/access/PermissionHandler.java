@@ -13,13 +13,13 @@ public class PermissionHandler {
 		VaadinService.getCurrentRequest().getWrappedSession().setAttribute("currentUser", currentUser);
 	}
 
+	public static VaadinUser getCurrentUser() {
+		return (VaadinUser) VaadinService.getCurrentRequest().getWrappedSession().getAttribute("currentUser");
+	}
+
 	public static void setCurrentUser(User user) {
 		VaadinUser currentUser = new VaadinUser(user.getId(), user.isAdmin() ? UserRole.ADMIN : UserRole.USER);
 		VaadinService.getCurrentRequest().getWrappedSession().setAttribute("currentUser", currentUser);
-	}
-
-	public static VaadinUser getCurrentUser() {
-		return (VaadinUser) VaadinService.getCurrentRequest().getWrappedSession().getAttribute("currentUser");
 	}
 
 	public static boolean isLoggedIn() {
@@ -97,6 +97,6 @@ public class PermissionHandler {
 	}
 
 	public static Component restrictComponentToLoggedOutUsers(Component component, Consumer<Boolean> func) {
-		return  restrictComponentToRoles(component, func, UserRole.NOT_LOGGED_IN);
+		return restrictComponentToRoles(component, func, UserRole.NOT_LOGGED_IN);
 	}
 }

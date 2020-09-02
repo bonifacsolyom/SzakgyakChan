@@ -35,9 +35,9 @@ public interface IReplyService {
 	/**
 	 * Creates a reply.
 	 *
-	 * @param content The content of the reply.
-	 * @param thread  The thread the reply belongs to.
-	 * @param user    The user the reply belongs to.
+	 * @param content   The content of the reply.
+	 * @param thread    The thread the reply belongs to.
+	 * @param user      The user the reply belongs to.
 	 * @param imagePath The image path of the post
 	 * @return The created reply.
 	 */
@@ -88,7 +88,7 @@ public interface IReplyService {
 	 * @return The updated reply.
 	 */
 	default Reply update(Long id, String content, Set<Long> usersUpvoted, Set<Long> usersDownvoted, Thread thread, User user) {
-		return update(new Reply(id, content, LocalDateTime.now(), usersUpvoted, usersDownvoted, thread, user, null));
+		return update(new Reply(id, content, LocalDateTime.now(), thread, user, null, usersUpvoted, usersDownvoted));
 	}
 
 	/**
@@ -101,7 +101,7 @@ public interface IReplyService {
 	 * @return The updated reply.
 	 */
 	default Reply update(Long id, String content, Set<Long> usersUpvoted, Set<Long> usersDownvoted, String image, Thread thread, User user) {
-		return update(new Reply(id, content, LocalDateTime.now(), usersUpvoted, usersDownvoted, thread, user, image));
+		return update(new Reply(id, content, LocalDateTime.now(), thread, user, image, usersUpvoted, usersDownvoted));
 	}
 
 	/**
@@ -130,7 +130,6 @@ public interface IReplyService {
 	/**
 	 * Votes on a reply.
 	 *
-	 *
 	 * @param userId
 	 * @param id       The ID of the reply.
 	 * @param voteType The type of the vote
@@ -138,7 +137,7 @@ public interface IReplyService {
 	 */
 	Reply vote(Long userId, Long id, VoteType voteType);
 
-	public Optional<VoteType> getUserVote(Long userId, Long replyId);
+	Optional<VoteType> getUserVote(Long userId, Long replyId);
 
 	/**
 	 * Deletes a reply.

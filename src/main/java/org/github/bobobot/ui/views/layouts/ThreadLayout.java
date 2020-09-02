@@ -3,7 +3,6 @@ package org.github.bobobot.ui.views.layouts;
 import com.vaadin.navigator.View;
 import com.vaadin.shared.ui.ContentMode;
 import com.vaadin.spring.annotation.SpringComponent;
-import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Label;
 import com.vaadin.ui.NativeSelect;
 import com.vaadin.ui.VerticalLayout;
@@ -30,17 +29,14 @@ import java.util.stream.Collectors;
 public class ThreadLayout extends VerticalLayout implements View {
 
 	@Autowired
-	private ApplicationContext appContext;
-
-	@Autowired
-	private ThreadService threadService;
-
-	@Autowired
 	protected TransactionTemplate transactionTemplate;
-
 	BoardView parentBoardView;
 	Thread thread;
 	OrderBy orderBy;
+	@Autowired
+	private ApplicationContext appContext;
+	@Autowired
+	private ThreadService threadService;
 
 	ThreadLayout(BoardView parentBoardView) {
 		this.parentBoardView = parentBoardView;
@@ -88,7 +84,7 @@ public class ThreadLayout extends VerticalLayout implements View {
 			addComponent(replyLayout);
 		}
 
-		Label newReplyButton = new Label("<a class=\"btn btn-primary create-new-button\" data-toggle=\"collapse\" href=\"#collapseNewThread" + thread.getId() +" \" role=\"button\" aria-expanded=\"false\" aria-controls=\"collapseExample\">" +
+		Label newReplyButton = new Label("<a class=\"btn btn-primary create-new-button\" data-toggle=\"collapse\" href=\"#collapseNewThread" + thread.getId() + " \" role=\"button\" aria-expanded=\"false\" aria-controls=\"collapseExample\">" +
 				"Create reply</a>");
 		newReplyButton.setContentMode(ContentMode.HTML);
 		addComponent(newReplyButton);

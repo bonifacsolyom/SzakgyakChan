@@ -5,7 +5,7 @@
 // The actual styles should be defined in mytheme.scss
 
 .mytheme {
-  @include addons;
-  @include mytheme;
+	@include addons;
+	@include mytheme;
 
 }

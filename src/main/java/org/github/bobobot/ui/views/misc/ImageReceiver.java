@@ -3,16 +3,18 @@ package org.github.bobobot.ui.views.misc;
 import com.vaadin.ui.Upload;
 import lombok.Getter;
 
-import java.io.*;
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.OutputStream;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 
 public class ImageReceiver implements Upload.Receiver {
 
-	String fileName;
-
 	@Getter
 	private static final String folderPath = "src" + File.separator + "main" + File.separator + "resources" + File.separator + "images";
+	String fileName;
 
 	@Override
 	public OutputStream receiveUpload(String fileName, String mimeType) {

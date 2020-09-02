@@ -29,18 +29,16 @@ import static com.vaadin.navigator.ViewChangeListener.ViewChangeEvent;
 @Slf4j
 public class BoardView extends VerticalLayout implements View {
 	public static final String name = "boardView";
-
+	@Autowired
+	IBoardService boardService;
+	@Getter
+	Board board;
 	@Autowired
 	private ApplicationContext appContext;
 
-	@Autowired
-	IBoardService boardService;
-
-	@Getter
-	Board board;
-
 	/**
 	 * Sets which board this view should display, given to us by the URL parameters.
+	 *
 	 * @param eventParameters The parameters of the enter event
 	 */
 	private void setViewBoard(String eventParameters) {

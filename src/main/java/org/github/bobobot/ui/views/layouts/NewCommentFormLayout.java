@@ -34,33 +34,20 @@ import java.util.concurrent.atomic.AtomicBoolean;
 public class NewCommentFormLayout extends FormLayout implements View {
 
 	@Autowired
-	private ApplicationContext appContext;
-
-	@Autowired
 	protected IReplyService replyService;
-
 	@Autowired
 	protected IUserService userService;
-
 	@Autowired
 	protected TransactionTemplate transactionTemplate;
-
-	@Setter
-	private Thread currentThread;
-
-	private AtomicBoolean contentNotEmpty = new AtomicBoolean(false);
-	private AtomicBoolean imageUploaded = new AtomicBoolean(false);
-	protected Binder<ThreadFormContent> binder = new Binder<>(ThreadFormContent.class);;
+	protected Binder<ThreadFormContent> binder = new Binder<>(ThreadFormContent.class);
 	protected Upload uploadButton;
 	protected ImageReceiver imageReceiver;
-
-
-	@Data
-	protected class ThreadFormContent {
-		private String title; //only used for threads
-		private String content;
-		private String imagePath;
-	}
+	@Autowired
+	private ApplicationContext appContext;
+	@Setter
+	private Thread currentThread;
+	private final AtomicBoolean contentNotEmpty = new AtomicBoolean(false);
+	private final AtomicBoolean imageUploaded = new AtomicBoolean(false);
 
 	@PostConstruct
 	protected void init() {
@@ -154,5 +141,12 @@ public class NewCommentFormLayout extends FormLayout implements View {
 
 	protected void addStyleNameToForm() {
 		addStyleName("create-comment-form");
+	}
+
+	@Data
+	protected class ThreadFormContent {
+		private String title; //only used for threads
+		private String content;
+		private String imagePath;
 	}
 }

@@ -1,6 +1,5 @@
 package org.github.bobobot.access;
 
-import lombok.AllArgsConstructor;
 import lombok.Data;
 
 @Data

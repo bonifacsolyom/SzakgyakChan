@@ -1,26 +1,21 @@
 package org.github.bobobot.ui;
 
 import com.vaadin.annotations.JavaScript;
-import com.vaadin.annotations.PreserveOnRefresh;
 import com.vaadin.annotations.StyleSheet;
 import com.vaadin.annotations.Theme;
 import com.vaadin.navigator.View;
 import com.vaadin.navigator.ViewDisplay;
-import com.vaadin.server.Page;
-import com.vaadin.server.ThemeResource;
 import com.vaadin.server.VaadinRequest;
 import com.vaadin.spring.annotation.SpringUI;
 import com.vaadin.spring.annotation.SpringViewDisplay;
 import com.vaadin.spring.navigator.SpringNavigator;
-import com.vaadin.ui.*;
-import lombok.Getter;
+import com.vaadin.ui.Component;
+import com.vaadin.ui.Panel;
+import com.vaadin.ui.UI;
+import com.vaadin.ui.VerticalLayout;
 import lombok.extern.slf4j.Slf4j;
 import org.github.bobobot.access.PermissionHandler;
-import org.github.bobobot.services.IUserService;
 import org.github.bobobot.ui.views.ErrorView;
-import org.github.bobobot.ui.views.LoginView;
-import org.github.bobobot.ui.views.MainView;
-import org.github.bobobot.ui.views.RegisterView;
 import org.github.bobobot.ui.views.layouts.NavbarLayout;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
@@ -42,14 +37,7 @@ public class MainUI extends UI implements ViewDisplay {
 	@Autowired
 	private SpringNavigator navigator;
 
-	//TODO: debug shit, töröld
-	@Autowired
-	private IUserService userService;
-
-	@Getter
-	private Panel springViewDisplay; //Ebben jelenítjük meg a view-ot
-
-	private VerticalLayout layout; //Ez az egész oldal layoutja
+	private Panel viewDisplay;
 
 	private NavbarLayout navigationBar;
 
@@ -57,7 +45,8 @@ public class MainUI extends UI implements ViewDisplay {
 	protected void init(VaadinRequest vaadinRequest) {
 		PermissionHandler.setCurrentUserToNotLoggedIn();
 
-		layout = new VerticalLayout();
+		//This is the layout of the entire site, inculding both the navbar and the view display
+		VerticalLayout layout = new VerticalLayout();
 		layout.setSizeFull();
 		layout.addStyleName("layout-padding");
 
@@ -67,21 +56,21 @@ public class MainUI extends UI implements ViewDisplay {
 		navigationBar = appContext.getBean(NavbarLayout.class);
 		layout.addComponent(navigationBar);
 
-		springViewDisplay = new Panel();
-		springViewDisplay.setSizeFull();
-		springViewDisplay.addStyleName("background-gradient");
-		layout.addComponent(springViewDisplay);
-		layout.setExpandRatio(springViewDisplay, 1.0f);
+		viewDisplay = new Panel();
+		viewDisplay.setSizeFull();
+		viewDisplay.addStyleName("background-gradient");
+		layout.addComponent(viewDisplay);
+		layout.setExpandRatio(viewDisplay, 1.0f);
 
 		setContent(layout);
 	}
 
 	@Override
 	public void showView(View view) {
-		springViewDisplay.setContent((Component) view);
+		viewDisplay.setContent((Component) view);
 	}
 
- 	public void reRenderNavbar() {
+	public void reRenderNavbar() {
 		navigationBar.render();
 	}
 }

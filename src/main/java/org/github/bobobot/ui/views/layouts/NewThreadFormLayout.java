@@ -1,10 +1,7 @@
 package org.github.bobobot.ui.views.layouts;
 
 import com.vaadin.spring.annotation.SpringComponent;
-import com.vaadin.ui.Button;
 import com.vaadin.ui.TextField;
-import com.vaadin.ui.Upload;
-import com.vaadin.ui.Upload.SucceededEvent;
 import lombok.extern.slf4j.Slf4j;
 import org.github.bobobot.access.PermissionHandler;
 import org.github.bobobot.entities.Board;
@@ -13,13 +10,8 @@ import org.github.bobobot.entities.User;
 import org.github.bobobot.services.IThreadService;
 import org.github.bobobot.ui.views.BoardView;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.config.ConfigurableBeanFactory;
 import org.springframework.context.annotation.Scope;
-import org.springframework.lang.NonNull;
-import org.springframework.transaction.TransactionStatus;
-import org.springframework.transaction.annotation.Transactional;
-import org.springframework.transaction.support.TransactionCallbackWithoutResult;
 
 import javax.annotation.PostConstruct;
 import java.util.concurrent.atomic.AtomicBoolean;
@@ -29,12 +21,10 @@ import java.util.concurrent.atomic.AtomicBoolean;
 @Slf4j
 public class NewThreadFormLayout extends NewCommentFormLayout {
 
+	AtomicBoolean titleNotEmpty = new AtomicBoolean(false);
+	TextField threadTitleField;
 	@Autowired
 	private IThreadService threadService;
-
-	AtomicBoolean titleNotEmpty = new AtomicBoolean(false);
-
-	TextField threadTitleField;
 
 	@Override
 	@PostConstruct
@@ -71,19 +61,19 @@ public class NewThreadFormLayout extends NewCommentFormLayout {
 
 	@Override
 	protected void post() {
-				log.info("upload succeeded!");
+		log.info("upload succeeded!");
 
-				ThreadFormContent threadContentBean = binder.getBean();
-				threadContentBean.setImagePath(imageReceiver.getLastFileName());
+		ThreadFormContent threadContentBean = binder.getBean();
+		threadContentBean.setImagePath(imageReceiver.getLastFileName());
 
-				Board board = ((BoardView) getParent()).getBoard();
-				User currentUser = userService.findById(PermissionHandler.getCurrentUser().getId());
+		Board board = ((BoardView) getParent()).getBoard();
+		User currentUser = userService.findById(PermissionHandler.getCurrentUser().getId());
 
-				Thread thread = threadService.create(threadContentBean.getTitle(), board, currentUser);
-				replyService.post(threadContentBean.getContent(), thread, currentUser, threadContentBean.getImagePath());
+		Thread thread = threadService.create(threadContentBean.getTitle(), board, currentUser);
+		replyService.post(threadContentBean.getContent(), thread, currentUser, threadContentBean.getImagePath());
 
-				//We refresh the page for the new thread to appear
-				getUI().getNavigator().navigateTo(BoardView.name + "/" + board.getId());
+		//We refresh the page for the new thread to appear
+		getUI().getNavigator().navigateTo(BoardView.name + "/" + board.getId());
 	}
 
 	@Override

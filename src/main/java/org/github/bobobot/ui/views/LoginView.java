@@ -4,7 +4,6 @@ import com.vaadin.navigator.View;
 import com.vaadin.spring.annotation.SpringComponent;
 import com.vaadin.spring.annotation.SpringView;
 import com.vaadin.ui.HorizontalLayout;
-import com.vaadin.ui.Label;
 import com.vaadin.ui.LoginForm;
 import lombok.extern.slf4j.Slf4j;
 import org.github.bobobot.entities.User;
@@ -36,7 +35,7 @@ public class LoginView extends HorizontalLayout implements View {
 			Optional<User> loggedInUser = userService.login(email, password);
 			if (loggedInUser.isPresent()) {
 				log.info("Successful login!");
-				((MainUI)getUI()).reRenderNavbar();
+				((MainUI) getUI()).reRenderNavbar();
 				getUI().getNavigator().navigateTo(MainView.name);
 			} else {
 				log.info("Login failed.");
