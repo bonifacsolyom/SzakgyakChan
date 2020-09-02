@@ -67,7 +67,7 @@ public interface IReplyService {
 	 * @return The created reply.
 	 */
 	default Reply post(String content, int votes, String image, Thread thread, User user) {
-		return post(new Reply(content, LocalDateTime.now(), thread, user, image));
+		return post(new Reply(content, LocalDateTime.now(), thread, user, image)).setDebugVoteCount(votes);
 	}
 
 	/**

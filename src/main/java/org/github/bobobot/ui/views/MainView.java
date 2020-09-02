@@ -2,6 +2,7 @@ package org.github.bobobot.ui.views;
 
 import com.vaadin.navigator.View;
 import com.vaadin.shared.MouseEventDetails;
+import com.vaadin.shared.ui.ContentMode;
 import com.vaadin.spring.annotation.SpringComponent;
 import com.vaadin.spring.annotation.SpringView;
 import com.vaadin.ui.CssLayout;
@@ -30,6 +31,11 @@ public class MainView extends CssLayout implements View {
 
 	@PostConstruct
 	void init() {
+
+		Label logoText = new Label("<h1 class=\"animate__animated animate__zoomInDown animate__slow\">Szakgyak</h1><h1 class=\"animate__animated animate__zoomInUp animate__slow\">Chan</h1>", ContentMode.HTML);
+		logoText.addStyleName("logo-text");
+		addComponent(logoText);
+
 
 		CssLayout boardLayout = new CssLayout();
 		setWidthFull();

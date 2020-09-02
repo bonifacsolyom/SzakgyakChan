@@ -71,6 +71,9 @@ public class RegisterView extends HorizontalLayout implements View {
 		usernameField.setRequiredIndicatorVisible(true);
 		emailField.setRequiredIndicatorVisible(true);
 		passwordField.setRequiredIndicatorVisible(true);
+		passwordAgainField.setRequiredIndicatorVisible(true);
+
+		registerForm.addStyleName("register-form");
 
 
 		addComponent(registerForm);

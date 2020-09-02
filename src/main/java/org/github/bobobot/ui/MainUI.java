@@ -25,6 +25,8 @@ import org.springframework.context.ApplicationContext;
 @Theme("mytheme")
 @StyleSheet("https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css")
 @StyleSheet("https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css")
+@StyleSheet("https://raw.githubusercontent.com/anater/tachyons-animate/master/css/tachyons-animate.min.css")
+@StyleSheet("https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.0.0/animate.min.css")
 @JavaScript("https://code.jquery.com/jquery-3.5.1.slim.min.js")
 @JavaScript("https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js")
 @JavaScript("https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js")

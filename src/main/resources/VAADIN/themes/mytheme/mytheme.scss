@@ -292,4 +292,31 @@ $v-app-loading-text: "Loading SzakgyakChan...";
 	.v-slot-navbar + .v-spacing {
 		height: 0;
 	}
+
+	.register-form {
+		margin: 37px;
+	}
+
+	.v-formlayout-row {
+		display: block;
+
+		.v-formlayout-captioncell {
+			display: inline;
+		}
+
+		.v-formlayout-errorcell {
+			max-width: 0;
+		}
+	}
+
+	.logo-text {
+		h1 {
+			display: inline-block;
+			font-weight: bold;
+			font-size: 50px;
+		}
+		margin: 5px auto 25px;
+		width: fit-content;
+		display: block;
+	}
 }

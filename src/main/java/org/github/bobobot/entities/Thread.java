@@ -9,7 +9,9 @@ import lombok.ToString;
 import lombok.extern.slf4j.Slf4j;
 
 import javax.persistence.*;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 
 @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
@@ -72,5 +74,9 @@ public class Thread {
 		log.info("trying to remove thread from user");
 		user.getThreads().remove(this);
 		log.info("successfully removed thread from user");
+	}
+
+	public LocalDateTime getLastReplyDate() {
+		return replies.stream().max(Comparator.comparing(Reply::getDate)).get().getDate();
 	}
 }

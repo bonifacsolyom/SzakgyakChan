@@ -21,6 +21,10 @@ import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.Scope;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.Comparator;
+import java.util.List;
+import java.util.stream.Collectors;
+
 import static com.vaadin.navigator.ViewChangeListener.ViewChangeEvent;
 
 @SpringView(name = BoardView.name)
@@ -76,7 +80,10 @@ public class BoardView extends VerticalLayout implements View {
 
 		addStyleName("row");
 
-		for (Thread thread : board.getThreads()) {
+		List<Thread> orderedThreads = board.getThreads().stream().sorted(Comparator.comparing(Thread::getLastReplyDate).reversed()).collect(Collectors.toList());
+
+
+		for (Thread thread : orderedThreads) {
 			ThreadLayout threadLayout = appContext.getBean(ThreadLayout.class, this).init(thread);
 			addComponent(threadLayout);
 		}
