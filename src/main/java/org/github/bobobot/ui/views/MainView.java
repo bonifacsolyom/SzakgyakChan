@@ -7,6 +7,7 @@ import com.vaadin.shared.MouseEventDetails;
 import com.vaadin.shared.ui.ContentMode;
 import com.vaadin.spring.annotation.SpringComponent;
 import com.vaadin.spring.annotation.SpringView;
+import com.vaadin.ui.Component;
 import com.vaadin.ui.CssLayout;
 import com.vaadin.ui.Label;
 import com.vaadin.ui.VerticalLayout;
@@ -18,8 +19,6 @@ import org.springframework.beans.factory.config.ConfigurableBeanFactory;
 import org.springframework.context.annotation.Scope;
 
 import javax.annotation.PostConstruct;
-
-import java.security.Key;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -35,10 +34,17 @@ public class MainView extends CssLayout implements View {
 	@Autowired
 	IBoardService boardService;
 
+	private static boolean animate = true;
+
 	@PostConstruct
 	void init() {
 
-		Label logoText = new Label("<h1 class=\"animate__animated animate__zoomInDown animate__slow\">Szakgyak</h1><h1 class=\"animate__animated animate__zoomInUp animate__slow\">Chan</h1>", ContentMode.HTML);
+		Label logoText;
+		if (animate) {
+			logoText = new Label("<h1 class=\"animate__animated animate__zoomInDown animate__slow logo-text__szakgyak\">Szakgyak</h1><h1 class=\"animate__animated animate__zoomInUp animate__slow logo-text__chan\">Chan</h1>", ContentMode.HTML);
+		} else {
+			logoText  = new Label("<h1 class=\"logo-text__szakgyak\">Szakgyak</h1><h1 class=\"logo-text__chan\">Chan</h1>", ContentMode.HTML);
+		}
 		logoText.addStyleName("logo-text");
 		addComponent(logoText);
 
@@ -55,34 +61,43 @@ public class MainView extends CssLayout implements View {
 			shortName.addStyleNames("font-weight-bold", "board-list__short-name");
 			Label longName = new Label(board.getLongName());
 			longName.addStyleName("board-list__long-name");
+			if (animate) longName.addStyleName("invisible");
 			div.addComponents(shortName, longName);
 			div.addLayoutClickListener(layoutClickEvent -> {
 				if (layoutClickEvent.getButton().equals(MouseEventDetails.MouseButton.LEFT)) //We make sure that the user only navigates to another board if they pressed left click
 					getUI().getNavigator().navigateTo(BoardView.name + "/" + board.getId());
 			});
-			div.addStyleNames("board-div", "col-3", "invisible");
+			div.addStyleNames("board-div", "col-3");
+			if (animate) div.addStyleName("invisible");
 			boardLayout.addComponent(div);
 			boardDivs.add(div);
 		}
 
-		//Presentation mode
+		//Presentation mode, pls don't even try to process this
+		if (animate) {
+			addShortcutListener(new ShortcutListener("presentation-shortcut-listener", ShortcutAction.KeyCode.SPACEBAR, null) {
+				int spacePressed = 0;
+				int divShown = 0;
 
-		addShortcutListener(new ShortcutListener("presentation-shortcut-listener", ShortcutAction.KeyCode.SPACEBAR, null) {
-			int divShown = 0;
-
-			@Override
-			public void handleAction(Object sender, Object target) {
-				if (divShown < boardDivs.size()) {
-					VerticalLayout boardLayout = boardDivs.get(divShown++);
-					boardLayout.removeStyleName("invisible");
-					boardLayout.addStyleNames("animate__animated", "animate__fadeInDown");
-
-
+				@Override
+				public void handleAction(Object sender, Object target) {
+					if (spacePressed++ < 8) {
+						if (spacePressed % 2 == 1) {
+							VerticalLayout boardLayout = boardDivs.get(divShown);
+							boardLayout.removeStyleName("invisible");
+							boardLayout.addStyleNames("animate__animated", "animate__fadeInDown");
+						} else {
+							Label longName = (Label) boardDivs.get(divShown++).getComponent(1);
+							longName.removeStyleName("invisible");
+							longName.addStyleNames("animate__animated", "animate__fadeInDown");
+						}
+					}
 				}
-			}
-		});
+			});
+		}
 
 		addComponent(boardLayout);
+		animate = false;
 	}
 
 	@Override

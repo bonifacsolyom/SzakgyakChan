@@ -81,15 +81,13 @@ $v-app-loading-text: "Loading SzakgyakChan...";
 		border-radius: 7px;
 		margin: 5px;
 		padding: 7px;
-		transition: transform .2s;
+		transition: transform .05s;
 	}
 
 	.board-div:hover {
 		box-shadow: rgb(150, 150, 150) 2px 2px 3px;
 		cursor: pointer;
-		-ms-transform: scale(1.5); /* IE 9 */
-		-webkit-transform: scale(1.5); /* Safari 3-8 */
-		transform: scale(1.5);
+		transform: scale(1.05);
 	}
 
 	.thread-div {
@@ -207,11 +205,13 @@ $v-app-loading-text: "Loading SzakgyakChan...";
 	.delete-button .v-icon {
 		max-width: 40px;
 		height: auto;
+		transform: translate(0, -2px);
 	}
 
 	.notification-button .v-icon {
 		max-width: 33px;
 		height: auto;
+		transform: translate(0, -2px);
 	}
 
 	//just another anti-vaadin intézkedés
@@ -221,6 +221,11 @@ $v-app-loading-text: "Loading SzakgyakChan...";
 
 	.reply-div__content .v-slot .v-verticallayout {
 		padding: 0;
+	}
+
+	.v-slot-navbar {
+		@include linear-gradient(#ffc891 96%, #e2af70 100%);
+		border-bottom: #e2af70 solid 2px;
 	}
 
 	.navbar-button-layout {
@@ -258,7 +263,7 @@ $v-app-loading-text: "Loading SzakgyakChan...";
 
 	.unread-notification {
 		width: 100%;
-		background-color: rgba(136, 0, 0, 0.5);
+		background-color: rgba(136, 0, 0, 0.25);
 		border: rgba(136, 0, 0, 0.7);
 		border-radius: 5px;
 		cursor: pointer;
@@ -277,6 +282,7 @@ $v-app-loading-text: "Loading SzakgyakChan...";
 		justify-content: space-between;
 		margin: 0 auto;
 		margin-top: 25px;
+		overflow: visible;
 	}
 
 	.board-list__short-name {
@@ -318,8 +324,17 @@ $v-app-loading-text: "Loading SzakgyakChan...";
 			display: inline-block;
 			font-weight: bold;
 			font-size: 50px;
-			margin: 0
+			margin: 0;
 		}
+
+		.logo-text__szakgyak {
+			color: #880000;
+		}
+
+		.logo-text__chan {
+			color: #8894a0;
+		}
+
 		margin: 50px auto 80px;
 		width: fit-content;
 		display: block;

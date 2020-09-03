@@ -30,6 +30,9 @@ import org.springframework.context.ApplicationContext;
 @JavaScript("https://code.jquery.com/jquery-3.5.1.slim.min.js")
 @JavaScript("https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js")
 @JavaScript("https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js")
+@JavaScript("https://raw.githubusercontent.com/uzairfarooq/arrive/master/minified/arrive.min.js")
+@JavaScript("arrive.min.js")
+@JavaScript("script.js")
 @Slf4j
 public class MainUI extends UI implements ViewDisplay {
 
@@ -75,4 +78,6 @@ public class MainUI extends UI implements ViewDisplay {
 	public void reRenderNavbar() {
 		navigationBar.render();
 	}
+
+
 }
