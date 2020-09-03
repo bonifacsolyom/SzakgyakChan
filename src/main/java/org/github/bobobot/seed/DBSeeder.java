@@ -64,20 +64,20 @@ public class DBSeeder implements ApplicationRunner {
 
 	private void seedBoards() {
 		boardService.create("v", "video games");
+		boardService.create("rand", "random");
 		boardService.create("pol", "poland");
-		boardService.create("b", "random");
 		boardService.create("long", "longrend");
 	}
 
 	private void seedThreads() {
 		threadService.create("First thread of /v/", boardService.findByShortName("v"), userService.findByUsername("admin"));		//1
 		threadService.create("First thread of /pol/", boardService.findByShortName("pol"), userService.findByUsername("admin"));	//2
-		threadService.create("First thread of /b/", boardService.findByShortName("b"), userService.findByUsername("admin"));		//3
+		threadService.create("First thread of /rand/", boardService.findByShortName("rand"), userService.findByUsername("admin"));	//3
 		threadService.create("First thread of /long/", boardService.findByShortName("long"), userService.findByUsername("admin"));	//4
 		threadService.create("Spring boot", boardService.findByShortName("long"), userService.findByUsername("user1"));			//5
-		threadService.create("Terrorist attack", boardService.findByShortName("b"), userService.findByUsername("kornel"));			//6
+		threadService.create("Terrorist attack", boardService.findByShortName("rand"), userService.findByUsername("kornel"));		//6
 		threadService.create("Vaadin", boardService.findByShortName("long"), userService.findByUsername("user1"));					//7
-		threadService.create("Duck song", boardService.findByShortName("b"), userService.findByUsername("user1"));					//8
+		threadService.create("Duck song", boardService.findByShortName("rand"), userService.findByUsername("user1"));				//8
 	}
 
 	private void seedReplies() {
@@ -87,12 +87,13 @@ public class DBSeeder implements ApplicationRunner {
 		replyService.post("Everything about longrend.", 419, toImagePath("longrend.png"), threadService.findById(4L), userService.findByUsername("admin"));
 		replyService.post("wow, cool", 13, threadService.findById(3L), userService.findByUsername("user1"));
 		replyService.post("yeah I love being random", -2, threadService.findById(3L), userService.findByUsername("user2"));
-		replyService.post("*holds up spork*", -132, toImagePath("penguinofdoom.png"), threadService.findById(3L), userService.findByUsername("user1"));
 		replyService.post("Spring is my favorite framework!", -1, toImagePath("spring.png"), threadService.findById(5L), userService.findByUsername("user2"));
 		replyService.post("I prefer C#", 103, threadService.findById(5L), userService.findByUsername("user1"));
 		replyService.post("Have you heard the news about the two corrupt police officers in San Francisco? Horrible.", 103, toImagePath("gloden_gate.jpg"), threadService.findById(6L), userService.findByUsername("kornel"));
 		replyService.post(">imagine unironically using vaadin", 706, toImagePath("vaadin.png"), threadService.findById(7L), userService.findByUsername("user1"));
 		replyService.post("A duck walked up to a lemonade stand.", 7776, toImagePath("ducksong.png"), threadService.findById(8L), userService.findByUsername("user1"));
+		replyService.post("*holds up spork*", -132, toImagePath("penguinofdoom.png"), threadService.findById(3L), userService.findByUsername("user1"));
+		replyService.post("wrong flag, buddy", 24, threadService.findById(2L), userService.findByUsername("user2"));
 	}
 
 	private void seedNotifications() {}

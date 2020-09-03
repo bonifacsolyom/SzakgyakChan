@@ -7,7 +7,6 @@ import com.vaadin.shared.MouseEventDetails;
 import com.vaadin.shared.ui.ContentMode;
 import com.vaadin.spring.annotation.SpringComponent;
 import com.vaadin.spring.annotation.SpringView;
-import com.vaadin.ui.Component;
 import com.vaadin.ui.CssLayout;
 import com.vaadin.ui.Label;
 import com.vaadin.ui.VerticalLayout;
@@ -20,6 +19,7 @@ import org.springframework.context.annotation.Scope;
 
 import javax.annotation.PostConstruct;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import static com.vaadin.navigator.ViewChangeListener.ViewChangeEvent;
@@ -43,7 +43,7 @@ public class MainView extends CssLayout implements View {
 		if (animate) {
 			logoText = new Label("<h1 class=\"animate__animated animate__zoomInDown animate__slow logo-text__szakgyak\">Szakgyak</h1><h1 class=\"animate__animated animate__zoomInUp animate__slow logo-text__chan\">Chan</h1>", ContentMode.HTML);
 		} else {
-			logoText  = new Label("<h1 class=\"logo-text__szakgyak\">Szakgyak</h1><h1 class=\"logo-text__chan\">Chan</h1>", ContentMode.HTML);
+			logoText = new Label("<h1 class=\"logo-text__szakgyak\">Szakgyak</h1><h1 class=\"logo-text__chan\">Chan</h1>", ContentMode.HTML);
 		}
 		logoText.addStyleName("logo-text");
 		addComponent(logoText);
@@ -73,26 +73,46 @@ public class MainView extends CssLayout implements View {
 			boardDivs.add(div);
 		}
 
-		//Presentation mode, pls don't even try to process this
+		//Presentation mode, pls don't even try to process this it's not even part of the real program
 		if (animate) {
 			addShortcutListener(new ShortcutListener("presentation-shortcut-listener", ShortcutAction.KeyCode.SPACEBAR, null) {
 				int spacePressed = 0;
 				int divShown = 0;
 
+				int[] showDivsSteps = new int[]{1, 3, 5, 7};
+				int[] showDescriptionSteps = new int[]{2, 4, 6, 8};
+				int changeLongToIntStep = 7;
+				int changeIntToLongAndShowDescriptionStep = 8;
+
 				@Override
 				public void handleAction(Object sender, Object target) {
-					if (spacePressed++ < 8) {
-						if (spacePressed % 2 == 1) {
+					if (spacePressed++ < 9) {
+						Label longName = (Label) boardDivs.get(divShown).getComponent(1);
+						Label shortName = (Label) boardDivs.get(divShown).getComponent(0);
+
+						if (spacePressed == changeLongToIntStep) { //cheeky breeky
+							shortName.setValue("/int/");
+						}
+						if (contains(showDivsSteps, spacePressed)) { //If we want to show a new board div
 							VerticalLayout boardLayout = boardDivs.get(divShown);
 							boardLayout.removeStyleName("invisible");
 							boardLayout.addStyleNames("animate__animated", "animate__fadeInDown");
-						} else {
-							Label longName = (Label) boardDivs.get(divShown++).getComponent(1);
+						}
+						if (spacePressed == changeIntToLongAndShowDescriptionStep) { //undo cheeky breeky
+							shortName.setValue("/long/");
+						}
+						if (contains(showDescriptionSteps, spacePressed)) { //if we want to show the board div's description
 							longName.removeStyleName("invisible");
 							longName.addStyleNames("animate__animated", "animate__fadeInDown");
+							divShown++;
 						}
 					}
 				}
+
+				private boolean contains(int[] array, int number) {
+					return Arrays.stream(array).anyMatch(i -> i == number);
+				}
+
 			});
 		}
 

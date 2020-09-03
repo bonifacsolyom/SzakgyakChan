@@ -339,4 +339,12 @@ $v-app-loading-text: "Loading SzakgyakChan...";
 		width: fit-content;
 		display: block;
 	}
+
+	.v-textarea,.v-textfield {
+		width: 300px;
+	}
+
+	.register-button {
+		margin-top: 13px;
+	}
 }

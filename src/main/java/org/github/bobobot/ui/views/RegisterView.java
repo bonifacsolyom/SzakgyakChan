@@ -41,7 +41,7 @@ public class RegisterView extends HorizontalLayout implements View {
 		binder.bind(passwordField, User::getPasswordHash, User::setPasswordHash);
 		TextField passwordAgainField = new PasswordField("Password (again)");
 		Button registerButton = new Button("Register");
-		registerButton.addStyleName("btn btn-primary");
+		registerButton.addStyleNames("btn", "btn-primary", "register-button");
 		passwordAgainField.addValueChangeListener(valueChangeEvent -> {
 			if (!valueChangeEvent.getValue().equals(passwordField.getValue())) {
 				passwordField.addStyleName("incorrect-input");
