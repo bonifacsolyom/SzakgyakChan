@@ -27,7 +27,7 @@ hs_err_pid*
 *.iml
 /target
 *.db
-src/main/resources/images/
+src/main/resources/images/*
 !/src/main/resources/images/spring.png
 !/src/main/resources/images/penguinofdoom.png
 !/src/main/resources/images/hedgehog.png
