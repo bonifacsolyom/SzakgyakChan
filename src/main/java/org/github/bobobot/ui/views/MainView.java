@@ -55,26 +55,29 @@ public class MainView extends CssLayout implements View {
 
 		List<VerticalLayout> boardDivs = new ArrayList<>();
 
+		int delay = 3;
+
 		for (Board board : boardService.list()) {
 			VerticalLayout div = new VerticalLayout();
 			Label shortName = new Label("/" + board.getShortName() + "/");
 			shortName.addStyleNames("font-weight-bold", "board-list__short-name");
 			Label longName = new Label(board.getLongName());
 			longName.addStyleName("board-list__long-name");
-			if (animate) longName.addStyleName("invisible");
+			if (animate && false) longName.addStyleName("invisible"); //TODO: remove false for presentation
 			div.addComponents(shortName, longName);
 			div.addLayoutClickListener(layoutClickEvent -> {
 				if (layoutClickEvent.getButton().equals(MouseEventDetails.MouseButton.LEFT)) //We make sure that the user only navigates to another board if they pressed left click
 					getUI().getNavigator().navigateTo(BoardView.name + "/" + board.getId());
 			});
 			div.addStyleNames("board-div", "col-3");
-			if (animate) div.addStyleName("invisible");
+			if (animate && false) div.addStyleName("invisible"); //TODO: remove false for presentation
+			else div.addStyleNames("animate__animated", "animate__fadeInDown", "d" + delay++);
 			boardLayout.addComponent(div);
 			boardDivs.add(div);
 		}
 
 		//Presentation mode, pls don't even try to process this it's not even part of the real program
-		if (animate) {
+		if (animate && false) { //TODO: remove false for presentation
 			addShortcutListener(new ShortcutListener("presentation-shortcut-listener", ShortcutAction.KeyCode.SPACEBAR, null) {
 				int spacePressed = 0;
 				int divShown = 0;
