@@ -64,15 +64,14 @@ public class NavbarLayout extends HorizontalLayout implements View {
 		setComponentAlignment(buttonLayout, Alignment.TOP_RIGHT);
 
 		//TODO: only for debug purposes, delete later
-		Button adminLogin = new Button("Login as admin", event -> {
-			userService.login("admin@chan.com", "admin");
-			init();
-		});
-		buttonLayout.addComponent(adminLogin);
-		PermissionHandler.restrictComponentToLoggedOutUsers(adminLogin, adminLogin::setVisible);
+//		Button adminLogin = new Button("Login as admin", event -> {
+//			userService.login("admin@chan.com", "admin");
+//			init();
+//		});
+//		buttonLayout.addComponent(adminLogin);
+//		PermissionHandler.restrictComponentToLoggedOutUsers(adminLogin, adminLogin::setVisible);
 		//TODO: end of TODO
 
-		//TODO: ikon szépítése
 		if (PermissionHandler.isLoggedIn()) {
 			NotificationLayout notifLayout = appContext.getBean(NotificationLayout.class);
 			PopupView notificationPopUp = new PopupView(null, notifLayout);

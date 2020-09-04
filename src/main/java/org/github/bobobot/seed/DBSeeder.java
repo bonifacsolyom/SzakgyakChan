@@ -88,12 +88,13 @@ public class DBSeeder implements ApplicationRunner {
 		replyService.post("wow, cool", 13, threadService.findById(3L), userService.findByUsername("user1"));
 		replyService.post("yeah I love being random", -2, threadService.findById(3L), userService.findByUsername("user2"));
 		replyService.post("Spring is my favorite framework!", -1, toImagePath("spring.png"), threadService.findById(5L), userService.findByUsername("user2"));
-		replyService.post("I prefer C#", 103, threadService.findById(5L), userService.findByUsername("user1"));
 		replyService.post("Have you heard the news about the two corrupt police officers in San Francisco? Horrible.", 103, toImagePath("gloden_gate.jpg"), threadService.findById(6L), userService.findByUsername("kornel"));
 		replyService.post(">imagine unironically using vaadin", 706, toImagePath("vaadin.png"), threadService.findById(7L), userService.findByUsername("user1"));
+		replyService.post("I prefer C#", 103, threadService.findById(5L), userService.findByUsername("user1"));
 		replyService.post("A duck walked up to a lemonade stand.", 7776, toImagePath("ducksong.png"), threadService.findById(8L), userService.findByUsername("user1"));
 		replyService.post("*holds up spork*", -132, toImagePath("penguinofdoom.png"), threadService.findById(3L), userService.findByUsername("user1"));
 		replyService.post("wrong flag, buddy", 24, threadService.findById(2L), userService.findByUsername("user2"));
+		replyService.post("The best company in the world!", 999, threadService.findById(4L), userService.findByUsername("user1"));
 	}
 
 	private void seedNotifications() {}

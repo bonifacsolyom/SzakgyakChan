@@ -42,6 +42,12 @@ public class NotificationLayout extends VerticalLayout implements View {
 				.sorted((n1, n2) -> n2.getId().compareTo(n1.getId()))
 				.collect(Collectors.toList());
 
+		if (notifications.size() == 0) {
+			Label noNotificationsLabel = new Label("You have no notifications.");
+			noNotificationsLabel.addStyleName("text-muted");
+			addComponent(noNotificationsLabel);
+		}
+
 		for (int i = 0; i < NOTIFICATIONS_TO_SHOW; i++) {
 			if (notifications.size() <= i) break;
 			Notification notification = notifications.get(i);

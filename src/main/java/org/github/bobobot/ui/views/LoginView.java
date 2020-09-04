@@ -42,6 +42,8 @@ public class LoginView extends HorizontalLayout implements View {
 			}
 		});
 
+		loginForm.addStyleName("login-form");
+
 		addComponent(loginForm);
 	}
 }
