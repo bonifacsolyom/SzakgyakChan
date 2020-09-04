@@ -17,7 +17,6 @@ public class UserController {
 	@Autowired
 	private IUserService service;
 
-	//@ExceptionHandler
 	ModelAndView handleErrors(Exception e) {
 		log.error("Error in user controller: ", e);
 		ModelAndView modelAndView = new ModelAndView();

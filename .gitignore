@@ -27,3 +27,13 @@ hs_err_pid*
 *.iml
 /target
 *.db
+src/main/resources/images/*
+!/src/main/resources/images/spring.png
+!/src/main/resources/images/penguinofdoom.png
+!/src/main/resources/images/hedgehog.png
+!/src/main/resources/images/longrend.png
+!/src/main/resources/images/feelsbadman.png
+!/src/main/resources/images/vaadin.png
+!/src/main/resources/images/gloden_gate.jpg
+!/src/main/resources/images/videogames.png
+!/src/main/resources/images/ducksong.png

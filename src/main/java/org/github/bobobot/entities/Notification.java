@@ -32,7 +32,18 @@ public abstract class Notification {
 		this.originalReply = originalReply;
 	}
 
+	public Notification(@NonNull Reply originalReply) {
+		this.originalReply = originalReply;
+	}
+
 	public User getUser() {
 		return originalReply.getUser();
 	}
+
+	protected String shortenText(String text, int textLimit) {
+		if (text.length() < textLimit) return text;
+		return text.substring(0, textLimit) + "...";
+	}
+
+	public abstract String getAsText();
 }

@@ -1,6 +1,5 @@
 package org.github.bobobot.services.impl;
 
-import org.github.bobobot.entities.Board;
 import org.github.bobobot.entities.MetaInfo;
 import org.github.bobobot.repositories.IMetaRepository;
 import org.github.bobobot.services.IMetaService;

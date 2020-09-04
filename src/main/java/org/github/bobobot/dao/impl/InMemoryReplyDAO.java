@@ -28,7 +28,6 @@ public class InMemoryReplyDAO implements IReplyDAO {
 		if (memoryReply.isPresent()) {
 			memoryReply.get().setContent(reply.getContent());
 			memoryReply.get().setDate(reply.getDate());
-			memoryReply.get().setVotes(reply.getVotes());
 			memoryReply.get().setThread(reply.getThread());
 		}
 

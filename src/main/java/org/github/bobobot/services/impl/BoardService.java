@@ -27,7 +27,7 @@ public class BoardService implements IBoardService {
 
 	@Override
 	public Board update(Board tempBoard) {
-		getBoardIfPresent(repository.findById(tempBoard.getId())); //dobjunk errort ha nem létezik
+		getBoardIfPresent(repository.findById(tempBoard.getId())); //throw an error if it doesn't exist
 		return repository.save(tempBoard);
 	}
 
@@ -50,7 +50,7 @@ public class BoardService implements IBoardService {
 
 	@Override
 	public void delete(Long id) {
-		getBoardIfPresent(repository.findById(id)); //dobjunk errort ha nem létezik
+		getBoardIfPresent(repository.findById(id)); //throw an error if it doesn't exist
 		repository.deleteById(id);
 	}
 }

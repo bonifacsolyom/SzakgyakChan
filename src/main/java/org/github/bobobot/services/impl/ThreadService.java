@@ -4,9 +4,13 @@ import org.github.bobobot.entities.Board;
 import org.github.bobobot.entities.Reply;
 import org.github.bobobot.entities.Thread;
 import org.github.bobobot.entities.User;
+import org.github.bobobot.repositories.IReplyRepository;
 import org.github.bobobot.repositories.IThreadRepository;
+import org.github.bobobot.services.IBoardService;
+import org.github.bobobot.services.IReplyService;
 import org.github.bobobot.services.IThreadService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -18,6 +22,15 @@ public class ThreadService implements IThreadService {
 	@Autowired
 	private IThreadRepository repository;
 
+	@Autowired
+	private IBoardService boardService;
+
+	@Autowired
+	private IReplyService replyService;
+
+	@Autowired
+	private IReplyRepository replyRepository;
+
 	private Thread getThreadIfPresent(Optional<Thread> thread) {
 		if (!thread.isPresent()) {
 			throw new IllegalArgumentException("Thread was not found!");
@@ -28,7 +41,7 @@ public class ThreadService implements IThreadService {
 	@Override
 	public Thread create(Thread tempThread) {
 		tempThread.getUser().addThread(tempThread);
-		tempThread.getBoard().addThread(tempThread);
+		boardService.findById(tempThread.getBoard().getId()).addThread(tempThread);
 		return repository.save(tempThread);
 	}
 
@@ -41,7 +54,7 @@ public class ThreadService implements IThreadService {
 
 	@Override
 	public Thread update(Thread tempThread) {
-		getThreadIfPresent(repository.findById(tempThread.getId())); //dobjunk errort ha nem létezik
+		getThreadIfPresent(repository.findById(tempThread.getId())); //throw an error if it doesn't exist
 		return repository.save(tempThread);
 	}
 
@@ -51,6 +64,7 @@ public class ThreadService implements IThreadService {
 	}
 
 	@Override
+	@Transactional
 	public Thread findById(Long id) {
 		Optional<Thread> thread = repository.findById(id);
 		return getThreadIfPresent(thread);
@@ -58,7 +72,8 @@ public class ThreadService implements IThreadService {
 
 	@Override
 	public void delete(Long id) {
-		getThreadIfPresent(repository.findById(id)); //dobjunk errort ha nem létezik
-		repository.deleteById(id);
+		Thread thread = getThreadIfPresent(repository.findById(id)); //throw an error if it doesn't exist
+		thread.getReplies().clear();
+		repository.deleteById(id); //Finally we delete the thread
 	}
 }

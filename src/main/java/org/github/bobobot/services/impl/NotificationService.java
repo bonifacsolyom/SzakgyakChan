@@ -7,6 +7,7 @@ import org.github.bobobot.repositories.IVoteNotificationRepository;
 import org.github.bobobot.services.INotificationService;
 import org.github.bobobot.services.IUserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Optional;
@@ -39,6 +40,7 @@ public class NotificationService implements INotificationService {
 	}
 
 	@Override
+	@Transactional
 	public CommentNotification create(CommentNotification notification) {
 		checkIfRepliesInTheSameThread(notification.getOriginalReply(), notification.getOtherUsersReply());
 		notification = commentRepository.save(notification);
@@ -57,13 +59,13 @@ public class NotificationService implements INotificationService {
 	@Override
 	public CommentNotification update(CommentNotification tempNotification) {
 		checkIfRepliesInTheSameThread(tempNotification.getOriginalReply(), tempNotification.getOtherUsersReply());
-		getNotificationIfPresent(commentRepository.findById(tempNotification.getId())); //dobjunk errort ha nem létezik
+		getNotificationIfPresent(commentRepository.findById(tempNotification.getId())); //throw an error if it doesn't exist
 		return commentRepository.save(tempNotification);
 	}
 
 	@Override
 	public VoteNotification update(VoteNotification tempNotification) {
-		getNotificationIfPresent(voteRepository.findById(tempNotification.getId())); //dobjunk errort ha nem létezik
+		getNotificationIfPresent(voteRepository.findById(tempNotification.getId())); //throw an error if it doesn't exist
 		return voteRepository.save(tempNotification);
 	}
 
@@ -91,13 +93,11 @@ public class NotificationService implements INotificationService {
 
 	@Override
 	public List<CommentNotification> listCommentNotifications() {
-		//fúj
 		return commentRepository.findAll();
 	}
 
 	@Override
 	public List<VoteNotification> listVoteNotifications() {
-		//fúj 2.0
 		return voteRepository.findAll();
 	}
 

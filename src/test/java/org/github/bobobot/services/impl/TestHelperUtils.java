@@ -77,7 +77,6 @@ public class TestHelperUtils {
 	static Reply createDummyReply(Thread thread, User user) {
 		return new Reply("tesztContent",
 				LocalDateTime.of(2020, 4, 20, 8, 0),
-				0,
 				thread, user, "teszt/image.png");
 	}
 

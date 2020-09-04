@@ -1,18 +1,18 @@
 package org.github.bobobot.entities;
 
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
-import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.NonNull;
+import org.hibernate.annotations.Fetch;
+import org.hibernate.annotations.FetchMode;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
 @Entity
@@ -44,10 +44,12 @@ public class User {
 	@OneToMany(cascade = CascadeType.ALL)
 	List<Reply> replies = new ArrayList<>();
 
-	@OneToMany(cascade = CascadeType.ALL)
+	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+	@Fetch(FetchMode.SELECT)
 	List<CommentNotification> commentNotifications = new ArrayList<>();
 
-	@OneToMany(cascade = CascadeType.ALL)
+	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+	@Fetch(FetchMode.SELECT)
 	List<VoteNotification> voteNotifications = new ArrayList<>();
 
 
@@ -89,10 +91,12 @@ public class User {
 		this.voteNotifications = voteNotifications;
 	}
 
+	@Transactional
 	public List<Notification> getNotifications() {
-		return Stream.of(commentNotifications, voteNotifications)
-				.flatMap(x -> Stream.ofNullable((Notification)x))
-				.collect(Collectors.toList());
+		List<Notification> notifications = new ArrayList<>();
+		notifications.addAll(getCommentNotifications());
+		notifications.addAll(getVoteNotifications());
+		return notifications;
 	}
 
 	public void addThread(Thread thread) {
@@ -111,4 +115,5 @@ public class User {
 	public void addVoteNotification(VoteNotification notification) {
 		this.voteNotifications.add(notification);
 	}
+
 }

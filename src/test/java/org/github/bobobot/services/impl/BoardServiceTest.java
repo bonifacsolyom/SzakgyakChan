@@ -1,6 +1,5 @@
 package org.github.bobobot.services.impl;
 
-import org.github.bobobot.config.ApplicationConfig;
 import org.github.bobobot.entities.Board;
 import org.github.bobobot.services.IBoardService;
 import org.junit.jupiter.api.Test;
@@ -10,7 +9,6 @@ import org.springframework.boot.test.autoconfigure.orm.jpa.TestEntityManager;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.context.ActiveProfiles;
-import org.springframework.test.context.ContextConfiguration;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatIllegalArgumentException;

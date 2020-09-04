@@ -1,0 +1,350 @@
+// If you edit this file you need to compile the theme. See README.md for details.
+
+// Global variable overrides. Must be declared before importing Valo.
+
+// Defines the plaintext font size, weight and family. Font size affects general component sizing.
+//$v-font-size: 16px;
+//$v-font-weight: 300;
+//$v-font-family: "Open Sans", sans-serif;
+
+// Defines the border used by all components.
+//$v-border: 1px solid (v-shade 0.7);
+//$v-border-radius: 4px;
+
+// Affects the color of some component elements, e.g Button, Panel title, etc
+//$v-background-color: hsl(210, 0%, 98%);
+// Affects the color of content areas, e.g  Panel and Window content, TextField input etc
+//$v-app-background-color: $v-background-color;
+
+// Affects the visual appearance of all components
+//$v-gradient: v-linear 8%;
+//$v-bevel-depth: 30%;
+//$v-shadow-opacity: 5%;
+
+// Defines colors for indicating status (focus, success, failure)
+//$v-focus-color: valo-focus-color(); // Calculates a suitable color automatically
+//$v-friendly-color: #2c9720;
+//$v-error-indicator-color: #ed473b;
+
+// For more information, see: https://vaadin.com/book/-/page/themes.valo.html
+// Example variants can be copy/pasted from https://vaadin.com/docs/v8/framework/articles/ValoExamples.html
+
+$v-app-loading-text: "Loading SzakgyakChan...";
+
+//noinspection CssUnknownTarget
+@import "../valo/valo.scss";
+
+@mixin mytheme {
+	@include valo;
+
+	//Font color
+	div {
+		background-color: unset;
+		color: #800;
+	}
+
+	.unified-border {
+		border: solid 2px #e2af70;
+		border-radius: 3px;
+	}
+
+	.debug-object {
+		border: solid #de0000;
+		border-radius: 3px;
+		//padding: 10px;
+	}
+
+	.background-gradient {
+		@include linear-gradient(#FED7B0, #FFFFEE);
+	}
+
+	html, body {
+		background-color: unset;
+	}
+
+	.layout-padding {
+		padding: 0;
+	}
+
+	.text-button {
+		background: none !important;
+		border: none;
+		padding: 0 !important;
+		color: #069;
+		text-decoration: underline;
+		cursor: pointer;
+	}
+
+	.board-div {
+		border: 2px #b1b1b1;
+		background: #ffe6f8;
+		border-radius: 7px;
+		margin: 5px;
+		padding: 7px;
+		transition: transform .05s;
+	}
+
+	.board-div:hover {
+		box-shadow: rgb(150, 150, 150) 2px 2px 3px;
+		cursor: pointer;
+		transform: scale(1.05);
+	}
+
+	.thread-div {
+		//@extend .unified-border;
+		border: rgba(136, 0, 0, 0.6) 1px solid;
+		padding: 2px;
+		margin: 10px;
+		background-color: #eeb672;
+	}
+
+	.reply-div {
+		@extend .unified-border;
+		border-top: 0;
+		padding: 2px;
+		margin: 10px;
+		background-color: #f1bd81;
+	}
+
+	.reply-div__header {
+		background-color: #8894a0;
+	}
+
+	.reply-div__content {
+		//background-color: #fed7b0;
+	}
+
+	//god forgive me for I have sinned
+	.v-slot-card-header {
+		@extend .card-header;
+	}
+
+	//this is still the same sin btw pls don't punish me twice
+	.v-slot-card-body {
+		@extend .card-body;
+	}
+
+	.v-button {
+		@extend .btn;
+		@extend .btn-primary;
+	}
+
+	.logo {
+		cursor: pointer;
+	}
+
+	.upvoted {
+		color: #FF8b60;
+		font-weight: bold;
+	}
+
+	.downvoted {
+		color: #9494FF;
+		font-weight: bold;
+	}
+
+	.incorrect-input {
+		border: #880000 solid medium;
+		background-color: rgba(136, 80, 80, 0.4);
+	}
+
+
+	.create-comment-form {
+		@extend .unified-border;
+		padding: 20px;
+		margin: 10px;
+		width: min-content !important;
+	}
+
+	.create-thread-form {
+		@extend .unified-border;
+		padding: 20px;
+		margin: 10px;
+		width: min-content !important;
+	}
+
+	.v-slot-create-new-button + .v-spacing {
+		height: 0;
+	}
+
+	.create-new-button {
+		margin: 10px;
+	}
+
+	//ha a vaadin nem lenne rák akkor nem kéne ilyen rák elnevezéseket használni
+	//de a vaadin rák
+	.v-slot-align-right {
+		float: right;
+	}
+
+	.upvote-button {
+		width: 70%;
+		cursor: pointer;
+		filter: opacity(0.7);
+	}
+
+	.downvote-button {
+		width: 70%;
+		cursor: pointer;
+		filter: opacity(0.7);
+	}
+
+	.not-voted {
+		font-weight: normal;
+		color: slategray;
+	}
+
+	.disabled-image-button {
+		filter: grayscale(100);
+	}
+
+	.voted-image-button {
+		filter: saturate(2) brightness(0.9) opacity(1);
+	}
+
+	.delete-button .v-icon {
+		max-width: 40px;
+		height: auto;
+		transform: translate(0, -2px);
+	}
+
+	.notification-button .v-icon {
+		max-width: 33px;
+		height: auto;
+		transform: translate(0, -2px);
+	}
+
+	//just another anti-vaadin intézkedés
+	.v-formlayout-contentcell, .v-formlayout-captioncell, .v-formlayout-errorcell {
+		padding: 0 !important;
+	}
+
+	.reply-div__content .v-slot .v-verticallayout {
+		padding: 0;
+	}
+
+	.v-slot-navbar {
+		@include linear-gradient(#ffc891 96%, #e2af70 100%);
+		border-bottom: #e2af70 solid 2px;
+	}
+
+	.navbar-button-layout {
+		margin: 15px;
+	}
+
+	.reply-image {
+		width: 30%;
+		border: solid 2px rgba(136, 0, 0, 0.4);
+		border-radius: 3px;
+		float: left;
+		margin: 5px;
+		display: block;
+	}
+
+	//white-space normal because vaadin sets it to nowrap for some godforsaken reason
+	.reply-text {
+		display: block;
+		word-break: break-word;
+		white-space: normal;
+		padding-top: 2px;
+		padding-left: 5px;
+	}
+
+	.vote-layout {
+		padding: 0;
+		float: left;
+	}
+
+	//if we don't set this to a custom amount, part of the popup goes off from the screen
+	//just vaadin things
+	.v-popupview-popup {
+		left: 1430px !important;
+	}
+
+	.unread-notification {
+		width: 100%;
+		background-color: rgba(136, 0, 0, 0.25);
+		border: rgba(136, 0, 0, 0.7);
+		border-radius: 5px;
+		cursor: pointer;
+	}
+
+	.notification-label {
+		padding-right: 10px;
+	}
+
+	.logo {
+		height: 100px;
+	}
+
+	.board-list {
+		display: flex;
+		justify-content: space-between;
+		margin: 0 auto;
+		margin-top: 25px;
+		overflow: visible;
+	}
+
+	.board-list__short-name {
+		font-size: 25px;
+		padding: 10px;
+	}
+
+	.board-list__long-name {
+		padding: 10px;
+	}
+
+	.board-div > .v-spacing {
+		height: 0;
+	}
+
+	//nem vaadin, nem kérek oda extra helyet köszi
+	.v-slot-navbar + .v-spacing {
+		height: 0;
+	}
+
+	.register-form {
+		margin: 37px;
+	}
+
+	.v-formlayout-row {
+		display: block;
+
+		.v-formlayout-captioncell {
+			display: inline;
+		}
+
+		.v-formlayout-errorcell {
+			max-width: 0;
+		}
+	}
+
+	.logo-text {
+		h1 {
+			display: inline-block;
+			font-weight: bold;
+			font-size: 50px;
+			margin: 0;
+		}
+
+		.logo-text__szakgyak {
+			color: #880000;
+		}
+
+		.logo-text__chan {
+			color: #8894a0;
+		}
+
+		margin: 50px auto 80px;
+		width: fit-content;
+		display: block;
+	}
+
+	.v-textarea,.v-textfield {
+		width: 300px;
+	}
+
+	.register-button {
+		margin-top: 13px;
+	}
+}

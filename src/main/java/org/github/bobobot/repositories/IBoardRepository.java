@@ -16,5 +16,4 @@ public interface IBoardRepository extends JpaRepository<Board, Long> {
 	 * @return The found board wrapped in an optional.
 	 */
 	Optional<Board> findByShortName(String shortName);
-
 }

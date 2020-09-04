@@ -30,4 +30,15 @@ public class CommentNotification extends Notification {
 		super(read, originalReply);
 		this.otherUsersReply = otherUsersReply;
 	}
+
+	/**
+	 * This method returns the notification in a string format.
+	 * It also makes sure that the text doesn't exceed 60 characters. (Vaadin is inflexible)
+	 */
+	@Override
+	public String getAsText() {
+		int textLimit = 50;
+		String restOfTheText = otherUsersReply.getUser().getName() + " replied to your comment: \"";
+		return restOfTheText + shortenText(otherUsersReply.getContent(), textLimit - restOfTheText.length()) + "\"";
+	}
 }
